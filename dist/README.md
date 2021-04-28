@@ -26,13 +26,13 @@ Simple, elegant, lightweight although powerful and versatile HTML5 media player.
 * Written in pure JavaScript, no dependencies required
 * Touch-devices support
 * Three UI modes : normal / compact / mini
-* Preview thumbnails support
+* [Preview thumbnails support](https://amstramgram75.github.io/Amstramgram-Media-Player/thumbnails.html)
 * SVG buttons included in css, no extra files to download
 * Previous, play/pause, next, fullscreen, subtitles, pip, settings, download buttons
 * All buttons titles configurable
 * Display of current time and total duration
 * __Sass__ so you can include in your build processes
-* Around 25.44 Ko gzipped (js + css) and even 19.39 Ko if you only need the audio player...
+* Around 25.44 Ko gzipped (js + css) and even 19.39 Ko [if you only need audio players](https://amstramgram75.github.io/Amstramgram-Media-Player/audio.html)...
 
 __BUT no Youtube, Vimeo or whatever integration.__
 ___
@@ -51,7 +51,8 @@ npm -i -d amstramgrammediaplayer
 ```html
 <link rel="stylesheet" href="dist/css/amstramgramMediaPlayer.min.css">
 <script src="dist/iife/amstramgramMediaPlayer.min.js"></script>
-```Or if you like to take advantage of the support for javascript modules in all major browsers (and you should !), you can do :
+```
+Or if you like to take advantage of the support for javascript modules in all major browsers (and you should !), you can do :
 ```html
 <link rel="stylesheet" href="dist/css/amstramgramMediaPlayer.min.css">
 <script type="module">
@@ -83,14 +84,22 @@ import AmstramgramMediaPlayer from 'AmstramgramMediaPlayer';
 ```scss
 @use "../node_modules/amstramgrammediaplayer/src/scss/amstramgramAudioPlayer";
 ```
+
+More infos [here](https://amstramgram75.github.io/Amstramgram-Media-Player/).
 ___
 ## Usage
+
+```html
+<video id="myVideo" src="path_to_video.mp4">
+```
 
 Initialize the script by running :
 
 ```js
-new AmstramgramMediaPlayer(document.querySelector('video'))
+new AmstramgramMediaPlayer(document.querySelector('#myVideo'))
 ```
+
+Check the examples [here](https://amstramgram75.github.io/Amstramgram-Media-Player/demo.html) and [here](https://amstramgram75.github.io/Amstramgram-Media-Player/playlists.html).
 ___
 ## Customization
 
@@ -100,16 +109,21 @@ AmstramgramMediaPlayer.options({
   // Custom options
 });
 ```
-See here for details...
 
-When creating an instance, you can pass an object with custom options as the second parameter.
+When creating an instance, you can pass an object with source(s) and custom options as the second parameter.
 
 ```js
-new AmstramgramMediaPlayer(document.querySelector('video'),{
-  // Custom options
-});
+new AmstramgramMediaPlayer(document.querySelector('video'),
+  {
+    src: 'video file path',
+    duration: 'duration of the video',
+    poster: 'poster path',
+    thumbnails: 'thumbnails path',
+    ...
+  }
+);
 ```
-When setting the source, you can pass a simple string giving the video file path or an object including the source path and several other options as duration, poster, thumbnails and so on...
+When setting the source, you can pass a simple string giving the video file path or an object including the source(s) path and several other options as duration, poster, thumbnails and so on...
 ```js
 const player = new AmstramgramMediaPlayer(document.querySelector('video'));
 player.src = {
@@ -120,10 +134,12 @@ player.src = {
   ...
 }
 ```
+See [here](https://amstramgram75.github.io/Amstramgram-Media-Player/options.html) for details...
+
 ___
 ## Compatibility
 All modern browsers on desktop, Android and iOS are supported.  
-__Internet Explorer 11__ needs some polyfills (what a surprise !)
+__Internet Explorer 11__ needs some polyfills (what a surprise !). Have a look [here](https://amstramgram75.github.io/Amstramgram-Media-Player/polyfills.html) for all the details...
 ___
 ## Thanks
 <a href="https://www.browserstack.com/" target="_blanck">

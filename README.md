@@ -1,5 +1,3 @@
-<h1 align="center">Work in progress...</h1>
-
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/Amstramgram75/Amstramgram-Media-Player)
 [![MIT License](https://img.shields.io/badge/license-MIT-green)](https://github.com/Amstramgram75/Amstramgram-Video-Player/blob/master/LICENSE)
 ![No dependency](https://img.shields.io/badge/dependencies-none-green)

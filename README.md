@@ -51,7 +51,8 @@ npm -i -d amstramgrammediaplayer
 ```html
 <link rel="stylesheet" href="dist/css/amstramgramMediaPlayer.min.css">
 <script src="dist/iife/amstramgramMediaPlayer.min.js"></script>
-```Or if you like to take advantage of the support for javascript modules in all major browsers (and you should !), you can do :
+```
+Or if you like to take advantage of the support for javascript modules in all major browsers (and you should !), you can do :
 ```html
 <link rel="stylesheet" href="dist/css/amstramgramMediaPlayer.min.css">
 <script type="module">

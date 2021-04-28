@@ -1,0 +1,95 @@
+@import "./common/_main";
+@import "./common/_code";
+
+aside .aside .sub-menu li {
+  font-size: 0.8em;
+  &.active a{
+    color: $orange;
+  }
+}
+
+.content-wrapper.api{
+  h2 {
+    font-size: 1.2em;
+    span{
+      margin-left: 0.5em;
+    }
+    &.not-audio::after, &.get::after, &.set::after{
+      width: 0;
+    }
+  }
+  h3 {
+    font-size: 1em;
+    &::before{
+      content: '';
+      display: inline-block;
+      margin-right: 0.2em;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 5px 0 5px 8.7px;
+      border-color: transparent transparent transparent $orange;
+    }
+  }
+  & > p.text,
+  div.text p {
+    line-height: 1.6;
+    margin-top: 0.5rem;
+  }
+  .not-audio-mark, .get-mark, .set-mark{
+    cursor: pointer;
+    display: inline-flex;
+    background: $orange;
+    border-radius: 50%;
+    font-weight: bold;
+    width: 1.5em;
+    height: 1.5em;
+    justify-content: center;
+    align-items: center;
+    &:after{
+      content: "S";
+    }
+  }
+  .not-audio-mark{
+    border: 0.4em solid #840d0e;
+    background: $bodycolor;
+    position: relative;
+    &:after{
+      content: "A";
+      color:black;
+      font-size: 1.6em;
+      transform: translateY(-0.05em);
+    }
+    &:before{
+      content: "";
+      position: absolute;
+      top: 50%;
+      display: block;
+      background:  #840d0e;
+      width: 110%;
+      height: 0.25em;
+      transform: translateY(-50%) rotate(45deg);
+      z-index: 1;
+    }
+  }
+  .get-mark{
+    background: #27557b;
+    &:after{
+      content: "Get";
+      font-size: 0.6em;
+    }
+  }
+  .set-mark{
+    background: #197124;
+    &:after{
+      content: "Set";
+      font-size: 0.6em;
+    }
+  }
+  .anchor{
+    display: block;
+    position: relative;
+    top: -80px;
+    width: 0;
+  }
+}

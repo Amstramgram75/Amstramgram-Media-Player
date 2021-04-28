@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" class="loading">
+
+<head>
+	<title>Amstramgram Media Player - Documentation - Thumbnails</title>
+	<include src="head.html"></include>
+	<include src="headAmpPolyfill.html"></include>
+</head>
+<body>
+	<include src="header.html"></include>
+	<div class="content-wrapper">
+		<div class="content">
+      <h2 id="intro" class="padding-top140">Introduction</h2>
+			<div class="video-container">
+				<video></video>
+			</div>
+			<div class="text">
+				<p>
+					Here is the video we will use to illustrate how to build the thumbnails file.<br>
+					A new opportunity to try the <em>autoplay</em> feature.<br>
+					We hide the volume button, set the <em>volume</em> to 0 and the <em>volumeForced</em> to true so we can be sure that the video will be muted even on refresh.<br>
+					Yes ! that's really silly but even if your media has no audio track, some browsers will stubbornly refuse to autoplay it unless volume is explicitly set to 0.<br>
+					It should be great if this can be done automatically when the video has no sound as this is the case here. But <a href="https://caniuse.com/audiotracks" target="_blanck">the lack of audioTracks property support by most browsers</a> prevents this...
+				</p>
+			</div>
+			<div class="code-show-hide">
+				<input type="checkbox" id="show-code01" class="show-code" autocomplete="off" />
+				<pre>
+<h4>HTML</h4>
+<code class="html language-html">
+
+&lt;div class=&quot;video-container&quot;&gt;
+	&lt;video&gt;&lt;!-- Our video container --&gt;&lt;/video&gt;
+&lt;/div&gt;
+
+</code>
+<h4>JAVASCRIPT</h4>
+<code class="javascript">
+
+new AmstramgramMediaPlayer(
+	document.querySelector('video'),//Our target tag
+	{
+		autoplay: true,//Set autoplay
+		mute: { hidden: true },//Hide the volume button
+		src: 'assets/thumbnails/timeCode.mp4',//Our video source
+		thumbnails: {//Our thumbnails properties
+			src: 'assets/thumbnails/timeCode-thumbs.jpg',//The source
+			width: 120,//The width of one thumbnail. Just for demo since 120 is the default value.
+			int: 1.24//The time interval between two thumbnails in seconds
+		},
+		volume: 0,//Set the volume to 0
+		volumeForced: true//Force the player to ignore the volumeGroup value stored in session storage
+	},
+	function () {//Callback
+		//listen to the 'amst__play' event dispatched by the player when playback begins.
+		this.on('amst__play', function onFirstPlay() {
+			this.off('amst__play', onFirstPlay)//Remove the listener
+			this.hideControls()//Hide the player controls
+			//Listen to the media 'ended' event
+			this.params.media.addEventListener('ended', _ => {
+				this.play()//Re-launch the playback
+				this.hideControls()//And hide the controls
+			})
+		})
+	}
+)
+
+</code></pre><label for="show-code01">Code</label>
+			</div>
+			<h2 id="methodology" class="padding-top140">Methodology</h2>
+			<div class="text">
+				<p>
+					Throughout this presentation, the <em>thumbnail</em> world will be used to designate a snapshot of the video captured at regular time intervals, for example one picture every second.<br>
+					<span class="red bold bigger-font">But beware !!!</span><br>
+					We must not reason in terms of time, but in terms of number of frames, since a video is still and always only a succession of discrete frames.<br>
+				</p>
+				<p>
+					With a 25 fps video that is two minutes long, taking a 120 pixels wide thumbnail every 25 frames (ie every second) will generate a 12,000 pixels wide file.<br>
+					The interval between each snapshot must therefore be adapted to the video duration so as not to generate a too heavy file.<br>
+				</p>
+				<p>
+					The thumbnails file used by our video player consists of a collection of thumbnails joined together on a single line.<br>
+					It is set as background-image of a div whose dimensions correspond to that of one thumbnail.<br>
+					The css background-position-x property is adapted accordingly to the thumbnail to display.<br>
+				</p>
+				<p>
+					The height of the div container is simply given by the natural height of the thumbnails container file, known once it has been loaded.<br>
+					On the other hand, we can't guess its width. We indeed have access to the natural width of the container but we have no information on the number of thumbnails or the width of a thumbnail.
+				</p>
+				<p>
+					So, we already have two data to provide to the player :<br>
+					- the thumbnails container path.<br>
+					- the width of a thumbnail.<br>
+				</p>
+				<p>
+					Knowing a thumbnail width, it's easy to get the number of thumbnails included in the container&nbsp;:<br>
+					Number of thumbnails = Container Natural Width / Thumbnail Width<br>
+					Yep !<br>
+				</p>
+				<p>
+					However, to set to the background-position-x property accordingly to the video timestamp pointed by the user, we also have to know what duration each thumbnail covers...<br>
+					And this duration is impossible to guess from what we already know.
+				</p>
+				<p>
+					Yes... I know... You don't trust me !<br>
+					So, let's try anyway !
+				</p>
+				<p>
+					Suppose we have a video of 1.2 seconds, with a frame rate of 25 and so <em>1.2 * 25 = 30 frames</em>.<br>
+					Note that a frame lasts <em>1 / 25 = 0.04 s = 40 ms</em>.<br>
+					Below, you can see how it looks. Be aware that, like for an array, first frame index is 0.
+				</p>
+				<div class="thumbnail-container">
+					<img src="assets/thumbnails/timeCode-short.jpg" width="3600" height="68">
+				</div>
+				<p>
+					Now, suppose we take a 120 pixels wide snapshot every 7 frames.<br>
+					We'll get 5 thumbnails (frame 0, frame 7, frame 14, frame 21, frame 28) and the width of the resulting file is 5 * 120 = 600 pixels.
+				</p>
+				<div class="thumbnail-container">
+					<img src="assets/thumbnails/timeCode-short-thumbs.jpg" width="600" height="68">
+				</div>
+				<p>
+				<p>
+					Thumbnail indexed 0 covers frames from 0 to 6, ie <em>7 * 40 = 280ms</em>.<br>
+					Thumbnail indexed 1 covers frames from 7 to 13 (ie 280ms).<br>
+					Thumbnail indexed 2 covers frames from 14 to 20 (ie 280ms).<br>
+					Thumbnail indexed 3 covers frames from 21 to 27 (ie 280ms).<br>
+					Thumbnail indexed 4 covers frames 28 and 29, ie <em>2 * 40 = 80ms</em> !
+				</p>
+				<p>
+					We just tell to the player that the thumbnail width is 120 pixels.<br>
+					As it is a smart guy, it deduces that there are&nbsp;:<br>
+					<em>600 / 120 = 5 thumbnails</em>.<br>
+				</p>
+				<p>
+					But then ?
+				</p>
+				<p>
+					It could think that each thumbnail covers&nbsp;:<br>
+					<em>VIDEO_DURATION / THUMBNAILS_NUMBER = 1200 / 5 = 240 ms ie 6 frames...</em><br>
+				</p>
+				<p>
+					Not so smart !...
+				</p>
+				<p>
+					Indeed, it should rather be something like this&nbsp;:<br> 
+					<em>VIDEO_DURATION / (THUMBNAILS_NUMBER - 1) = 1200 / 4 = 300 ms ie 7.5 frame</em>s<br>
+				</p>
+				<p>
+					(Yes.. It's not easy for everyone...<br>
+					Let simplify a little bit more the current example and think of a ten frames video with a snapshot every 3 frames.<br>
+					We get 4 thumbnails : 0, 3, 6, 9.<br>
+					But :<br> 
+					<em>10 / 4 = 2</em><br> 
+					Whereas :<br> 
+					<em>10 / (4 - 1) = 3</em><br>
+					End of the parenthesis)
+				</p>
+				<p>
+					But even that is also wrong !<br>
+					Because, our player can't know that the last thumbnail covers only 80ms...
+				</p>
+				<div class="thumbnail-container">
+					<img src="assets/thumbnails/timeCode-differences.jpg" width="3600" height="272">
+				</div>
+				<p>
+					So ! There is no alternative ! <br>
+					To get the right correspondence between a given timestamp of the video and the thumbnail to display, we have to know the time interval between two thumbnails.<br>
+					In our example, this interval is 280 ms.<br>
+					Consequently&nbsp;:<br>
+					- a timestamp of 520 ms (<em>Time Code = 00:00:00:13</em>. Frame indexed <em>Math.floor( 520 / 40 ) = 13</em>) will require the thumbnail indexed <em>Math.floor( 520 / 280 ) = 1</em>;<br>
+					- a timestamp of 1,02 s (<em>Time Code between 00:00:00:25 and 00:00:00:26</em>. Frame indexed <em>Math.floor( 1020 / 40 ) = 25</em>) the thumbnail indexed <em>Math.floor( 1020 / 280 ) = 3</em>;<br>
+					[...]
+				</p>
+				<p>
+					To summarize, our player needs three data to display thumbnails&nbsp;:<br>
+					- the thumbnails container file source;<br>
+					- the width of one thumbnail;<br>
+					- the time interval between two thumbnails.
+				</p>
+				<p>
+					The last point to examine is&nbsp;: how much thumbnails do we need ?<br>
+					And the answer is&nbsp;: it depends...<br>
+					I think that an hundred could be set as a maximum in all cases just because the width of the seeking area will rarely exceed 1900 pixels. Even in this borderline case, a pointer horizontal displacement of 19 pixels would be sufficient to update the thumbnail.<br>
+					But for a video duration less than 1 minute and 40 seconds (100 seconds), it would result in a thumbnail in less than a second, which is not very reasonable and above all quite useless.<br>
+					So we can decide that the interval between two thumbnails should be at least one second for videos less than 100 seconds long and about one hundredth of their duration for others.
+				</p>
+				<p>
+					That being said, the big question remains&nbsp;: how to get this set of thumbnails in a single file&nbsp;?<br>
+					<a href="https://www.ffmpeg.org/" target="_blank">FFmpeg</a> and its toolbox kindly brings a solution to our problem...
+				</p>
+			</div>
+      <h2 id="video_informations" class="padding-top140">Video informations</h2>
+			<div class="text">
+				<p>
+					We need two informations about our video&nbsp;: its duration and its number of frames.<br>
+					<a href="https://www.ffmpeg.org/ffprobe.html" target="_blank">ffprobe</a> can give us these two data with one quite simple shell command line&nbsp;:<br>
+					<i>(Okay, this assumes the FFmpeg folder is specified in your path environment variable and that you launch a terminal in the video file folder... But I think you're brilliant enough to guess it !)</i>
+				</p>
+				<pre class="shell"><code>ffprobe -v error -select_streams v:0 -show_entries stream=duration,nb_frames -of csv=p=0 -i timeCode.mp4</code></pre>
+				<ul>
+					<li>
+						<mark>-v error</mark> : hide the info output for a better readability.<br>
+					</li>
+					<li>
+						<mark>-select_streams v:0</mark> : select only the video stream.<br>
+					</li>
+					<li>
+						<mark>-show_entries stream=duration,nb_frames</mark> : show the entries for duration and nb_frames.
+					</li>
+					<li>
+						<mark>-of csv=p=0</mark> : minimize the output.
+					</li>
+					<li>
+						<mark>-i timeCode.mp4</mark> : set our video as input.
+					</li>
+				</ul>
+			</div>
+			<p class="text">
+				You can get the full explanation and some alternative methods <a href="https://stackoverflow.com/questions/2017843/fetch-frame-count-with-ffmpeg/28376817#28376817" target="_blank">here</a>.<br>
+			</p>
+			<p class="text">
+				And here is the output for our <i>timeCode.mp4</i> video file&nbsp;:
+			</p>
+			<pre class="shell"><code>126.440000,3161</code></pre>
+			<p class="text">
+				Or in a more human friendly way&nbsp;: our video lasts 126.44 seconds and contains 3161 frames.
+			</p>
+			<p class="text">
+				Let's say we like to have 100 thumbnails.<br>
+				First thumbnail will be the first video frame.<br>
+				We therefore have 99 snapshots left to distribute, i.e. one every <em>Math.floor (3161 / 99 ) = 31</em> frames.<br>
+				So, we should take a snapshot every 31 frames.<br>
+				But, if we do so, we leave the three last seconds without a snapshot since <em>99 * 31 = 3069</em>.<br>
+				So, we have two solutions&nbsp;:<br>
+				- keep a 31 frames interval but take 102 thumbnails&nbsp;: <em>(102 - 1) * 31 = 3131</em>.<br>
+				- choose a 32 frames interval and extract 99 thumbnails&nbsp;: <em>(99 - 1) * 32 = 3136</em>.<br>
+				Okay ! Let's go with the first one...
+			</p>
+			<p class="text">
+				31 frames give a duration of <em>31 * 126.44 / 3161 = 1.24 s</em>.<br>
+				This will be one of the data to transmit to our player so that it can do its job properly.
+			</p>
+      <h2 id="generating" class="padding-top140">Generating</h2>
+			<p class="text">
+				Here is the magic line for FFmpeg to do what we need&nbsp;:
+			</p>
+			<pre class="shell"><code>ffmpeg -i <span class="orange bold">timeCode.mp4</span> -y -frames 1 -q:v 10 -vf "select=not(mod(n\,<span class="orange bold">31</span>)),scale=120:-1,tile=<span class="orange bold">102</span>x1" timeCode-thumbs.jpg</code></pre>
+			<ul>
+				<li>
+					<mark>-i timeCode.mp4</mark> : take our video as input.<br>
+				</li>
+				<li>
+					<mark>-y</mark> : overwrite the output file (timeCode-thumbs.jpg) if it exists.<br>
+				</li>
+				<li>
+					<mark>-frames 1</mark> : output only one frame.
+				</li>
+				<li>
+					<mark>-q:v 10</mark> : set the jpg quality to 10 (1 is the best, 31 the worst). See <a href="https://stackoverflow.com/a/10234065" target="_blank">here</a> for details.
+				</li>
+				<li>
+					<mark>-vf</mark> : create the filtergraph.
+				</li>
+				<li>
+					<mark>"select=not(mod(n\,31)),scale=120:-1,tile=102x1"</mark> : our filtergraph which <a href="https://www.ffmpeg.org/ffmpeg-filters.html#select_002c-aselect" target="_blank">selects</a> one frame every <span class="orange bold">31</span>, uses the <a href="https://trac.ffmpeg.org/wiki/Scaling" target="_blank">scale filter</a> to fix the width to 120 pixels while keeping the aspect ratio (<span class="italic">this is why we get : -1</span>) and finally outputs the result to a <span class="orange bold">102</span>x1 tile.
+				</li>
+				<li>
+					<mark>timeCode-thumbs.jpg</mark> : name of our generated file.
+				</li>
+			</ul>
+			<p>
+				And here is what we get&nbsp;:
+			</p>
+			<div class="thumbnail-container">
+				<img src="assets/thumbnails/timeCode-thumbs.jpg" width="12240" height="68">
+			</div>
+
+			<div class="end"></div>
+		</div>
+	</div>
+	<div class="up"></div>
+	<include src="footerAmp.html"></include>
+	<link rel="stylesheet" href="css/thumbnails.css">
+	<script src="js/thumbnails.js"></script>
+</body>
+</html>

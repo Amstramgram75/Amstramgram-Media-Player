@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" class="loading">
+
+<head>
+	<title>Amstramgram Media Player - Documentation - Autoplay</title>
+	<include src="head.html"></include>
+	<include src="headAmpPolyfill.html"></include>
+</head>
+<body>
+	<include src="header.html"></include>
+	<div class="content-wrapper">
+		<div class="content">
+      <h2 id="Demo1" class="padding-top140">Autoplay Demo 1</h2>
+			<div class="video-container">
+				<video src="assets/video/Greenpeace-2020_End_of_Year.mp4" muted autoplay></video>
+			</div>
+			<a class="link" href="./autoplay2.html">
+				<div><div>Another one ?</div><div>Yep !</div></div>
+			</a>
+			<div class="padding-top20 text">
+				<p>
+					Quite easy : <em>autoplay</em>, <em>muted</em> are set in the HTML code.<br>
+					In javascript, we just set two parameters :<br>
+					- <em>volumeForced: true</em>, so we're sure that volume will always be null on refresh;<br>
+					- <em>volumeGroup: 2</em>, group whose members are this player and also the one that you can discover if you are curious enough to click on the button above.<br>
+					The callback function is used to hide the controls when the player is ready and starts playing.
+				</p>
+			</div>
+			<div class="code-show-hide">
+				<input type="checkbox" id="show-code01" class="show-code" autocomplete="off" />
+				<pre>
+<h4>HTML</h4>
+<code class="html">
+
+&lt;div class=&quot;video-container&quot;&gt;
+	&lt;video src=&quot;assets/video/Greenpeace-2020_End_of_Year.mp4&quot; muted autoplay&gt;&lt;/video&gt;
+&lt;/div&gt;
+
+</code>
+<h4>JAVASCRIPT</h4>
+<code class="javascript">
+
+new AmstramgramMediaPlayer(document.querySelector('video'), {
+	volumeGroup: 2,
+	volumeForced: true,
+}, function () {
+	//this = our player
+	//Start listening to amst__play event
+	this.on('amst__play', function hideControlsWhenPlayBegin() {
+		//this = our player
+		//Stop listening
+		this.off('amst__play', hideControlsWhenPlayBegin)
+		//Hide the controls
+		this.hideControls()
+	})
+})
+
+</code></pre><label for="show-code01">Code</label>
+			</div>
+			<div class="end"></div>
+		</div>
+	</div>
+	<div class="up"></div>
+	<include src="footerAmp.html"></include>
+	<link rel="stylesheet" href="css/autoplay.css">
+	<script src="js/autoplay.js"></script>
+</body>
+</html>

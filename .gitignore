@@ -1,0 +1,11 @@
+.local-pack
+.vscode
+AmstramgramThumbnailsGenerator
+docs_dev
+node_modules
+travail
+amstramgramMediaPlayer.code-workspace
+dev.bat
+TODO.txt
+WORKFLOW.txt
+build.bat

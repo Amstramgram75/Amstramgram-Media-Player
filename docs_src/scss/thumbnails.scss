@@ -1,0 +1,47 @@
+@import "./common/_main";
+@import "./common/_code";
+
+.video-container {
+  margin-top: 1em;
+}
+
+.content .thumbnail-container{
+  width: 100%;
+  margin-top: 20px;
+  overflow-x: auto;
+}
+.content pre.shell {
+  margin-top: 1.5em;
+  code{
+    font-size: 0.75em;
+    pointer-events: none;
+    display: block;
+    overflow-x: auto;
+    padding: 1em;
+    background: #1e1e1e;
+    color: #c0cde0;
+    border: 1px $red solid;
+    border-radius: 5px;
+  }
+}
+.content ul{
+  margin-top: 2em;
+  li {
+    line-height: 1.5;
+    padding-bottom: 0.5em;
+    &:before{
+      content: '';
+      display: inline-block;
+      width: 0.4em;
+      height: 0.4em;
+      background: $orange;
+      border-radius: 50%;
+      vertical-align: middle;
+    }
+  }
+  mark{
+    background: $orange;
+    font-size: 0.85em;
+    padding: 0.1em 0.3em;
+  }
+}

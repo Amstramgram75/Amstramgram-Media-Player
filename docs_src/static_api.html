@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" class="loading">
+
+<head>
+	<title>Amstramgram Media Player - Documentation - Static API</title>
+	<include src="head.html"></include>
+</head>
+<body>
+	<include src="header.html"></include>
+	<div class="content-wrapper api">
+		<div class="content">
+<!-- 
+	**** INTRODUCTION ****
+-->
+      <h2 id="intro" class="padding-top140">Introduction</h2>
+			<div class="text">
+				<p>
+          Some of the static methods listed here DO NOT APPLY to the <em class="orange">AmstramgramAudioPlayer</em> class.<br>
+					They are marked with a <span class="not-audio-mark"></span>.
+				</p>
+				<p>
+					The <span class="get-mark"></span> and <span class="set-mark"></span> marks indicate that the properties have respectively a <em>getter</em> and a <em>setter</em>.
+				</p>
+			</div>
+<!-- 
+	**** AUDIOOPTIONS ****
+-->
+<h2 id="audioOptions" class="padding-top140 not-audio get set">audioOptions</h2>
+				<pre class="default"><code class="javascript">/**
+ * @set audioOptions
+ * @params {object}
+ * @description : set the audio players default options .
+ */
+
+//Set the default aria-label content for audio players HTML wrappers.
+AmstramgramMediaPlayer.audioOptions = {appLabel: 'Lecteur Audio'}
+
+/**
+ * @get audioOptions
+ * @returns {object}
+ * @description : get the audio players default options .
+ */
+
+console.log(AmstramgramMediaPlayer.audioOptions.appLabel)
+//Should output : Lecteur Audio
+
+</code></pre>
+<!-- 
+	**** CURRENTPLAYER ****
+-->
+<h2 id="currentPlayer" class="padding-top140 get">currentPlayer</h2>
+				<pre class="default"><code class="javascript">/**
+ * @get currentPlayer
+ * @returns {AmstramgramAudioPlayer | AmstramgramVideoPlayer | undefined}
+ * @description : Returns the current player or undefined if there is none.
+ */
+
+//Pauses the current player if it's playing
+if (AmstramgramMediaPlayer.currentPlayer && !AmstramgramMediaPlayer.currentPlayer.paused) {
+	AmstramgramMediaPlayer.currentPlayer.pause()
+}
+
+//Same thing if you use AmstramgramAudioPlayer class
+if (AmstramgramAudioPlayer.currentPlayer && !AmstramgramAudioPlayer.currentPlayer.paused) {
+	AmstramgramAudioPlayer.currentPlayer.pause()
+}
+
+</code></pre>
+<!-- 
+	**** OPTIONS ****
+-->
+<h2 id="options" class="padding-top140 get set">options</h2>
+				<pre class="default"><code class="javascript">/**
+ * @set options
+ * @params {object}
+ * @description : set the players default options .
+ */
+
+//Set the default aria-label content for all players HTML wrappers.
+AmstramgramMediaPlayer.options = {appLabel: 'Multimedia Player'}
+
+//Or if you're using the AmstramgramAudioPlayer class :
+AmstramgramAudioPlayer.options = {appLabel: 'My beautiful Audio Player'}
+
+/**
+ * @get options
+ * @returns {object}
+ * @description : get the players default options .
+ */
+
+console.log(AmstramgramMediaPlayer.options.appLabel)
+//Should output : Multimedia Player
+
+</code></pre>
+<!-- 
+	**** PLAYERS ****
+-->
+<h2 id="players" class="padding-top140 get">players</h2>
+				<pre class="default"><code class="javascript">/**
+ * @get players
+ * @returns {array}
+ * @description : returns an array of all instantiated players.
+ */
+
+//Hides the download button of all players.
+AmstramgramMediaPlayer.players.forEach( player => player.download = {hidden: true} )
+
+</code></pre>
+<!-- 
+	**** VIDEOOPTIONS ****
+-->
+			<h2 id="videoOptions" class="padding-top140  not-audio get set">videoOptions</h2>
+				<pre class="default" ><code class="javascript">/**
+ * @set videoOptions
+ * @params {object}
+ * @description : set the video players default options .
+ */
+
+ //Set the default aria-label content for video players HTML wrappers.
+ AmstramgramMediaPlayer.videoOptions = {appLabel: 'Lecteur Vidéo'}
+
+/**
+ * @get videoOptions
+ * @returns {object}
+ * @description : returns the video players default options .
+ */
+
+console.log(AmstramgramMediaPlayer.videoOptions.appLabel)
+//Should output : Lecteur Vidéo
+
+</code></pre>
+			<div class="end"></div>
+		</div>
+	</div>
+	<div class="up"></div>
+	<link rel="stylesheet" href="css/static_api.css">
+	<script src="js/static_api.js"></script>
+</body>
+</html>

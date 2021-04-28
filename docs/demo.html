@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="en" class="loading"><head><title>Amstramgram Media Player - Documentation - Demo</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta name="description" content="AmstramgramMediaPlayer is a open-source, simple, smart, responsive, lightweight although powerful HTML5 Audio and Video Player"><meta name="author" content="onfaitdessites.fr"><link rel="icon shortcut" href="#"><meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0"><style>body,html{height:100%;background:#121212}.loading body{opacity:0;overflow-y:scroll}.loading:after,.loading:before{content:"";display:block;position:fixed;top:50%;left:50%;width:100px;height:100px;border-radius:50%}.loading:before{transform:translate(-50%,-50%);border:10px solid red;box-sizing:border-box}.loading:after{background:linear-gradient(90deg,#000,rgba(0,0,0,.9) 30%,rgba(0,0,0,.7) 70%,transparent);animation:r 1.5s linear infinite}@keyframes r{0%{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(1turn)}}</style><script>if(function(e){if(!e.currentScript){var t=e.createElement("script"),i=e.createElement("script");t.async=i.async="false",t.src="js/polyfill/highlight9.18.5.min.js",i.src="js/polyfill/symbol-es6-polyfill.min.js",e.head.appendChild(t),e.head.appendChild(i)}}(document),!("function"==typeof Object.assign&&Array.from&&Array.prototype.includes&&Array.prototype.find&&"remove"in Element.prototype&&"function"==typeof window.CustomEvent&&"function"==typeof window.WeakSet)){var d=document,s=d.createElement("script");s.async="false",s.src="./js/iife/amstramgramMediaPlayerPolyfill.min.js",d.head.appendChild(s)}</script></head><body> <input class="menu-btn" type="checkbox" id="menu-btn" autocomplete="off"><header class="header"> <a href="https://github.com/Amstramgram75/Amstramgram-Media-Player" class="logo">mstramgram<div> <div class="github"></div> <div> <div class="media">edia</div><div class="player">layer</div> </div> </div></a> </header><aside> <div class="aside"> <ul class="menu"> <li><a href="index.html">HOME</a></li> <li><a href="demo.html">DEMO</a></li> <li><a href="playlists.html">PLAYLISTS</a></li> <li><a href="autoplay.html">AUTOPLAY</a></li> <li><a href="audio.html">AUDIO ONLY</a></li> <li><a href="options.html">OPTIONS</a></li> <li><a href="static_api.html">STATIC API</a></li> <li><a href="instance_api.html">INSTANCE API</a></li> <li><a href="events.html">EVENTS</a></li> <li><a href="thumbnails.html">THUMBNAILS</a></li> <li><a href="polyfills.html">IE11 POLYFILLS</a></li> </ul> <label class="menu-icon" for="menu-btn"><span></span></label> </div></aside> <div class="content-wrapper"> <div class="content"> <h2 id="audio" class="padding-top140">Audio Examples</h2> <h3>1. Basic</h3> <div class="audio-container"> <audio preload="none" src="https://amp.onfaitdessites.fr/assets/audio/Whales.mp3" loop type="audio/mpeg"></audio> </div> <p class="text"> Just an audio tag wrapped in a block container.<br> The <em>src</em> points to a local mp3 file, the <em>preload</em> is set to <em>none</em> and we add a <em>loop</em> attribute because this sound is so lovely !<br> To make the whole more pleasant, we surround the container with a thin red border.<br> All player options are left by default except the duration since no metadata are downloaded. </p> <div class="code-show-hide"> <input type="checkbox" id="show-code01" class="show-code" autocomplete="off"> <pre>
+<h4>HTML</h4>
+<code class="html">
+
+&lt;!-- The audio tag is wrapped in a div just for a styling purpose.--&gt
+&lt;div class=&quot;audio-container&quot;&gt;
+	&lt;audio preload=&quot;none&quot; src=&quot;assets/audio/Whales.mp3&quot; loop&gt;&lt;/audio&gt;
+&lt;/div&gt;
+
+</code>
+<h4>SCSS</h4>
+<code class="css">
+
+.audio-container .amst__wrapper {
+  border: 1px solid rgba(161, 3, 4, 0.5);
+  border-radius: 5px;
+}
+
+</code>
+<h4>JAVASCRIPT</h4>
+<code class="javascript">
+
+new AmstramgramMediaPlayer(
+	document.querySelectorAll('audio')[0],//Our &lt;audio&gt; tag 
+	{ 
+		duration: 20//Display the duration since no metadata are downloaded.
+	}
+)
+
+</code></pre><label for="show-code01">Code</label> </div> <h3 class="padding-top80">2. A little bit more sophisticated</h3> <div class="audio-container highligth"> <audio preload="none"> <source src="https://amp.onfaitdessites.fr/assets/audio/Le_Prince_Miiaou_POISSON_128.mp3" data-quality="MP3 128K" type="audio/mpeg"> <source src="https://amp.onfaitdessites.fr/assets/audio/Le_Prince_Miiaou_POISSON_320.mp3" data-quality="MP3 320K" type="audio/mpeg" data-default="true"> <source src="https://amp.onfaitdessites.fr/assets/audio/Le_Prince_Miiaou_POISSON.wav" data-quality="WAV" type="audio/wav"> <track label="French" kind="subtitles" srclang="fr" src="https://amp.onfaitdessites.fr/assets/audio/Le_Prince_Miiaou_POISSON_audio.vtt"> </audio> <div class="audio-subtitles-display"> <div class="audio-subtitles-wrapper"><span class="audio-subtitles-container"><b>Le Prince Miiaou<br>POISSON</b></span></div> </div> </div> <p class="text"><b class="orange">Le Prince Miiaou</b> is a french artist. Maud-Elisa Mandeau (her real name) has released 5 albums so far.<br> <b class="orange">Poisson</b>, the wonderful song you can discover here, is part of the last one : <b class="orange">Victoire</b>.<br> You should learn more about her on her <a href="http://leprincemiiaou.com/" target="_blank">official site</a> and <a href="https://leprincemiiaou.bandcamp.com/" target="_blank">here</a>...<br> I love her work... <br> <i>Précautionneusement...</i> </p> <p class="text">This one, we provide in the <em>HTML</em> code three sources with different qualities :<br> - <em>MP3 128K</em>;<br> - <em>MP3 320K</em>;<br> - <em>WAV</em>.<br> The <em>MP3 320K</em> file is defined as the default source.<br> The <em>settings</em> button allows user to change the quality. This choice is stored in local session storage and redefines the default quality.<br> On the other hand, the ability to change the playback speed is removed from the options.<br> Moreover, lyrics issued from a <em>.vtt</em> file provided by a <em>track</em> tag are displayed in a dedicated container below the player.<br> The <em>download</em> button is hidden. </p> <div class="code-show-hide"> <input type="checkbox" id="show-code02" class="show-code" autocomplete="off"> <pre>
+<h4>HTML</h4>
+<code class="html">
+
+&lt;!--The audio tag is wrapped in a div just for a styling purpose.
+We set three different sources with an explicit data-quality attribute.
+Those attributes are listed in the settings panel
+in the order in which they appear in the HTML code.
+The MP3 320K file is defined as default source
+by its data-default attribute set to true.
+Note that the preload attribute of the audio tag is set to none. 
+Otherwise, the browser will uselessly download the metadata of the first source 
+with MP3 128K data-quality that is not the default.
+The audio-subtitles-display,
+audio-subtitles-wrapper and
+audio-subtitles-container elements
+are used to display the subtitles provided by the track tag.--&gt;
+
+&lt;div class=&quot;audio-container highligth&quot;&gt;
+	&lt;audio preload=&quot;none&quot;&gt;
+		&lt;source src=&quot;assets/audio/Le_Prince_Miiaou_POISSON_128.mp3&quot; data-quality=&quot;MP3 128K&quot; type="audio/mpeg"&gt;
+		&lt;source src=&quot;assets/audio/Le_Prince_Miiaou_POISSON_320.mp3&quot; data-quality=&quot;MP3 320K&quot; type="audio/mpeg" data-default=&quot;true&quot;&gt;
+		&lt;source src=&quot;assets/audio/Le_Prince_Miiaou_POISSON.wav&quot; data-quality=&quot;WAV 48K&quot; type="audio/wav"&gt;
+		&lt;track label=&quot;English&quot; kind=&quot;subtitles&quot; srclang=&quot;fr&quot; src=&quot;assets/audio/Le_Prince_Miiaou_POISSON_audio.vtt&quot;&gt;
+	&lt;/audio&gt;
+	&lt;div class=&quot;audio-subtitles-display&quot;&gt;
+		&lt;div class=&quot;audio-subtitles-wrapper&quot;&gt;
+			&lt;span class=&quot;audio-subtitles-container&quot;&gt;
+				&lt;!-- Display the artist name and the song title --&gt;
+				&lt;b&gt;Le Prince Miiaou&lt;br/&gt;POISSON&lt;b&gt;
+			&lt;/span&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+</code>
+<h4>SCSS</h4>
+<code class="scss">
+
+//Just a little highlight for the audio player
+.audio-container.highligth .amst__wrapper {
+  border: 1px solid #383838;
+  border-radius: 5px;
+  box-shadow: 2px 2px 3px #383838;
+}
+
+//Subtitles
+.audio-subtitles-display {
+  text-align: center;
+  margin-top: 15px;
+  height: 100px;
+  .audio-subtitles-wrapper {
+    display: inline-block;
+    padding: 15px;
+    background: #333;
+    border-radius: 5px;
+    .audio-subtitles-container {
+      white-space: break-spaces;
+    }
+	 /*
+		amst__hide-subtitles class is added to the wrapper 
+		when the player subtitles button is turned off.
+		amst__subtitles-empty class is added to the wrapper
+		as soon as there is no subtitle to display.
+	*/
+    &.amst__hide-subtitles,
+    &.amst__subtitles-empty {
+      display: none;
+    }
+  }
+}
+
+</code>
+<h4>JAVASCRIPT</h4>
+<code class="javascript">
+
+/*
+First, we set some class global options (all the players created afterwards will get these options as default) :
+- we set the crossOrigin media property to "anonymous" because subtitles may be loaded from an external url
+- we hide the <em>download</em> button cause it's visible by default.
+- we reset the <em>playbackRates</em> array of the settings panel
+		because we don't want to give the user the ability to change playback speed.
+		(by default : 
+		playbackRates: [['0.25 x', 0.25], ['0.5 x', 0.5], ['0.75 x', 0.75], ['Normal', 1], ['1.5 x', 1.5], ['2 x', 2], ['4 x', 4]])
+		If you really care, you can test this option in the basic example above.
+- we set the subtitles button labels to <b>Hide lyrics</b> / <b>Show lyrics</b> and force its state to true 
+		so the lyrics are displayed by default.
+*/
+AmstramgramMediaPlayer.options = { 
+	download: { hidden: true }, 
+	settings: { playbackRates: [] }, 
+	subtitles: { 
+		label: { 
+			on: 'Hide lyrics', 
+			off: 'Show lyrics' 
+		}, 
+		state: true 
+	} 
+}
+
+/*
+- We declare a new <em>AmstramgramMediaPlayer</em> instance on the <em>&lt;audio&gt;</em> tag,
+		set its <em>preload</em> option to <em>'auto'</em>,
+		provide a duration
+		and define the <em>wrapper</em> and <em>container</em> properties of the subtitles option.
+- The function passed as last parameter of the constructor
+		is called after the instance initialization.
+
+<em>IMPORTANT</em> : <em>preload</em> has been set to <em>none</em> in HTML to prevent the browser
+to downloading the metadata of the first source it finds.
+Setting <em>preload</em> to <em>auto</em> in the instance options is more efficient 
+because the browser will load the metadata of the source marked as default.
+*/
+new AmstramgramMediaPlayer(
+	document.querySelectorAll('audio')[1], 
+	{
+		duration: 262,
+		preload: 'auto',
+		subtitles: { 
+			wrapper: '.audio-subtitles-wrapper', 
+			container: '.audio-subtitles-container' 
+		},
+	}, 
+	function () {//Function called after instance initialization
+		/*
+		If the subtitles wrapper is styled with padding and background-color (which is the case here),
+		it will be displayed as an empty rectangle when there is no subtitles.
+		To avoid this, the instance adds to it the <em>amst__subtitles-empty</em> class
+		each time there is no subtitle to display.
+		This class just sets the display property to 'none'.
+		But here, we'd like to show the track info written in the container.
+		So, we just remove the <em>amst__subtitles-empty</em> class.
+		*/
+		document.querySelector('.amst__subtitles-empty').classList.remove('amst__subtitles-empty')
+	}
+)
+
+</code></pre><label for="show-code02">Code</label> </div> <h2 id="video" class="padding-top140">Video Example</h2> <div class="video-container"> <video preload="none" poster="https://amp.onfaitdessites.fr/assets/video/Le_Prince_Miiaou_POISSON.jpg"> <source src="https://amp.onfaitdessites.fr/assets/video/Le_Prince_Miiaou_POISSON_240P.mp4" data-quality="240p"> <source src="https://amp.onfaitdessites.fr/assets/video/Le_Prince_Miiaou_POISSON_360p.mp4" data-quality="360p"> <source src="https://amp.onfaitdessites.fr/assets/video/Le_Prince_Miiaou_POISSON_480p.mp4" data-quality="480p"> <source src="https://amp.onfaitdessites.fr/assets/video/Le_Prince_Miiaou_POISSON_720P.mp4" data-quality="720p" data-default="true"> <source src="https://amp.onfaitdessites.fr/assets/video/Le_Prince_Miiaou_POISSON_1080p.mp4" data-quality="1080p"> <track label="English" kind="subtitles" srclang="fr" src="https://amp.onfaitdessites.fr/assets/video/Le_Prince_Miiaou_POISSON.vtt"> </video> </div> <p class="text"> Same artist... Same song...<br> But with some pictures...<br> And a poster, <a href="thumbnails.html">preview thumbnails</a>, subtitles, a vertical volume slider and five qualities... </p> <div class="code-show-hide"> <input type="checkbox" id="show-code03" class="show-code" autocomplete="off"> <pre>
+<h4>HTML</h4>
+<code class="html">
+
+&lt;!-- We set five different sources with an explicit data-quality attribute.
+Those attributes are listed in the settings panel
+in the order in which they appear in the HTML code.
+The 720p file is defined as default source
+by its data-default attribute set to true.
+Note that preload attribute of the &lt;video&gt; tag is set to none. 
+Otherwise, the browser will uselessly download the metadata of the first source 
+with 240p data-quality that is not the default.
+The poster source is simply set through the &lt;video&gt; tag poster attribute. --&gt;
+
+&lt;div class=&quot;video-container&quot;&gt;
+	&lt;video preload=&quot;none&quot; poster=&quot;assets/video/Le_Prince_Miiaou_POISSON.jpg&quot;&gt;
+		&lt;source src=&quot;assets/video/Le_Prince_Miiaou_POISSON_240p.mp4&quot; data-quality=&quot;240p&quot;&gt;
+		&lt;source src=&quot;assets/video/Le_Prince_Miiaou_POISSON_360p.mp4&quot; data-quality=&quot;360p&quot;&gt;
+		&lt;source src=&quot;assets/video/Le_Prince_Miiaou_POISSON_480p.mp4&quot; data-quality=&quot;480p&quot;&gt;
+		&lt;source src=&quot;assets/video/Le_Prince_Miiaou_POISSON_720p.mp4&quot; data-quality=&quot;720p&quot; data-default=&quot;true&quot;&gt;
+		&lt;source src=&quot;assets/video/Le_Prince_Miiaou_POISSON_1080p.mp4&quot; data-quality=&quot;1080p&quot;&gt;
+		&lt;track label=&quot;English&quot; kind=&quot;subtitles&quot; srclang=&quot;fr&quot; src=&quot;assets/video/Le_Prince_Miiaou_POISSON.vtt&quot;&gt;
+	&lt;/video&gt;
+&lt;/div&gt;
+
+</code>
+<h4>JAVASCRIPT</h4>
+<code class="javascript">
+
+/*
+As mentioned in the previous example, we begin by setting the class global options :
+- we hide the <em>download</em> button because it's visible by default.
+- we reset the <em>playbackRates</em> array of the settings panel
+		because we don't want to give the user the ability to change playback speed.
+		(by default : 
+		playbackRates: [['0.25 x', 0.25], ['0.5 x', 0.5], ['0.75 x', 0.75], ['Normal', 1], ['1.5 x', 1.5], ['2 x', 2], ['4 x', 4]]),
+- we set the subtitles button labels to <b>Hide lyrics</b> / <b>Show lyrics</b> and force its state to true 
+		so the lyrics are displayed by default.
+*/
+AmstramgramMediaPlayer.options = { 
+	download: { hidden: true }, 
+	settings: { playbackRates: [] }, 
+	subtitles: { 
+		label: { 
+			on: 'Hide lyrics', 
+			off: 'Show lyrics' 
+		}, 
+		state: true 
+	} 
+}
+
+/*
+We declare a new <em>AmstramgramMediaPlayer</em> instance on the <em>&lt;video&gt;</em> tag,
+set its <em>duration</em> to <em>261</em> (i.e. 4 minutes and 21 seconds :
+thus, the correct duration is displayed even though the metadata have not been loaded).
+define the thumbnails src and choose a vertical volume slider.
+*/
+new AmstramgramMediaPlayer(document.querySelector('video'), {
+	duration: 261,
+	thumbnails: { 
+		src: 'assets/video/Le_Prince_Miiaou_POISSON_thumbnails.jpg',
+		int: 2.6
+	},
+	volumeHorizontal: false
+})
+
+</code></pre><label for="show-code03">Code</label> </div> <h2 id="notes" class="padding-top140">Notes</h2> <div class="end text"> <p>A few things you should note :<br> - If you start a player while another is already playing, the latter automatically pauses.<br> - The volume levels of the three players are linked. This can be change by setting a different value to their <em>volumeGroup</em> option. Moreover, each <em>volumeGroup</em> value is stored in the session storage and recalled on refresh or when navigating from page to page.<br> - The volume slider orientation is horizontal by default. It can be switched to vertical by setting the <em>volumeHorizontal</em> player option to false. However, on mobile devices, the volume changes are restricted to mute/unmute and there so is no slider.<br> - The UI changes according to the available width.<br> - The video controls are hidden after a delay defined by the <em>hideControlsDelay</em> option. On desktop, they are shown as soon as the mouse moves on player. They also can be shown/hidden by the keyboard shortcuts <i>Shift + Arrow Up</i> / <i>Shift + Arrow Down</i>. On mobile, they are hidden by a vertical down swipe and shown by a tap on video or by a vertical up swipe.<br> - On touch devices, video thumbnails are displayed by an horizontal swipe on the player.<br> - Each button can be customized : its title (that appears in tooltip when mouse hovering), but also its display properties (disabled / hidden). </p> <p> You should discover some other features and options by visiting the other pages of this wiki... </p> </div> </div> </div> <div class="up"></div> <link rel="stylesheet" href="./css/amstramgramMediaPlayer.min.css"><script type="module">import AmstramgramMediaPlayer from"./js/esm/amstramgramMediaPlayer.min.js";window.AmstramgramMediaPlayer=AmstramgramMediaPlayer;</script><script nomodule src="./js/iife/amstramgramMediaPlayer.min.js"></script> <link rel="stylesheet" href="css/demo.css"> <script src="js/demo.js"></script> </body></html>

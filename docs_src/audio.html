@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en" class="loading">
+
+<head>
+	<title>Amstramgram Media Player - Documentation - Audio only</title>
+	<include src="head.html"></include>
+	<include src="headAmpPolyfill.html"></include>
+</head>
+<body>
+	<include src="header.html"></include>
+	<div class="content-wrapper">
+		<div class="content">
+      <h2 id="why" class="padding-top140">Why ?</h2>
+			<p class="text">
+				<em class="orange">AmstramgramMediaPlayer</em> works with audio and video.<br>
+				If you just need audio players, you should use the <em class="orange">AmstramgramAudioPlayer</em> package rather than its big brother <em class="orange">AmstramgramMediaPlayer</em>.<br>
+				You'll find here the same audio examples as those shown on <a href="./index.html">Home</a> and <a href="./playlists.html">Playlists</a> pages.<br>
+				As you can see, operations and features are identical.
+			</p>
+			<h2 id="basic" class="padding-top140">Basic</h2>
+			<div class="audio-container padding-top60">
+				<audio preload="none" src="assets/audio/Whales.mp3" loop></audio>
+			</div>
+			<p class="text">
+				Just an audio tag with a mp3 <em>src</em> and a <em>preload</em> attribute set to <em>none</em> plus a thin red border on the player container.<br>
+				All player options are left by default except the duration since no metadata are downloaded.
+			</p>
+			<div class="code-show-hide">
+				<input type="checkbox" id="show-code01" class="show-code" autocomplete="off" />
+				<pre>
+<h4>HTML</h4>
+<code class="html">
+
+&lt;!-- The audio tag is wrapped in a div just for a styling purpose.--&gt
+&lt;div class=&quot;audio-container&quot;&gt;
+	&lt;audio preload=&quot;none&quot; src=&quot;assets/audio/Whales.mp3&quot;&gt;&lt;/audio&gt;
+&lt;/div&gt;
+
+</code>
+<h4>SCSS</h4>
+<code class="css">
+
+.audio-container .amst__wrapper {
+  border: 1px solid rgba(161, 3, 4, 0.5);
+  border-radius: 5px;
+}
+
+</code>
+<h4>JAVASCRIPT</h4>
+<code class="javascript">
+
+new AmstramgramAudioPlayer(
+	document.querySelectorAll('audio')[0], 
+	{ 
+		duration: 20//Display the duration since no metadata are downloaded.
+	}
+)
+
+</code></pre><label for="show-code01">Code</label>
+			</div>
+			<h2 id="advanced" class="padding-top140">Advanced</h2>
+			<div class="audio-container highligth">
+				<audio preload="none">
+					<source src="assets/audio/Le_Prince_Miiaou_POISSON_128.mp3" data-quality="MP3 128K" type="audio/mpeg">
+					<source src="assets/audio/Le_Prince_Miiaou_POISSON_320.mp3" data-quality="MP3 320K" type="audio/mpeg" data-default="true">
+					<source src="assets/audio/Le_Prince_Miiaou_POISSON.wav" data-quality="WAV" type="audio/wav">
+					<track label="English" kind="subtitles" srclang="en" src="https://amp.onfaitdessites.fr/assets/audio/Le_Prince_Miiaou_POISSON_audio.vtt">
+				</audio>
+				<div class="audio-subtitles-display">
+					<div class="audio-subtitles-wrapper"><span class="audio-subtitles-container"><b>Le Prince Miiaou<br>POISSON</b></span></div>
+				</div>
+			</div>
+			<p class="text"><b class="orange">Le Prince Miiaou</b> is a french artist. Maud-Elisa Mandeau (her real name) has released 5
+				albums so far.<br>
+				<b class="orange">Poisson</b>, the wonderful song you can discover here, is part of the last one : <b
+					class="orange">Victoire</b>.<br>
+				You should learn more about her on her <a href="http://leprincemiiaou.com/" target="_blank">official site</a>
+				and <a href="https://leprincemiiaou.bandcamp.com/" target="_blank">here</a>...<br>
+				I love her work... <br>
+				<i>Précautionneusement...</i>
+			</p>
+			<p class="text">This one, we provide in the <em>HTML</em> code three sources with different qualities :<br>
+				- <em>MP3 128K</em>;<br>
+				- <em>MP3 320K</em>;<br>
+				- <em>WAV</em>.<br>
+				The <em>MP3 320K</em> file is defined as default source.<br>
+				The <em>settings</em> button allow user to change the quality. This choice is stored in local session storage and redefined the default quality.<br>
+				On the other hand, the ability to change the playback speed is removed from the options.<br>
+				Moreover, lyrics issued from a <em>.vtt</em> file provided by a <em>track</em> tag are displayed in a dedicated container below the player.<br>
+				The <em>download</em> button is hidden.
+			</p>
+			<div class="code-show-hide">
+				<input type="checkbox" id="show-code02" class="show-code" autocomplete="off" />
+				<pre>
+<h4>HTML</h4>
+<code class="html">
+
+&lt;!--The audio tag is wrapped in a div just for a styling purpose.
+We set three different sources with an explicit data-quality attribute.
+Those attributes are listed in the settings panel
+in the order in which they appear in the HTML code.
+The MP3 320K file is defined as default source
+by its data-default attribute set to true.
+Note that preload attribute of the audio tag is set to none. 
+Otherwise, the browser will uselessly download the metadata of the first source 
+with MP3 128K data-quality that is not the default.
+The audio-subtitles-display,
+audio-subtitles-wrapper and
+audio-subtitles-container elements
+are used to display the subtitles provided by the track tag.--&gt;
+
+&lt;div class=&quot;audio-container highligth&quot;&gt;
+	&lt;audio preload=&quot;none&quot;&gt;
+		&lt;source src=&quot;assets/audio/Le_Prince_Miiaou_POISSON_128.mp3&quot; data-quality=&quot;MP3 128K&quot; type="audio/mpeg"&gt;
+		&lt;source src=&quot;assets/audio/Le_Prince_Miiaou_POISSON_320.mp3&quot; data-quality=&quot;MP3 320K&quot; type="audio/mpeg" data-default=&quot;true&quot;&gt;
+		&lt;source src=&quot;assets/audio/Le_Prince_Miiaou_POISSON.wav&quot; data-quality=&quot;WAV 48K&quot; type="audio/wav"&gt;
+		&lt;track label=&quot;English&quot; kind=&quot;subtitles&quot; srclang=&quot;fr&quot; src=&quot;assets/audio/Le_Prince_Miiaou_POISSON_audio.vtt&quot;&gt;
+&lt;/audio&gt;
+	&lt;div class=&quot;audio-subtitles-display&quot;&gt;
+		&lt;div class=&quot;audio-subtitles-wrapper&quot;&gt;
+			&lt;span class=&quot;audio-subtitles-container&quot;&gt;
+				&lt;!-- Display the artist name and the song title -&gt;
+				&lt;b&gt;Le Prince Miiaou&lt;br/&gt;POISSON&lt;b&gt;
+			&lt;/span&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+</code>
+<h4>SCSS</h4>
+<code class="scss">
+
+//Just a little highlight for the audio player
+.audio-container.highligth .amst__wrapper {
+  border: 1px solid #383838;
+  border-radius: 5px;
+  box-shadow: 2px 2px 3px #383838;
+}
+
+//Subtitles
+.audio-container .amst__wrapper {
+  border: 1px solid #383838;
+  border-radius: 5px;
+  box-shadow: 2px 2px 3px #383838;
+} 12
+.audio-subtitles-display {
+  text-align: center;
+  margin-top: 15px;
+  height: 100px;
+  .audio-subtitles-wrapper {
+    display: inline-block;
+    padding: 15px;
+    background: #333;
+    border-radius: 5px;
+    .audio-subtitles-container {
+      white-space: break-spaces;
+    }
+	 /*
+		amst__hide-subtitles class is added to the wrapper 
+		when the player subtitles button is turned off.
+		amst__subtitles-empty class is added to the wrapper
+		as soon as there is no subtitle to display.
+	*/
+    &.amst__hide-subtitles,
+    &.amst__subtitles-empty {
+      display: none;
+    }
+  }
+}
+
+</code>
+<h4>JAVASCRIPT</h4>
+<code class="javascript">
+
+/**
+	* For the next audio players, we hide the download button 
+	* and reset the playbackRates array of the settings panel
+	* because we don't want to give the user the ability to change playback speed.
+	* (by default : 
+	*  playbackRates: [['0.25 x', 0.25], ['0.5 x', 0.5], ['0.75 x', 0.75], ['Normal', 1], ['1.5 x', 1.5], ['2 x', 2], ['4 x', 4]]
+	* )
+*/
+AmstramgramAudioPlayer.options = {
+	download: { hidden: true },//Download button is visible by default
+	settings: { playbackRates: [] },
+}
+
+/*
+We declare a new AmstramgramAudioPlayer instance on the second &lt;audio&gt; tag
+set the crossOrigin media property to "anonymous" because subtitles may be loaded from an external url
+provide a duration
+and set the subtitles parameters.
+The function passed as last parameter of the constructor
+is called after the instance initialization.
+
+IMPORTANT : preload has been set to none in HTML to prevent the browser
+to downloading the metadata of the first source it finds.
+Setting preload to auto in the instance options is more efficient 
+because the browser will load the metadata of the source marked as default.
+*/
+new AmstramgramAudioPlayer(
+	document.querySelectorAll('audio')[1],
+	{
+		crossOrigin: "anonymous",
+		duration: 262,
+		preload: 'auto',
+		subtitles:
+		{
+			label://Adapt the button labels
+			{
+				on: 'Hide lyrics',//Default is "Hide Subtitles"
+				off: 'Show lyrics'//Default is "Show Subtitles" 
+			},
+			state: true,//Subtitles are displayed by default
+			wrapper: '.audio-subtitles-wrapper',
+			container: '.audio-subtitles-container'
+		},
+	},
+	function () {//Function called after instance initialization
+		/*
+		If the subtitles wrapper is styled with padding and background-color (which is the case here),
+		it will be displayed as an empty rectangle when there is no subtitles.
+		To avoid this, the instance adds to it the amst__subtitles-empty class
+		each time there is no subtitle to display.
+		This class just sets the display property to 'none'.
+		But here, we'd like to show the track info written in the container.
+		So, we just remove the amst__subtitles-empty class.
+		*/
+		document.querySelector('.amst__subtitles-empty').classList.remove('amst__subtitles-empty')
+	}
+)
+
+</code></pre><label for="show-code02">Code</label>
+			</div>
+      <h2 id="playlist" class="padding-top140">Playlist</h2>
+      <div class="audio-playlist-wrapper">
+				<div class="playlist-menu">
+					<svg width="40" height="44" viewBox="0 0 100 110"><ellipse cx="14.14" cy="98.26" rx="14.52" ry="11.26" transform="rotate(-21.12 14.15 98.275)"/><rect x="24.52" y="18" width="3.77" height="79.4" rx="1"/><ellipse cx="85.86" cy="84.92" rx="14.52" ry="11.26" transform="rotate(-21.12 85.883 84.921)"/><rect x="96.23" y="4.66" width="3.77" height="79.4" rx="1"/><path d="M100 15.98L24.52 33.59V17.02L100 0v15.98z"/><rect x="46.91" y="37.46" width="28" height="6.49" rx="3.25"/><rect x="46.91" y="49.55" width="28" height="6.49" rx="3.25"/><rect x="46.91" y="61.64" width="28" height="6.49" rx="3.25"/></svg>
+					<ul>
+					</ul>
+				</div>
+        <div class="audio-container">
+          <audio></audio>
+					<div class="track-title"></div>
+        </div>
+			</div>
+			<div class="padding-top80 text">
+				<p>Five tracks with three qualities each.<br>
+				<em>Download</em> button is hidden.<br>
+				The availability to change the playback speed is removed.<br>
+				<em>Previous</em> and <em>Next</em> buttons tooltips and states are updated according to the current track.
+			</p>
+			</div>
+			<div class="code-show-hide">
+				<input type="checkbox" id="show-code03" class="show-code" autocomplete="off" />
+				<pre>
+<h4>HTML</h4>
+<code class="html language-html">
+
+&lt;div class=&quot;audio-playlist-wrapper&quot;&gt;
+	&lt;div class=&quot;playlist-menu&quot;&gt;
+		&lt;!-- A beautiful icon --&gt;
+		&lt;svg width=&quot;40&quot; height=&quot;44&quot; viewBox=&quot;0 0 100 110&quot;&gt;
+			&lt;ellipse cx=&quot;14.14&quot; cy=&quot;98.26&quot; rx=&quot;14.52&quot; ry=&quot;11.26&quot; transform=&quot;rotate(-21.12 14.15 98.275)&quot;/&gt;
+			&lt;rect x=&quot;24.52&quot; y=&quot;18&quot; width=&quot;3.77&quot; height=&quot;79.4&quot; rx=&quot;1&quot;/&gt;
+			&lt;ellipse cx=&quot;85.86&quot; cy=&quot;84.92&quot; rx=&quot;14.52&quot; ry=&quot;11.26&quot; transform=&quot;rotate(-21.12 85.883 84.921)&quot;/&gt;
+			&lt;rect x=&quot;96.23&quot; y=&quot;4.66&quot; width=&quot;3.77&quot; height=&quot;79.4&quot; rx=&quot;1&quot;/&gt;
+			&lt;path d=&quot;M100 15.98L24.52 33.59V17.02L100 0v15.98z&quot;/&gt;
+			&lt;rect x=&quot;46.91&quot; y=&quot;37.46&quot; width=&quot;28&quot; height=&quot;6.49&quot; rx=&quot;3.25&quot;/&gt;
+			&lt;rect x=&quot;46.91&quot; y=&quot;49.55&quot; width=&quot;28&quot; height=&quot;6.49&quot; rx=&quot;3.25&quot;/&gt;
+			&lt;rect x=&quot;46.91&quot; y=&quot;61.64&quot; width=&quot;28&quot; height=&quot;6.49&quot; rx=&quot;3.25&quot;/&gt;
+		&lt;/svg&gt;
+		&lt;ul&gt;&lt;!-- The track list will be build by javascript --&gt;&lt;/ul&gt;
+	&lt;/div&gt;
+	&lt;div class=&quot;audio-container&quot;&gt;
+		&lt;audio&gt;&lt;!-- Our audio container --&gt;&lt;/audio&gt;
+		&lt;div class=&quot;track-title&quot;&gt;&lt;!-- Will display the current track information --&gt;&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+</code>
+<h4>SCSS</h4>
+<code class="scss language-scss">
+
+//For the curious !
+
+$bodycolor: #c9be9f;
+$red: #a10304;
+$orange: #cb852a;
+
+.audio-playlist-wrapper {
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  .playlist-menu {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    svg {
+      width: 20px;
+      height: 30px;
+      fill:$red;
+      transition: fill 0.4s;
+      margin-top: auto;
+      margin-bottom: auto;
+      margin-right: 10px;
+      @media screen and (min-width: 450px) {
+        width: 40px;
+        height: 44px;
+        margin-right: 20px;
+      }
+    }
+    ul {
+      overflow: hidden;
+      transition: width 0.4s;
+      li{
+        padding-bottom: 5px;
+        span{
+          position: relative;
+          cursor: pointer;
+        }
+        span:after{
+          content: '';
+          display: block;
+          position: absolute;
+          height: 1px;
+          width: 0;
+          left: 0;
+          bottom: -2px;
+          background: $bodycolor;
+          transition: width 0.2s;
+        }
+        &.active{
+          color: $orange;
+          span:before{
+            content:'';
+            display: inline-block;
+          }
+          &:not(.playing) span:before{
+            height : 0;
+            width : 0;
+            border-top : 0.4em solid transparent;
+            border-bottom : 0.4em solid transparent;
+            border-left : 0.7em solid $orange;
+            margin-right: 3px;
+          }
+          &.playing span:before{
+            width: 2px;
+            height: 0.8em;
+            box-shadow: 0.4em 0 0 0 $orange;
+            background: $orange;
+            margin-right: 10px;
+          }
+          span:after {
+            width: 100%;
+            background: $orange;
+          }
+        }
+        @media screen and (hover:hover) {
+          &:hover span:after{
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+  .audio-container {
+    margin-top: 20px;
+    position: relative;
+    .amst__wrapper {
+      border: 1px solid #383838;
+      border-radius: 5px;
+      box-shadow: 2px 2px 3px #383838;
+    }
+    .track-title{
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translate(-50%, 150%);
+      padding-top: 5px;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+  }
+}
+@mixin large-screens{
+  .audio-playlist-wrapper {
+    flex-direction: row;
+    align-items: center;
+    .playlist-menu {
+      cursor: pointer;
+      flex-wrap: nowrap;
+      padding: 20px 0;
+      svg{
+        fill: $orange;
+      }
+      ul{
+        width: 0px;
+        li{
+          white-space: nowrap;
+        }
+      }
+      &:hover{
+        svg{
+          fill: $red;
+        }
+        ul {
+          width: 320px;
+        }
+      }
+    }
+    .audio-container {
+      flex-grow: 1;
+      margin: auto;
+    }
+  }
+}
+body.menu-is-closed {
+  @media screen and (hover: hover) and (min-width: 750px) {
+    @include large-screens;
+  }
+}
+body:not(.menu-is-closed) {
+  @media screen and (hover: hover) and (min-width: 970px) {
+    @include large-screens;
+  }
+}
+body.ie{
+  @include large-screens;
+}
+
+</code>
+<h4>JAVASCRIPT</h4>
+<code class="javascript language-js">
+
+/**
+	* Players are listening to the window resize and scroll events to update
+	* their UI accordingly to their dimensions and position 
+	* and prevent some erratic mouse behavior on the time and volume sliders.
+	* The sidebar animation on this page may affect the players dimensions
+	* without the browser triggering the common resize event.
+	* So :
+*/
+document.addEventListener('transitionend', () => {
+	window.dispatchEvent(new CustomEvent('resize'))
+})
+
+const
+	audioWrapper = document.querySelector('.audio-playlist-wrapper'),
+	audioPlaylist = [
+		{
+			artist: 'Camille',
+			title: 'Seeds',
+			duration: 171,
+			src: [
+				{
+					src: 'assets/audio/Camille-Seeds-128.mp3',
+					quality: 'MP3 128K',
+					type: 'audio/mpeg',
+				},
+				{
+					src: 'assets/audio/Camille-Seeds-320.mp3',
+					quality: 'MP3 320K',
+					type: 'audio/mpeg',
+				},
+				{
+					src: 'assets/audio/Camille-Seeds.wav',
+					quality: 'WAV',
+					type: 'audio/wav',
+				},
+			]
+		},
+		{
+			artist: 'Claude Nougaro',
+			title: "Déjeuner sur l'herbe",
+			duration: 257,
+			src: [
+				{
+					src: "assets/audio/Claude_Nougaro-Dejeuner_sur_l'herbe-128.mp3",
+					quality: 'MP3 128K',
+					type: 'audio/mpeg',
+				},
+				{
+					src: "assets/audio/Claude_Nougaro-Dejeuner_sur_l'herbe-320.mp3",
+					quality: 'MP3 320K',
+					type: 'audio/mpeg',
+				},
+				{
+					src: "assets/audio/Claude_Nougaro-Dejeuner_sur_l'herbe.wav",
+					quality: 'WAV',
+					type: 'audio/wav',
+				},
+			]
+		},
+		{
+			artist: 'Jacques Higelin',
+			title: "Ici, c'est l'enfer",
+			duration: 254,
+			src: [
+				{
+					src: "assets/audio/Jacques_Higelin-Ici_c'est_l'enfer-128.mp3",
+					quality: 'MP3 128K',
+					type: 'audio/mpeg',
+				},
+				{
+					src: "assets/audio/Jacques_Higelin-Ici_c'est_l'enfer-320.mp3",
+					quality: 'MP3 320K',
+					type: 'audio/mpeg',
+				},
+				{
+					src: "assets/audio/Jacques_Higelin-Ici_c'est_l'enfer.wav",
+					quality: 'WAV',
+					type: 'audio/wav',
+				},
+			]
+		},
+		{
+			artist: 'Olivier Marguerit',
+			title: "Plonge dans l'eau",
+			duration: 222,
+			src: [
+				{
+					src: "assets/audio/Olivier_Marguerit-Plonge_dans_l'eau-128.mp3",
+					quality: 'MP3 128K',
+					type: 'audio/mpeg',
+				},
+				{
+					src: "assets/audio/Olivier_Marguerit-Plonge_dans_l'eau-320.mp3",
+					quality: 'MP3 320K',
+					type: 'audio/mpeg',
+				},
+				{
+					src: "assets/audio/Olivier_Marguerit-Plonge_dans_l'eau.wav",
+					quality: 'WAV',
+					type: 'audio/wav',
+				},
+			]
+		},
+		{
+			artist: 'Jacques Brel',
+			title: "La ville s'endormait",
+			duration: 254,
+			src: [
+				{
+					src: "assets/audio/Jacques_Brel-La_ville_s'endormait-128.mp3",
+					quality: 'MP3 128K',
+					type: 'audio/mpeg',
+				},
+				{
+					src: "assets/audio/Jacques_Brel-La_ville_s'endormait-320.mp3",
+					quality: 'MP3 320K',
+					type: 'audio/mpeg',
+				},
+				{
+					src: "assets/audio/Jacques_Brel-La_ville_s'endormait.wav",
+					quality: 'WAV',
+					type: 'audio/wav',
+				},
+			]
+		},
+	]
+
+	//Building the menu track list
+	let ulContent = ''
+	audioPlaylist.forEach(el => {
+		ulContent += `&lt;li&gt;&lt;span class="notranslate"&gt;&lt;b&gt;${el.artist}&lt;/b&gt; - ${el.title}&lt;/span&gt;&lt;/li&gt;`
+	})
+	audioWrapper.querySelector('ul').innerHTML = ulContent
+
+	let audioCurrentId//Store the current track id
+
+	//Initializing the audio player
+	const audioPlayer = new AmstramgramAudioPlayer(
+		audioWrapper.querySelector('audio'),//target of the instance 
+		{},//No parameter
+		function () {//Function call after player initialization
+			//this = player instance
+			this
+				//listening to the play and pause events dispatched by the player
+				//to update the track list menu
+				.on('amst__play', _ => audioWrapper.querySelectorAll('li')[audioCurrentId].classList.add('playing'))
+				.on('amst__pause', _ => audioWrapper.querySelectorAll('li')[audioCurrentId].classList.remove('playing'))
+				//Change the source when click on Next or Previous button
+				.on('amst__next-click', _ => setAudioSource(audioCurrentId + 1))
+				.on('amst__previous-click', _ => setAudioSource(audioCurrentId - 1))
+			//When a track ends, play the next one if there is one
+			this.params.media.addEventListener('ended', _ => {
+				if (audioCurrentId + 1 < audioPlaylist.length) {
+					setAudioSource(audioCurrentId + 1)
+					this.play()
+				}
+			})
+			//Set the first element of our audioPlaylist array as player primary source   
+			setAudioSource(0)
+		}
+	)
+
+	//Listening to the click event on the track list menu &lt;li&gt; items
+	Array.from(audioWrapper.querySelectorAll('li')).forEach((li, id) => {
+		li.addEventListener('click', _ => {
+			if (li.classList.contains('active')) {
+				//If the click occurs on active line, toggle the playback
+				audioPlayer.toggle()
+			} else {
+				//else, set the src according to the line id
+				setAudioSource(id)
+				//and force the playback to start
+				if (audioPlayer.paused) audioPlayer.play()
+			}
+		})
+	})
+
+	function setAudioSource(id) {
+	if (id >= 0 && id < audioPlaylist.length && id != audioCurrentId) {
+		//On first call, no line is active
+		if (audioWrapper.querySelector('li.active')) audioWrapper.querySelector('li.active').removeAttribute('class')
+		audioWrapper.querySelectorAll('li')[id].classList.add('active')
+		//Store the playback state
+		const paused = audioPlayer.paused
+		//Set the src with all relevant parameters
+		audioPlayer.src = {
+			src: audioPlaylist[id].src,
+			duration: audioPlaylist[id].duration,
+			previous: {
+				label: (id == 0) ? 'Nothing' : audioPlaylist[id - 1].title,
+				hidden: false,
+				disabled: (id == 0)
+			},
+			next: {
+				label: (id == audioPlaylist.length - 1) ? 'Nothing' : audioPlaylist[id + 1].title,
+				hidden: false,
+				disabled: (id == audioPlaylist.length - 1)
+			},
+		}
+		//Update the current track id
+		audioCurrentId = id
+		//Update the track info
+		audioWrapper.querySelector('.track-title').innerHTML = audioWrapper.querySelector('li.active').innerHTML
+		//If the player was playing, start the playback
+		if (!paused) audioPlayer.play()
+	}
+}
+
+</code></pre><label for="show-code03">Code</label>
+			</div>
+			<div class="end"></div>
+		</div>
+	</div>
+	<div class="up"></div>
+	<link rel='stylesheet' href="./css/amstramgramAudioPlayer.css">
+	<link rel="stylesheet" href="css/audio.css">
+	<script type="module">
+		import AmstramgramAudioPlayer from './js/esm/amstramgramAudioPlayer.js'
+		window.AmstramgramAudioPlayer = AmstramgramAudioPlayer
+	</script>
+	<script nomodule src="./js/iife/amstramgramAudioPlayer.js"></script>
+	<script src="js/audio.js"></script>
+</body>
+</html>

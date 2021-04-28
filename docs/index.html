@@ -1,0 +1,82 @@
+<!DOCTYPE html><html lang="en" class="loading"><head><title>Amstramgram Media Player - Documentation - Installation and Usage</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta name="description" content="AmstramgramMediaPlayer is a open-source, simple, smart, responsive, lightweight although powerful HTML5 Audio and Video Player"><meta name="author" content="onfaitdessites.fr"><link rel="icon shortcut" href="#"><meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0"><style>body,html{height:100%;background:#121212}.loading body{opacity:0;overflow-y:scroll}.loading:after,.loading:before{content:"";display:block;position:fixed;top:50%;left:50%;width:100px;height:100px;border-radius:50%}.loading:before{transform:translate(-50%,-50%);border:10px solid red;box-sizing:border-box}.loading:after{background:linear-gradient(90deg,#000,rgba(0,0,0,.9) 30%,rgba(0,0,0,.7) 70%,transparent);animation:r 1.5s linear infinite}@keyframes r{0%{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(1turn)}}</style><script>!function(e){if(!e.currentScript){var l=e.createElement("script"),i=e.createElement("script");l.async=i.async="false",l.src="js/polyfill/highlight9.18.5.min.js",i.src="js/polyfill/symbol-es6-polyfill.min.js",e.head.appendChild(l),e.head.appendChild(i)}}(document);</script></head><body> <input class="menu-btn" type="checkbox" id="menu-btn" autocomplete="off"><header class="header"> <a href="https://github.com/Amstramgram75/Amstramgram-Media-Player" class="logo">mstramgram<div> <div class="github"></div> <div> <div class="media">edia</div><div class="player">layer</div> </div> </div></a> </header><aside> <div class="aside"> <ul class="menu"> <li><a href="index.html">HOME</a></li> <li><a href="demo.html">DEMO</a></li> <li><a href="playlists.html">PLAYLISTS</a></li> <li><a href="autoplay.html">AUTOPLAY</a></li> <li><a href="audio.html">AUDIO ONLY</a></li> <li><a href="options.html">OPTIONS</a></li> <li><a href="static_api.html">STATIC API</a></li> <li><a href="instance_api.html">INSTANCE API</a></li> <li><a href="events.html">EVENTS</a></li> <li><a href="thumbnails.html">THUMBNAILS</a></li> <li><a href="polyfills.html">IE11 POLYFILLS</a></li> </ul> <label class="menu-icon" for="menu-btn"><span></span></label> </div></aside> <div class="content-wrapper"> <div class="content"> <h2 id="installation" class="padding-top140">Installation</h2> <div class="text"> <h3>1. NPM</h3> <pre class="default"><code class="javascript">
+npm install amstramgrammediaplayer
+				
+</code></pre> <p>Then in your javascript&nbsp;:</p> <pre class="default"><code class="javascript">
+/***    COMMONJS     ***/
+
+const AmstramgramMediaPlayer = require('AmstramgramMediaPlayer');
+
+
+/***		   OR	 	***/
+/*** 	ES2015 	***/
+
+import AmstramgramMediaPlayer from 'AmstramgramMediaPlayer';
+				
+</code></pre> <p>... And in your SASS&nbsp;:</p> <pre class="default"><code class="css">
+@use "../node_modules/amstramgrammediaplayer/src/scss/amstramgramMediaPlayer";
+
+				
+</code></pre> <p class="padding-top40">Note however that <em class="orange">if you just need audio players</em>, you should rather do&nbsp;:</p> <pre class="default"><code class="javascript">
+/***    COMMONJS     ***/
+
+const AmstramgramAudioPlayer = require('AmstramgramMediaPlayer/AmstramgramAudioPlayer');
+
+
+/***		   OR	 	***/
+/*** 	ES2015 	***/
+
+import AmstramgramAudioPlayer from 'AmstramgramMediaPlayer/AmstramgramAudioPlayer';
+				
+</code></pre> <p>... And in your SASS&nbsp;:</p> <pre class="default"><code class="css">
+@use "../node_modules/amstramgrammediaplayer/src/scss/amstramgramAudioPlayer";
+				
+</code></pre> <p class="padding-top40">If you want to play with sources, you can also do&nbsp;:</p> <pre class="default"><code class="javascript">
+/*** 	ES2015 	***/
+
+import AmstramgramMediaPlayer from 'AmstramgramMediaPlayer/AmstramgramMediaPlayer_src';
+				
+</code></pre> <h3 class="padding-top40">2. Manually</h3> <p> - Download the <em class="orange">dist</em> folder.<br> - Somewhere in your document&nbsp;: </p> <pre class="default"><code class="html">
+&lt;link rel="stylesheet" href="css/amstramgramMediaPlayer.min.css"&gt;
+&lt;script src="js/amstramgramMediaPlayer.min.js"&gt;&lt;/script&gt;
+				
+</code></pre> <p>Or even better (see <a href="https://v8.dev/features/modules">here</a> why)&nbsp;:</p> <pre>
+					<h4>HTML</h4>
+<code class="html">
+
+&lt;link rel="stylesheet" href="css/amstramgramMediaPlayer.min.css"&gt;
+&lt;script type="module"&gt;
+	import AmstramgramMediaPlayer from './js/esm/amstramgramMediaPlayer.min.js'
+	window.AmstramgramMediaPlayer = AmstramgramMediaPlayer
+&lt;/script&gt;
+&lt;script nomodule src="js/amstramgramMediaPlayer.min.js"&gt;&lt;/script&gt;
+				
+</code></pre> <p class="padding-top40">And <em class="orange">if you just need audio players</em>&nbsp;:</p> <pre>
+					<h4>HTML</h4>
+<code class="html">
+
+&lt;link rel="stylesheet" href="css/amstramgramAudioPlayer.min.css"&gt;
+&lt;script type="module"&gt;
+	import AmstramgramAudioPlayer from './js/esm/amstramgramAudioPlayer.min.js'
+	window.AmstramgramAudioPlayer = AmstramgramAudioPlayer
+&lt;/script&gt;
+&lt;script nomodule src="js/amstramgramAudioPlayer.min.js"&gt;&lt;/script&gt;
+				
+</code></pre></div> <h2 id="usage" class="padding-top140">Usage</h2> <div class="text"> <pre class="default"><code class="javascript">
+const myMediaPlayer = new AmstramgramMediaPlayer(element, options, callback)
+
+//Or if there is no option but a callback :
+const myMediaPlayer = new AmstramgramMediaPlayer(element, callback)	
+
+//Or just :
+const myMediaPlayer = new AmstramgramMediaPlayer(element)	
+
+</code></pre> <p> <em class="orange">element</em> is a HTML media element (&lt;audio&gt; or &lt;video&gt;).<br> <em class="orange">options</em> is an object that can have a large number of keys as you can see <a href="./options.html">here</a>.<br> <em class="orange">callback</em> a function called after the player initialization. </p> <p class="padding-top40"> Or, if you only use audio players&nbsp;: </p> <pre class="default"><code class="javascript">
+const myAudioPlayer = new AmstramgramAudioPlayer(element, options, callback)
+
+//Or if there is no option but a callback :
+const myAudioPlayer = new AmstramgramAudioPlayer(element, callback)	
+
+//Or just :
+const myAudioPlayer = new AmstramgramAudioPlayer(element)	
+
+</code></pre> <p> <em class="orange">element</em> is a HTML audio element.<br> <em class="orange">options</em> is an object that can have a large number of keys as you can see <a href="./options.html">here</a>.<br> <em class="orange">callback</em> a function called after the player initialization. </p> </div> <h2 id="philosophy" class="padding-top140">Philosophy</h2> <div class="end text"> <p> All starts with the <em>AmstramgramAudioPlayer</em> class which extends a small utility <em>EventEmitter</em> class.<br> This is the only one you need if you just use audio players. </p> <p> An <em>AmstramgramVideoPlayer</em> class extends <em>AmstramgramAudioPlayer</em> and adds all the features needed for playing videos. </p> <p> Finally, the <em>AmstramgramMediaPlayer</em> class extends the basic <em>EventEmitter</em> class and wraps together audio and video classes, calling the right one accordingly to the HTML media element passed as parameter.<br> This is what you need if you use video players or a mix of audio and video players. </p> <p> Note that the <em>EventEmitter</em> class allows each player to emit events and listen to them. These events are detailed <a href="./events.html">here</a>. </p> </div> </div> </div> <div class="up"></div> <link rel="stylesheet" href="css/index.css"> <script src="js/index.js"></script> </body></html>

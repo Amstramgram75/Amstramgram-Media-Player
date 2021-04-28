@@ -1,0 +1,9 @@
+<script>
+  if (typeof Object.assign !== 'function' || !Array.from || !Array.prototype.includes || !Array.prototype.find || !('remove' in Element.prototype) || typeof window.CustomEvent !== "function" || typeof window.WeakSet !== "function") {
+    var d = document,
+      s = d.createElement('script');
+    s.async = "false";
+    s.src = "./js/iife/amstramgramMediaPlayerPolyfill.min.js";
+    d.head.appendChild(s);
+  }
+</script>

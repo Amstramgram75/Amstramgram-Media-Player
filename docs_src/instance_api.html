@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en" class="loading">
+
+<head>
+	<title>Amstramgram Media Player - Documentation - Instance API</title>
+	<include src="head.html"></include>
+</head>
+<body>
+	<include src="header.html"></include>
+	<div class="content-wrapper api">
+		<div class="content">
+<!-- 
+	**** INTRODUCTION ****
+-->
+      <h2 id="intro" class="padding-top140">Introduction</h2>
+			<div class="text">
+				<p>
+					The <span class="get-mark"></span> and <span class="set-mark"></span> marks indicate that the properties have respectively a <em>getter</em> and a <em>setter</em>.
+				</p>
+				<p>
+					Some properties only apply to the video player but I think you'll easily guess which ones.
+				</p>
+			</div>
+<!-- 
+	**** CURRENTTIME ****
+-->
+<h2 id="currentTime" class="padding-top140 get set">currentTime</h2>
+				<pre class="default"><code class="javascript">/**
+ * @set currentTime
+ * @params {positive number}
+ * @description : set the media current time in seconds.
+ */
+
+ //Set the current time to 25s.
+myPlayer.currentTime = 25
+
+
+/**
+ * @get currentTime
+ * @returns {number}
+ * @description : get the media current time in seconds.
+ */
+
+ //Should returns 25
+ console.log(myPlayer.currentTime)
+
+</code></pre>
+<!-- 
+	**** DOWNLOAD ****
+-->
+			<h2 id="download" class="padding-top140 set">download</h2>
+				<pre class="default"><code class="javascript">/**
+ * @set download
+ * @params {object}
+ * @description : set the download button properties (label / disabled / hidden / tooltip).
+ */
+
+//Changes the download button label and disables it.
+myPlayer.download = {
+	label: 'Télécharger', 
+	disabled: true
+}
+
+//Hides the download button.
+myPlayer.download = {hidden: true}
+
+</code></pre>
+<p class="text">All details <a href="./options.html#download">here</a>.</p>
+<!-- 
+	**** FULLSCREEN ****
+-->
+			<h2 id="fullscreen" class="padding-top140 set">fullscreen</h2>
+				<pre class="default"><code class="javascript">/**
+ * @set fullscreen
+ * @params {object}
+ * @description : set the fullscreen button properties (label / disabled / hidden / tooltip).
+ */
+
+//Changes the fullscreen button label and disables it.
+myPlayer.fullscreen = {
+	label: { 
+		on: 'Sortir du plein écran', 
+		off: 'Plein écran'
+	},  
+	disabled: true
+}
+
+//Hides the fullscreen button.
+myPlayer.fullscreen = {hidden: true}
+
+</code></pre>
+<p class="text">All details <a href="./options.html#fullscreen">here</a>.</p>
+<!-- 
+	**** INIT ****
+-->
+			<h2 id="init" class="padding-top140 get">init</h2>
+				<pre class="default"><code class="javascript">/**
+ * @get init
+ * @returns {boolean}
+ * @description : returns true if the instance is initialized.
+ */
+
+</code></pre>
+<!-- 
+	**** HIDECONTROLS ****
+-->
+			<h2 id="hideControls" class="padding-top140">hideControls()</h2>
+				<pre class="default"><code class="javascript">/**
+ * @method hideControls()
+ * @description : Hides the video controls bar.
+ */
+
+//Listens to the amst__play event dispatched when media plays
+//and immediately hides the controls bar
+myPlayer.on('amst__play', function onFirstPlay() {
+	myPlayer.off('amst__play', onFirstPlay)
+	this.hideControls()//Hides the player controls
+})
+
+</code></pre>
+<!-- 
+	**** MORE ****
+-->
+			<h2 id="more" class="padding-top140 set">more</h2>
+				<pre class="default"><code class="javascript">/**
+ * @set more
+ * @params {object}
+ * @description : set the more button properties (label / tooltip).
+ */
+
+//Changes the more button label.
+myPlayer.more = {
+	label: { 
+		on: 'Montrer moins', 
+		off: 'Montrer plus'
+	}
+}
+
+</code></pre>
+<p class="text">All details <a href="./options.html#more">here</a>.</p>
+<!-- 
+	**** MUTE ****
+-->
+			<h2 id="mute" class="padding-top140 set">mute</h2>
+				<pre class="default"><code class="javascript">/**
+ * @set mute
+ * @params {object}
+ * @description : set the mute button properties (label / disabled / hidden / tooltip).
+ */
+
+//Changes the mute button label and disables it.
+myPlayer.mute = {
+	label: { 
+		on: 'Remettre le son', 
+		off: 'couper le son'
+	},  
+	disabled: true
+}
+
+//Hides the mute button.
+myPlayer.mute = {hidden: true}
+
+</code></pre>
+<p class="text">All details <a href="./options.html#mute">here</a>.</p>
+<!-- 
+	**** MUTED ****
+-->
+			<h2 id="muted" class="padding-top140 get set">muted</h2>
+				<pre class="default"><code class="javascript">/**
+ * @set muted
+ * @params {boolean}
+ * @description : Mutes/unmutes the volume media.
+ */
+
+/**
+ * @get muted
+ * @returns {boolean}
+ * @description : returns true if the volume media is muted.
+ */
+
+//Unmutes the media if it is muted.
+if (myPlayer.muted) myPlayer.muted = false
+
+</code></pre>
+<!-- 
+	**** NEXT ****
+-->
+			<h2 id="next" class="padding-top140 set">next</h2>
+				<pre class="default"><code class="javascript">/**
+ * @set next
+ * @params {object}
+ * @description : set the next button properties (label / disabled / hidden / tooltip).
+ */
+
+//Changes the next button label and disables it.
+myPlayer.next = {
+	label: 'No more',
+	disabled: true
+}
+
+//Hides the next button.
+myPlayer.next = {hidden: true}
+
+</code></pre>
+<p class="text">All details <a href="./options.html#next">here</a>.</p>
+<!-- 
+	**** ON ****
+-->
+			<h2 id="on" class="padding-top140">on()</h2>
+				<pre class="default"><code class="javascript">/**
+ * @method on
+ * @params {string} one event or multiple events separated by a space
+ * @params {function} function called when one of the events passed in first parameter occurs
+ * @description : set a listener to one or multiple events.
+ */
+
+//Listening to the amst__play event (emitted by the player when playback starts)
+//and to the amst__pause event (emitted by the player when playback pauses)
+myPlayer.on('amst__play amst__pause', _ => {
+	this.paused ? console.log('Player is paused') : console.log('Player is playing')
+})
+
+</code></pre>
+<p class="text">More on events <a href="./events.html">here</a>.</p>
+<!-- 
+	**** off ****
+-->
+			<h2 id="off" class="padding-top140">off()</h2>
+				<pre class="default"><code class="javascript">/**
+ * @method off
+ * @params {string} one event or multiple events separated by a space
+ * @params {function} function associated to the listener
+ * @description : remove a listener to one or multiple events.
+ */
+
+let count = 0
+this.on('amst__play amst__pause', function just-a-silly-test(){
+	if (count &lt; 2) {
+		this.paused ? console.log('Player is paused') : console.log('Player is playing')
+		count++
+	} else {
+		this.off('amst__play amst__pause', just-a-silly-test)
+	}
+})
+
+</code></pre>
+<p class="text">More on events <a href="./events.html">here</a>.</p>
+<!-- 
+	**** PARAMS ****
+-->
+			<h2 id="params" class="padding-top140 get">params</h2>
+				<pre class="default"><code class="javascript">/**
+ * @get params
+ * @returns {object}
+ * @description : returns the current player parameters object.
+ */
+
+</code></pre>
+<!-- 
+	**** PAUSE ****
+-->
+<h2 id="pause" class="padding-top140">pause()</h2>
+<pre class="default"><code class="javascript">/**
+* @method pause()
+* @description : pauses the media.
+*/
+
+//Pauses the media if it is playing.
+if (!myPlayer.paused) myPlayer.pause()
+
+</code></pre>
+<!-- 
+	**** PAUSED ****
+-->
+			<h2 id="paused" class="padding-top140 get">paused</h2>
+				<pre class="default"><code class="javascript">/**
+ * @get paused
+ * @returns {boolean}
+ * @description : returns true if the media is paused.
+ */
+
+//Plays the media if it is paused.
+if (myPlayer.paused) myPlayer.play()
+
+</code></pre>
+<!-- 
+	**** PLAY ****
+-->
+			<h2 id="play" class="padding-top140">play()</h2>
+				<pre class="default"><code class="javascript">/**
+ * @method play()
+ * @description : plays the media.
+ */
+
+//Plays the media if it is paused.
+if (myPlayer.paused) myPlayer.play()
+
+</code></pre>
+<!-- 
+	**** PLAYBACKRATE ****
+-->
+			<h2 id="playbackRate" class="padding-top140 get set">playbackRate</h2>
+				<pre class="default"><code class="javascript">/**
+ * @set playbackRate
+ * @params {number}
+ * @description : set the media playbackRate.
+ */
+
+/**
+ * @get playbackRate
+ * @returns {number}
+ * @description : get the media playbackRate.
+ */
+
+</code></pre>
+<!-- 
+	**** PIP ****
+-->
+<h2 id="pip" class="padding-top140 set">pip</h2>
+<pre class="default"><code class="javascript">/**
+ * @set pip
+ * @params {object}
+ * @description : set the pip button properties (label / disabled / hidden / tooltip).
+ */
+
+//Changes the pip button label and disables it.
+myPlayer.pip = {
+	label: { 
+	on: 'Quitter le mode PIP', 
+	off: 'Ouvrir PIP'
+	},  
+	disabled: true
+}
+
+//Hides the pip button.
+myPlayer.pip = {hidden: true}
+
+</code></pre>
+<p class="text">All details <a href="./options.html#pip">here</a>.</p>
+<!-- 
+	**** PLAYPAUSE ****
+-->
+<h2 id="playPause" class="padding-top140 set">playPause</h2>
+<pre class="default"><code class="javascript">/**
+ * @set playPause
+ * @params {object}
+ * @description : set the playPause button properties (label / tooltip).
+ */
+
+//Changes the playPause button label.
+myPlayer.pip = {
+	label: { 
+	on: 'Arrêter', 
+	off: 'Jouer'
+	},  
+}
+
+</code></pre>
+<p class="text">All details <a href="./options.html#playPause">here</a>.</p>
+<!-- 
+	**** PREVIOUS ****
+-->
+<h2 id="previous" class="padding-top140 set">previous</h2>
+<pre class="default"><code class="javascript">/**
+ * @set previous
+ * @params {object}
+ * @description : set the previous button properties (label / disabled / hidden / tooltip).
+ */
+
+//Changes the previous button label and disables it.
+myPlayer.previous = {
+	label: 'No more',
+	disabled: true
+}
+ 
+//Hides the previous button.
+myPlayer.previous = {hidden: true}
+ 
+</code></pre>
+<p class="text">All details <a href="./options.html#previous">here</a>.</p>
+<!-- 
+	**** SETTINGS ****
+-->
+<h2 id="settings" class="padding-top140 set">settings</h2>
+<pre class="default"><code class="javascript">/**
+ * @set settings
+ * @params {object}
+ * @description : set the settings button properties 
+ * (hidden / qualityLabel / playbackRatesLabel / playbackRates / subsLabel).
+ */
+
+//Changes the settings button qualityLabel and subsLabel.
+myPlayer.settings = {
+	qualityLabel: 'QUALITÉ',
+	subsLabel: 'SOUS-TITRES'
+}
+ 
+//Hides the settings button.
+myPlayer.settings = {hidden: true}
+ 
+</code></pre>
+<p class="text">All details <a href="./options.html#settings">here</a>.</p>
+<!-- 
+	**** SHOWCONTROLS ****
+-->
+			<h2 id="showControls" class="padding-top140">showControls()</h2>
+				<pre class="default"><code class="javascript">/**
+ * @method showControls()
+ * @description : Shows the video controls bar.
+ */
+
+</code></pre>
+<!-- 
+	**** SRC ****
+-->
+			<h2 id="src" class="padding-top140 get set">src</h2>
+				<pre class="default"><code class="javascript">/**
+ * @set src
+ * @params {string | array | object}
+ * @description : defines the media source(s) and all the options you need.
+ */
+
+//With a string
+myPlayer.src = "path_to_media_file.mp4"
+
+//With an array
+myPlayer.src: [
+	{
+		src: 'path_to_media_file-360p.mp4',
+		quality: '360p'
+	},
+	{
+		src: 'path_to_media_file-480p.mp4',
+		quality: '480p'
+	},
+	{
+		src: 'path_to_media_file-720p.mp4',
+		quality: '720p',
+		default: true
+	},
+	{
+		src: 'path_to_media_file-1080p.mp4',
+		quality: '1080p'
+	},
+]
+
+//With an object
+myPlayer.src = {
+	duration: 300,
+	src: [
+		{
+			src: 'path_to_media_file-360p.mp4',
+			quality: '360p'
+		},
+		{
+			src: 'path_to_media_file-480p.mp4',
+			quality: '480p'
+		},
+		{
+			src: 'path_to_media_file-720p.mp4',
+			quality: '720p',
+			default: true
+		},
+		{
+			src: 'path_to_media_file-1080p.mp4',
+			quality: '1080p'
+		},
+	],
+	thumbnails: { 
+		src: 'path_to_thumbnails_file.jpg', 
+		int: 2.12 
+	},
+	subtitles: {
+		sources: [
+			{
+				src: 'path_to_subtitles_file-fr.vtt',
+				label: 'Français',
+				srclang: 'fr',
+			},
+			{
+				src: 'path_to_subtitles_file-en.vtt',
+				label: 'English',
+				srclang: 'en',
+			},
+		],
+		default: 'en'
+	}
+}
+
+/**
+ * @get src
+ * @returns {string}
+ * @description : returns the media source filepath.
+ */
+
+</code></pre>
+<p class="text">All details <a href="./options.html#src">here</a>.</p>
+<!-- 
+	**** SUBTITLES ****
+-->
+<h2 id="subtitles" class="padding-top140 set">subtitles</h2>
+<pre class="default"><code class="javascript">/**
+ * @set subtitles
+ * @params {object}
+ * @description :  set the subtitles button properties (label / disabled / hidden / tooltip / state)
+ *			  plus the subtitles files sources and the default language.
+ */
+
+/*
+	Changes the subtitles button label,
+	set subtitles sources,
+	default language to french, 
+	and forces the button state to true 
+	so subtitles are visible by default.
+*/
+myPlayer.subtitles = {
+	label: {
+		on: 'Cacher les sous-titres',
+		off: 'Montrer les sous-titres'
+	}
+	sources: [
+		{
+			src: 'path_to_the_english_subtitles_file.vtt',
+			srclang: 'en',
+			label: 'English',
+		},
+		{
+			src: 'path_to_the_french_subtitles_file.vtt',
+			srclang: 'fr',
+			label: 'Français',
+		},
+	],
+	default: 'fr',
+	state: true,
+}
+ 
+//Hides the subtitles button.
+myPlayer.subtitles = {hidden: true}
+ 
+</code></pre>
+<p class="text">All details <a href="./options.html#subtitles">here</a>.</p>
+<!-- 
+	**** TOGGLE ****
+-->
+			<h2 id="toggle" class="padding-top140">toggle()</h2>
+				<pre class="default"><code class="javascript">/**
+ * @method toggle()
+ * @description : toggles the media playback.
+ */
+
+//Plays the media if it is paused;
+//pauses it if it's playing
+myPlayer.toggle()
+
+</code></pre>
+<!-- 
+	**** VOLUME ****
+-->
+<h2 id="volume" class="padding-top140 get set">volume</h2>
+<pre class="default"><code class="javascript">/**
+ * @set volume
+ * @params {number between 0 and 1}
+ * @description : set the media volume.
+ */
+
+/**
+ * @get volume
+ * @returns {number}
+ * @description : get the media volume.
+ */
+
+</code></pre>
+
+			<div class="end"></div>
+		</div>
+	</div>
+	<div class="up"></div>
+	<link rel="stylesheet" href="css/instance_api.css">
+	<script src="js/instance_api.js"></script>
+</body>
+</html>

@@ -1,0 +1,1031 @@
+//GLOBAL CONST
+$ControlsButtonColor:#fff;
+$ControlsButtonOnColor: #a10304;
+$ControlsButtonHPBarColor: #666;
+$ControlsButtonSubsColor: #333;
+$OutlineFocusStyle: solid 2px #a10304;
+$TimeColor: #fff;
+$TimeSliderHeight: 6px;
+$TimeHandlerSize: 12px;
+$TimeHandlerBackground: #a10304;
+$TimeRailBackground: rgba(255, 255, 255, 0.3);
+$TimeSliderCurrentBackground: #a10304;
+$SliderBackground: rgba(255, 255, 255, 0.3);
+$LoadedBarBackground: rgba(255, 255, 255, 0.1);
+$DownloadedTimeRangesColor: rgba(255, 255, 255, 0.4);
+$BufferingBarBackground: linear-gradient(
+	-45deg,
+	rgba(255, 255, 255, 0.4) 25%,
+	transparent 25%,
+	transparent 50%,
+	rgba(255, 255, 255, 0.4) 50%,
+	rgba(255, 255, 255, 0.4) 75%,
+	transparent 75%,
+	transparent
+);
+$VolumeSliderBackground: transparent;
+$VolumeTotalBackground: rgba(255, 255, 255, 0.5);
+$VolumeCurrentBackground: rgba(255, 255, 255, 0.9);
+$ErrorFont: bold normal 24px Arial, "Helvetica Neue", Helvetica, sans-serif;
+$ErrorColor: #a10304;
+$ErrorBorder: 2px solid #a10304;
+$ErrorBackground: rgba(0, 0, 0, 0.85);
+$TooltipFont: bold normal 13px Arial, "Helvetica Neue", Helvetica, sans-serif;
+$TooltipColor: #333;
+$TooltipBackground: #fff;
+$TooltipBorder: solid 2px #a10304;
+$TooltipArrowColor: #a10304;
+$TooltipDisabledColor: #666;
+$TooltipDisabledBackground: #fff;
+$TooltipDisabledBorder: solid 2px grey;
+$TooltipDisabledArrowColor: grey;
+$SettingsFontFamily: Arial, "Helvetica Neue", Helvetica, sans-serif;
+
+//AUDIO CONST
+$AudioContainerBackground: transparent;
+$AudioControlsHeight: 70px;
+$AudioControlsCompactHeight: 80px;
+$AudioControlsBackground: #000;
+$AudioControlsPadding: 0 10px;
+$AudioControlsCompactPadding: 10px 5px 0 5px;
+$AudioControlsBorder: none;
+$AudioControlsBorderRadius: 5px;
+$AudioVolumeSliderVerticalBackground: #000;
+$AudioVolumeSliderVerticalBorder: 2px solid rgb(100, 100, 100);
+
+/************
+	UTILITIES 
+*************/
+.amst__hidden {
+	display: none !important;
+}
+.amst__overflow-hidden {
+	overflow: hidden;
+}
+//Accessibility
+.amst__wrapper .amst__offscreen {
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	-webkit-clip-path: inset(50%);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	word-wrap: normal;
+}
+/****************
+	END UTILITIES 
+*****************/
+
+/**********
+	GENERAL 
+***********/
+.amst__wrapper * {
+	box-sizing: border-box;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+.amst__container {
+	position: relative;
+	[tabindex]:focus {
+		outline: 0;
+		.amst__keyboard-active & {
+			outline: $OutlineFocusStyle;
+		}
+	}
+	[tabindex]::-moz-focus-inner {
+		border: 0;
+	}
+	.amst__error {
+		display: none;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		border: $ErrorBorder;
+		background: $ErrorBackground;
+		z-index: 5;
+		p {
+			margin: auto;
+			padding: 20px;
+			text-align: center;
+			font: $ErrorFont;
+			color: $ErrorColor;
+		}
+		.amst__show-error & {
+			display: flex;
+		}
+	}
+	.amst__contextmenu {
+		position: absolute;
+		opacity: 0;
+		visibility: hidden;
+		transition: opacity 0.4s, visibility 0s 0.4s;
+		z-index: 6;
+		&.amst__contextmenu-show {
+			visibility: visible;
+			opacity: 1;
+			transition: opacity 0.4s, visibility 0s;
+		}
+		a,
+		a:hover,
+		a:visited,
+		a:active {
+			display: block;
+			text-align: center;
+			line-height: 1.3;
+			background: #000;
+			color: #c9be9f;
+			font-weight: bold;
+			font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+			white-space: nowrap;
+			border: 1px solid white;
+			border-radius: 5px;
+			padding: 10px;
+		}
+	}
+}
+/************** 
+	END GENERAL 
+***************/
+
+/****************** 
+		NODAL/DIALOG 
+*******************/
+/*Used in mobile UI for settings */
+div[data-role="amst__nodal"] {
+	display: none;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.9);
+	top: 0;
+	left: 0;
+	z-index: 100000000;
+	padding: 50px 40px;
+	overflow: auto;
+	box-sizing: border-box;
+	/*CLOSE*/
+	&:before,
+	&:after {
+		content: "";
+		display: block;
+		background: #fff;
+		width: 25px;
+		height: 2px;
+		position: fixed;
+		right: 10px;
+		top: 20px;
+		transform: rotate(45deg);
+	}
+	&:after {
+		transform: rotate(-45deg);
+	}
+	/*END CLOSE*/
+	ul,
+	li {
+		margin: 0;
+		padding: 0;
+		border: 0;
+		outline: 0;
+		list-style: none;
+		font-weight: inherit;
+		font-style: inherit;
+		font-family: $SettingsFontFamily;
+		vertical-align: baseline;
+		color: #fff;
+	}
+	& > ul {
+		margin: auto;
+		padding: 50px 10px;
+		width: 100%;
+		max-width: 250px;
+		font-size: 16px;
+		& > li {
+			margin-top: 40px;
+			&:first-of-type {
+				margin-top: 0;
+			}
+			> span {
+				display: block;
+				border-bottom: 2px #fff solid;
+				padding-bottom: 3px;
+				margin-top: 15px;
+			}
+			ul {
+				text-align: right;
+				margin-top: 10px;
+				li {
+					cursor: pointer;
+					margin-top: 2px;
+					padding: 5px;
+					border-radius: 2px;
+					transition: background-color 0.4s;
+					border: 1px solid transparent;
+					&.amst__selected {
+						cursor: default;
+						position: relative;
+						border: 1px solid $ControlsButtonOnColor;
+						border-radius: 5px;
+						background: rgba(28, 28, 28, 0.9);
+						&:before {
+							content: "";
+							position: absolute;
+							background-position: -312px;
+							width: 20px;
+							height: 20px;
+							left: 5px;
+							top: 50%;
+							transform: scale(0.8) translateY(-50%);
+							transform-origin: 0 0;
+						}
+					}
+				}
+			}
+		}
+	}
+	@media screen and (max-width: 720px), screen and (max-height: 720px) {
+		display: flex;
+	}
+}
+/******************
+	END NODAL/DIALOG 
+*******************/
+
+/**************
+	CONTROL BAR 
+**************/
+.amst__controls {
+	display: flex;
+	width: 100%;
+	z-index: 2;
+	.amst__compact & {
+		flex-wrap: wrap;
+	}
+	.amst__show-error &{
+		filter: blur(5px);
+	}
+}
+.amst__svg-background,
+li.amst__selected:before {
+	background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='336' height='28'%3E%3Cdefs%3E%3Cpath d='M1 1l18 8L1 19z' id='A'/%3E%3Cpath d='M0 1h4v18H0z' id='B'/%3E%3Cpath d='M2 6h7v8H2zm8 0l8-5v18l-8-5z' id='C'/%3E%3Crect id='D' x='4' y='4' width='20' height='20' rx='2'/%3E%3Cpath d='M6 13h5v2H6zm7 0h9v2h-9zm-7 5h10v2H6zm12 0h4v2h-4z' id='E'/%3E%3Cpath d='M17.66 10.83L14.46 9l3.2-1.83a.65.65 0 0 0 .25-.91l-2.06-3.52a.68.68 0 0 0-.92-.25l-3.2 1.83V.67a.67.67 0 0 0-.67-.67H6.94a.67.67 0 0 0-.67.67v3.65L3.07 2.5a.68.68 0 0 0-.92.25L.1 6.26a.65.65 0 0 0 .25.91L3.54 9l-3.2 1.83a.65.65 0 0 0-.25.91l2.06 3.52a.68.68 0 0 0 .92.25l3.2-1.83v3.65a.67.67 0 0 0 .67.67h4.12a.67.67 0 0 0 .67-.67v-3.65l3.2 1.83a.68.68 0 0 0 .92-.25l2.06-3.52a.65.65 0 0 0-.25-.91zm-5.23-.67a3.45 3.45 0 0 1-.7 1.2 3.67 3.67 0 0 1-2 1.17 3.74 3.74 0 0 1-1.44 0 3.67 3.67 0 0 1-2-1.17 3.45 3.45 0 0 1-.7-3.52 3.45 3.45 0 0 1 .7-1.2 3.67 3.67 0 0 1 2-1.17 3.74 3.74 0 0 1 1.44 0 3.67 3.67 0 0 1 2 1.17 3.45 3.45 0 0 1 .7 3.52z' id='F'/%3E%3Cpath d='M0 10.56c2.55 2.37 4.2 4.5 6.9 9.44C12.83 4.72 20.94.8 19.9.12 17.83-1.3 7.7 10.65 6.5 12.23 5 11.43 0 8.65 0 10.56z' id='G'/%3E%3C/defs%3E%3Cg fill='%23#{str-slice(#{$ControlsButtonColor},2)}'%3E%3Cuse x='4' y='4' xlink:href='%23A'/%3E%3Cuse x='34.5' y='4' xlink:href='%23B'/%3E%3Cuse x='44.5' y='4' xlink:href='%23B'/%3E%3Cuse x='59' y='4' xlink:href='%23C'/%3E%3Cpath d='M65 5.5l10 17' stroke-width='5' stroke='%23#{str-slice(#{$ControlsButtonHPBarColor},2)}' stroke-linecap='round'/%3E%3Cuse x='87' y='4' xlink:href='%23C'/%3E%3Cpath d='M122 4h8v10h-8z'/%3E%3Cpath d='M115 13h22l-11 8zm2 9h18v2h-18z'/%3E%3Cuse x='144' y='4' transform='rotate(180 154 14)' xlink:href='%23A'/%3E%3Cuse x='144' y='4' xlink:href='%23B'/%3E%3Cuse x='171' y='4' xlink:href='%23A'/%3E%3Cuse x='187' y='4' xlink:href='%23B'/%3E%3C/g%3E%3Cg fill='%23#{str-slice(#{$ControlsButtonSubsColor},2)}'%3E%3Cuse x='196' xlink:href='%23D' fill='%23#{str-slice(#{$ControlsButtonColor},2)}'/%3E%3Cuse x='196' xlink:href='%23E'/%3E%3C/g%3E%3Cg fill='%23#{str-slice(#{$ControlsButtonOnColor},2)}'%3E%3Cuse x='224' xlink:href='%23D' fill='%23#{str-slice(#{$ControlsButtonColor},2)}'/%3E%3Cuse x='224' xlink:href='%23E'/%3E%3C/g%3E%3Cg fill='%23#{str-slice(#{$ControlsButtonColor},2)}'%3E%3Cuse x='257' y='5' xlink:href='%23F'/%3E%3Cuse x='285' y='5' xlink:href='%23F'/%3E%3Ccircle cx='294' cy='14' r='4' fill='%23#{str-slice(#{$ControlsButtonOnColor},2)}'/%3E%3Cuse x='312' y='4' xlink:href='%23G'/%3E%3C/g%3E%3C/svg%3E");
+}
+/* BUTTONS */
+.amst__controls {
+	.amst__additional-controls {
+		display: flex;
+		order: 2;
+		position: relative;
+	}
+	div[role="button"] {
+		height: 28px;
+		width: 28px;
+		padding: 0;
+		border: 0;
+		margin: 0 2px;
+		background: transparent;
+		overflow: visible; //IE 11
+		.amst__svg-background {
+			width: 100%;
+			height: 100%;
+		}
+		.amst__mouse & {
+			cursor: pointer;
+		}
+		&[data-disabled] {
+			cursor: default;
+			div {
+				opacity: 0.5;
+			}
+			.amst__mouse &.amst__tooltip:before {
+				background: $TooltipDisabledArrowColor;
+			}
+			.amst__mouse &.amst__tooltip:after {
+				color: $TooltipDisabledColor;
+				background: $TooltipDisabledBackground;
+				border: $TooltipDisabledBorder;
+			}
+		}
+		&.amst__previous .amst__svg-background {
+			background-position: -140px;
+		}
+		&.amst__playPause.amst__on .amst__svg-background {
+			background-position: -28px;
+		}
+		&.amst__next .amst__svg-background {
+			background-position: -168px;
+		}
+		&.amst__mute {
+			.amst__svg-background {
+				background-position: -84px;
+			}
+			&.amst__on .amst__svg-background {
+				background-position: -56px 0;
+			}
+		}
+		&.amst__more {
+			display: none;
+			margin-right: 0;
+			order: 2;
+			& > div {
+				position: relative;
+				width: 20px;
+				height: 20px;
+				margin: auto;
+				transition: transform 0.4s;
+				&:before,
+				&:after {
+					content: "";
+					display: block;
+					position: absolute;
+					top: 8px;
+					left: 0;
+					width: 20px;
+					height: 4px;
+					border-radius: 3px;
+					background: $ControlsButtonColor;
+					transition: background-color 0.4s;
+				}
+				&:after {
+					transform: rotate(90deg);
+				}
+				.amst__mouse &:hover {
+					&:before,
+					&:after {
+						background: $ControlsButtonOnColor;
+					}
+				}
+			}
+			&.amst__on > div {
+				transform: rotate(405deg);
+				&:before,
+				&:after {
+					background: $ControlsButtonOnColor;
+				}
+			}
+		}
+		&.amst__subtitles {
+			.amst__svg-background {
+				background-position: -196px;
+			}
+			&.amst__on .amst__svg-background {
+				background-position: -224px 0;
+			}
+		}
+		&.amst__download {
+			order: 2; //Force last position for video player
+			margin: 0 2px 0 5px;
+			div {
+				background-position: -112px;
+			}
+		}
+		&.amst__settings {
+			position: relative;
+			& > .amst__svg-background {
+				background-position: -252px 0;
+			}
+			ul,
+			li {
+				margin: 40px 0 0 0;
+				border: 0;
+				padding: 0;
+				outline: 0;
+				list-style: none;
+				font-weight: inherit;
+				font-style: inherit;
+				font-family: $SettingsFontFamily;
+				vertical-align: baseline;
+				color: #fff;
+				&:first-of-type {
+					margin: 0;
+				}
+			}
+			.amst__settings-display {
+				cursor: default;
+				position: absolute;
+				background: rgba(28, 28, 28, 0.9);
+				background: #000;
+				border: 1px solid $ControlsButtonOnColor;
+				overflow: hidden;
+				border-radius: 5px;
+				bottom: 100%;
+				right: 0;
+				width: 0;
+				padding: 0;
+				opacity: 0;
+				transition: opacity 0.4s, width 0s 0.4s, padding 0s 0.4s;
+				z-index: 5;
+				&.amst__align-bottom {
+					top: 100%;
+					bottom: auto;
+				}
+				& > div {
+					//Close
+					position: relative;
+					height: 28px;
+					&:before,
+					&:after {
+						content: "";
+						display: block;
+						cursor: pointer;
+						width: 20px;
+						height: 2px;
+						background: $ControlsButtonColor;
+						position: absolute;
+						top: 5px;
+						right: 5px;
+						border-radius: 5px;
+						transform: rotate(45deg);
+						transition: background-color 0.4s;
+					}
+					&:after {
+						transform: rotate(-45deg);
+					}
+				}
+				& > ul {
+					max-height: 0;
+					transition: max-height 0s 0.4s, padding 0s 0.4s;
+					overflow: auto;
+					scrollbar-width: thin;
+					scrollbar-color: $ControlsButtonOnColor #fff;
+					&::-webkit-scrollbar {
+						width: 2px;
+						height: 2px;
+					}
+					&::-webkit-scrollbar-thumb {
+						background: $ControlsButtonOnColor;
+					}
+					&::-webkit-scrollbar-track {
+						margin: 10px;
+						background: #fff;
+					}
+					& > li {
+						> span {
+							display: block;
+							border-bottom: 2px #fff solid;
+							padding-bottom: 3px;
+							margin-top: 15px;
+						}
+						ul {
+							text-align: right;
+							margin-top: 10px;
+							li {
+								cursor: pointer;
+								margin-top: 2px;
+								padding: 5px;
+								border-radius: 2px;
+								transition: background-color 0.4s;
+								border: 1px solid transparent;
+								&.amst__selected {
+									cursor: default;
+									position: relative;
+									border: 1px solid $ControlsButtonOnColor;
+									border-radius: 5px;
+									background: rgba(28, 28, 28, 0.9);
+									&:before {
+										content: "";
+										position: absolute;
+										background-position: -312px;
+										width: 20px;
+										height: 20px;
+										left: 5px;
+										top: 50%;
+										transform: scale(0.8) translateY(-50%);
+										transform-origin: 0 0;
+									}
+								}
+								.amst__mouse &:not(.amst__selected):hover {
+									background: $ControlsButtonOnColor;
+								}
+							}
+						}
+					}
+				}
+			}
+			&.amst__on,
+			.amst__mouse &:focus,
+			.amst__mouse &:hover {
+				& > .amst__svg-background {
+					background-position: -280px 0;
+				}
+				.amst__settings-display {
+					width: 250px;
+					padding: 10px;
+					opacity: 1;
+					transition: opacity 0.4s;
+					& > ul {
+						max-height: 300px;
+						padding: 0 20px 15px 20px;
+						transition: none;
+					}
+				}
+			}
+			.amst__mouse & .amst__settings-display > div {
+				display: none;
+			}
+			@media screen and (max-width: 720px), screen and (max-height: 720px) {
+				.amst__wrapper:not(.amst__mouse) & .amst__settings-display {
+					display: none;
+				}
+			}
+		}
+		.amst__mouse &.amst__tooltip {
+			position: relative;
+			//Pseudo-arrow for the tooltip
+			//In fact, it's a circle positioned by default on top/left of the tooltip
+			//If the tooltip has amst__tooltip-left class, the circle is positioned on top/right
+			&:before, &:after{
+				position: absolute;
+				transform: scale(0);
+				transform-style: preserve-3d;
+				transform-origin: 0 0;
+				transition: transform 0.15s;
+				z-index: 4;
+			}
+			&:before {
+				content: "";
+				width: 10px;
+				height: 10px;
+				border-radius: 50%;
+				background: $TooltipArrowColor;
+				//The button is a 28px square
+				top: 25px;
+				left: 25px;
+			}
+			//Tooltip container
+			//By default, it's positioned on bottom/right of the button
+			&:after {
+				content: attr(aria-label);
+				font: $TooltipFont;
+				color: $TooltipColor;
+				background: $TooltipBackground;
+				border: $TooltipBorder;
+				//The button is a 28px square
+				top: 28px;
+				left: 28px;
+				display: inline-block;
+				white-space: nowrap;
+				padding: 5px;
+				border-radius: 5px;
+			}
+			&.amst__tooltip-left:before {
+				right: 25px;
+				left: auto;
+				transform-origin: 100% 0;
+			}
+			&.amst__tooltip-left:after {
+				right: 28px;
+				left: auto;
+				transform-origin: 100% 0;
+			}
+			&:hover:before,
+			&:hover:after {
+				transform: scale(1);
+				transition: transform 0.15s linear 0.2s;
+			}
+		}
+	}
+	.amst__mini & {
+		.amst__previous,
+		.amst__next,
+		.amst__time-duration,
+		.amst__time-current,
+		.amst__currenttime,
+		.amst__duration {
+			transition: all 0.4s;
+		}
+		div[role="button"].amst__more {
+			display: flex;
+		}
+		.amst__time-current,
+		.amst__duration:before {
+			margin-right: 0;
+		}
+
+		.amst__additional-controls {
+			&:after {
+				content: "";
+				position: absolute;
+				bottom: -3px;
+				right: -24px;
+				width: calc(100% + 20px);
+				height: 2px;
+				background: $ControlsButtonOnColor;
+				transition: width 0.4s;
+			}
+			div[role="button"] {
+				&.amst__download {
+					margin: 0 2px;
+				}
+				transition: all 0.4s;
+			}
+		}
+	}
+	.amst__mini:not(.amst__show-additional-controls) & .amst__additional-controls {
+		&:after {
+			width: 0;
+		}
+		div[role="button"] {
+			width: 0;
+			padding: 0;
+			margin: 0;
+		}
+	}
+	.amst__mini.amst__show-additional-controls & {
+		.amst__previous,
+		.amst__next,
+		.amst__time-duration,
+		.amst__time-current,
+		.amst__currenttime,
+		.amst__duration {
+			margin: auto 0;
+			width: 0;
+			opacity: 0;
+		}
+	}
+}
+/* VOLUME */
+.amst__volume {
+	display: flex;
+	.amst__volume-wrapper {
+		display: flex;
+		.amst__mute {
+			order: 0;
+			margin-right: 0;
+		}
+		.amst__slider {
+			height: 28px;
+			width: 60px;
+			transform: scaleY(1);
+			background: $VolumeSliderBackground;
+			display: flex;
+			margin: auto;
+			cursor: pointer;
+			backface-visibility: hidden;
+			.amst__slider-total {
+				height: 4px;
+				width: 100%;
+				margin: auto 5px;
+				background: $VolumeTotalBackground;
+				border-radius: 2px;
+				transition: transform 0.2s;
+				cursor: pointer;
+				.amst__slider-current {
+					height: 100%;
+					width: 80%;
+					border-radius: 2px;
+					background: $VolumeCurrentBackground;
+					transform-origin: 0 0;
+					position: relative;
+				}
+			}
+		}
+	}
+	&:not(.amst__vertical):hover .amst__slider-total {
+		transform: scaleY(1.5);
+	}
+	&.amst__vertical {
+		width: 28px;
+		margin: 0 2px;
+		.amst__volume-wrapper {
+			z-index: 3;
+			transform: rotate(-90deg) translate(0, 100%);
+			transform-origin: 0 100%;
+			transform-style: preserve-3d;
+			backface-visibility: hidden;
+			.amst__mute {
+				transform: rotate(90deg);
+				margin: 0;
+			}
+			.amst__slider {
+				touch-action: none;
+				width: 0;
+				opacity: 0;
+				transition: opacity 0.4s, width 0s linear 0.4s;
+				background: $AudioVolumeSliderVerticalBackground;
+				border-radius: 5px;
+				border: $AudioVolumeSliderVerticalBorder;
+				.amst__ie & {
+					position: absolute;
+				}
+				.amst__slider-total {
+					height: 2px;
+					width: 80%;
+					margin: auto;
+					.amst__slider-current::after {
+						content: "";
+						position: absolute;
+						top: 50%;
+						left: 100%;
+						height: 18px;
+						width: 0;
+						opacity: 0;
+						background: $VolumeCurrentBackground;
+						border-radius: 2px;
+						transform: translate(-50%, -50%);
+						backface-visibility: hidden;
+						transition: opacity 0.4s, width 0s linear 0.4s;
+					}
+				}
+			}
+		}
+		& .amst__slider.amst__show,
+		.amst__mouse &:hover .amst__slider,
+		.amst__keyboard-active &:focus .amst__slider,
+		.amst__keyboard-active & .amst__slider:focus {
+			opacity: 1;
+			width: 100px;
+			transition: opacity 0.4s, width 0s;
+			.amst__slider-total .amst__slider-current::after {
+				width: 6px;
+				opacity: 1;
+				transition: opacity 0.4s, width 0s;
+			}
+		}
+	}
+	.amst__mute[data-disabled] ~ .amst__slider {
+		display: none;
+	}
+}
+/* END VOLUME */
+
+/* END BUTTONS */
+
+
+/* TIME INDICATORS */
+.amst__time,
+.amst__measureTime {
+	color: $TimeColor;
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	text-align: center;
+	height: 28px;
+}
+.amst__time {
+	margin: 0 5px;
+	display: flex;
+	flex-direction: column;
+	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+.amst__measureTime {
+	position: absolute;
+	top: -10000px;
+	left: 0;
+}
+.amst__time > span,
+.amst__measureTime > span {
+	margin: auto;
+	line-height: 1;
+}
+.amst__compact .amst__time-duration {
+	flex-grow: 1;
+	margin: 0;
+}
+.amst__compact .amst__currenttime {
+	margin-left: 10px;
+}
+.amst__compact .amst__duration {
+	width: 100%;
+	text-align: left;
+}
+.amst__compact .amst__duration:before {
+	content: " / ";
+	white-space: pre;
+	margin-right: 5px;
+}
+/* END TIME INDICATORS */
+
+/* PROGRESS BAR */
+.amst__time-rail {
+	display: flex;
+	height: 20px;
+	flex-grow: 1;
+	z-index: 1;
+	.amst__compact & {
+		width: 100%;
+		height: 25px;
+		order: 100;
+		z-index: 4;
+	}
+	.amst__slider,
+	.amst__buffering-bar,
+	.amst__loaded-bar,
+	.amst__seeking-wrapper,
+	.amst__seeking {
+		border-radius: 2px;
+	}
+	.amst__buffering-bar,
+	.amst__loaded-bar {
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.amst__time-slider {
+		display: flex;
+		width: 100%;
+		height: 100%;
+		padding: 0 floor(0.8 * $TimeHandlerSize);
+		margin: auto 5px;
+		border-radius: 2px;
+		opacity: 0.3;
+		transition: opacity 0.15s ease-in;
+		touch-action: none;
+		background: $TimeRailBackground;
+		.amst__compact & {
+			padding: 0;
+			background: transparent;
+		}
+		.amst__slider {
+			position: relative;
+			height: $TimeSliderHeight;
+			width: 100%;
+			margin: auto;
+			.amst__slider-total {
+				position: relative;
+				width: 100%;
+				height: 100%;
+				transition: transform 0.15s ease-in;
+				background: $SliderBackground;
+				border-radius: 20px;
+				.amst__slider-current {
+					background: $TimeSliderCurrentBackground;
+					width: 100%;
+					height: 100%;
+					transform-origin: 0 0;
+					transform: scaleX(0);
+				}
+				.amst__time-handler {
+					display: none;
+					transform: translateX(0);
+				}
+			}
+		}
+		//& = amst__time-slider
+		.amst__loadedmetadata & {
+			opacity: 1;
+		}
+		.amst__loadedmetadata.amst__mouse & {
+			cursor: pointer;
+			.amst__slider-total {
+				transform: scale3d(1, 0.5, 1);
+				.amst__time-handler {
+					display: block;
+					position: absolute;
+					top: 0.5 * ($TimeSliderHeight - $TimeHandlerSize);
+					left: -0.5 * $TimeHandlerSize;
+					&:after {
+						content: "";
+						display: block;
+						background: $TimeHandlerBackground;
+						width: $TimeHandlerSize;
+						height: $TimeHandlerSize;
+						border-radius: 50%;
+						transform: scale3d(0, 0, 1);
+						transition: transform 0.15s ease-in;
+					}
+				}
+			}
+			&:hover .amst__slider-total {
+				transform: scale3d(1, 1, 1) translateZ(0);
+				.amst__time-handler:after {
+					transform: scale3d(1, 1, 1);
+				}
+			}
+		}
+	}
+	.amst__buffering-bar {
+		animation: buffering-stripes 2s linear infinite;
+		background: $BufferingBarBackground;
+		background-size: 15px 15px;
+		width: 100%;
+		height: 100%;
+		display: none;
+		.amst__buffering & {
+			display: block;
+		}
+	}
+	.amst__loaded-bar {
+		left: 0;
+		height: 100%;
+		width: 100%;
+		background: $LoadedBarBackground;
+		//Color given to the draw rectangles that mark the downloaded timeRanges
+		color: $DownloadedTimeRangesColor;
+	}
+}
+/*Buffering*/
+@keyframes buffering-stripes {
+	from {
+		background-position: 0 0;
+	}
+	to {
+		background-position: 30px 0;
+	}
+}
+/*Curseur*/
+.amst__cursor {
+	display: none;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	pointer-events: none;
+}
+.amst__mouse.amst__loadedmetadata .amst__cursor {
+	display: block;
+}
+.amst__cursor > div {
+	display: block;
+	position: absolute;
+	left: -1px;
+	bottom: 0;
+	background: #000;
+	width: 2px;
+	height: $TimeSliderHeight + 8px;
+	transform: scale(0);
+}
+.amst__cursor > div::after {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	border: solid 5px #eee;
+	border-color: #eee transparent transparent;
+}
+.amst__mouse.amst__loadedmetadata .amst__time-slider:hover .amst__cursor > div {
+	transform: scale(1);
+}
+/*Seeking*/
+.amst__seeking-wrapper {
+	display: none;
+	position: absolute;
+	bottom: $TimeSliderHeight + 8px;
+	left: 0;
+}
+.amst__mouse.amst__loadedmetadata .amst__seeking-wrapper {
+	display: block;
+	pointer-events: none;
+}
+.amst__seeking {
+	background: #eee;
+	border: solid 1px #333;
+	height: auto;
+	padding: 3px;
+	margin: 0;
+	pointer-events: none;
+}
+.amst__controls .amst__seeking {
+	transform-origin: 50% 100%;
+	transform: translateX(-50%) scale(0);
+	transition: transform 0.15s ease-in;
+	.amst__ie & {
+		transition: none; //IE11 Bug on the element transition
+	}
+}
+.amst__mouse.amst__loadedmetadata .amst__time-slider:hover .amst__seeking {
+	transform: translateX(-50%) scale(1);
+}
+.amst__seeking > span {
+	color: #666;
+	line-height: 11px;
+}
+/* END PROGRESS BAR */
+
+.amst__audio {
+	.amst__mediaelement {
+		display: none;
+	}
+	.amst__container {
+		background: $AudioContainerBackground;
+	}
+	.amst__controls {
+		align-items: center;
+		height: $AudioControlsHeight;
+		padding: $AudioControlsPadding;
+		background: $AudioControlsBackground;
+		border: $AudioControlsBorder;
+		border-radius: $AudioControlsBorderRadius;
+	}
+	&.amst__compact .amst__controls {
+		flex-wrap: wrap;
+		height: $AudioControlsCompactHeight;
+		padding: $AudioControlsCompactPadding;
+	}
+	audio::-webkit-media-controls,
+	audio::-webkit-media-controls-panel,
+	audio::-webkit-media-controls-panel-container,
+	audio::-webkit-media-controls-start-playback-button {
+		/* Hide iOS native controls */
+		-webkit-appearance: none;
+		display: none !important;
+	}
+}
+/* END */

@@ -1,0 +1,50 @@
+{
+  "name": "amstramgrammediaplayer",
+  "version": "1.0.0",
+  "description": "Simple, smart, responsive, lightweight although powerfull HTML5 Audio and Video Player",
+  "author": {
+    "name": "Amstramgram",
+    "email": "contact@onfaitdessites.fr",
+    "url": "https://amp.onfaitdessites.fr/"
+  },
+  "keywords": [
+    "audio",
+    "video",
+    "media",
+    "player",
+    "light",
+    "responsive"
+  ],
+  "homepage": "https://amp.onfaitdessites.fr/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Amstramgram75/Amstramgram-Media-Player"
+  },
+  "bugs": {
+    "url": "https://github.com/Amstramgram75/Amstramgram-Media-Player/issues"
+  },
+  "license": "MIT",
+  "main": "cjs/amstramgramMediaPlayer.js",
+  "module": "esm/amstramgramMediaPlayer.js",
+  "exports": {
+    ".": {
+      "require": "./cjs/amstramgramMediaPlayer.js",
+      "import": "./esm/amstramgramMediaPlayer.js"
+    },
+    "./AmstramgramAudioPlayer": {
+      "require": "./cjs/amstramgramAudioPlayer.js",
+      "import": "./esm/amstramgramAudioPlayer.js"
+    },
+    "./AmstramgramMediaPlayer_src": {
+      "import": "./src/js/amstramgramMediaPlayer.js"
+    }
+  },
+  "style": "css/amstramgramMediaPlayer.min.css",
+  "files": [
+    "css",
+    "cjs",
+    "esm",
+    "iife",
+    "src"
+  ]
+}

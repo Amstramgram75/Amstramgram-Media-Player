@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="en" class="loading"><head><title>Amstramgram Media Player - Documentation - Autoplay - Example 2</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta name="description" content="AmstramgramMediaPlayer is a open-source, simple, smart, responsive, lightweight although powerful HTML5 Audio and Video Player"><meta name="author" content="onfaitdessites.fr"><link rel="icon shortcut" href="#"><meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0"><style>body,html{height:100%;background:#121212}.loading body{opacity:0;overflow-y:scroll}.loading:after,.loading:before{content:"";display:block;position:fixed;top:50%;left:50%;width:100px;height:100px;border-radius:50%}.loading:before{transform:translate(-50%,-50%);border:10px solid red;box-sizing:border-box}.loading:after{background:linear-gradient(90deg,#000,rgba(0,0,0,.9) 30%,rgba(0,0,0,.7) 70%,transparent);animation:r 1.5s linear infinite}@keyframes r{0%{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(1turn)}}</style><script>if(function(e){if(!e.currentScript){var t=e.createElement("script"),i=e.createElement("script");t.async=i.async="false",t.src="js/polyfill/highlight9.18.5.min.js",i.src="js/polyfill/symbol-es6-polyfill.min.js",e.head.appendChild(t),e.head.appendChild(i)}}(document),!("function"==typeof Object.assign&&Array.from&&Array.prototype.includes&&Array.prototype.find&&"remove"in Element.prototype&&"function"==typeof window.CustomEvent&&"function"==typeof window.WeakSet)){var d=document,s=d.createElement("script");s.async="false",s.src="./js/iife/amstramgramMediaPlayerPolyfill.min.js",d.head.appendChild(s)}</script></head><body> <input class="menu-btn" type="checkbox" id="menu-btn" autocomplete="off"><header class="header"> <a href="https://github.com/Amstramgram75/Amstramgram-Media-Player" class="logo">mstramgram<div> <div class="github"></div> <div> <div class="media">edia</div><div class="player">layer</div> </div> </div></a> </header><aside> <div class="aside"> <ul class="menu"> <li><a href="index.html">HOME</a></li> <li><a href="demo.html">DEMO</a></li> <li><a href="playlists.html">PLAYLISTS</a></li> <li><a href="autoplay.html">AUTOPLAY</a></li> <li><a href="audio.html">AUDIO ONLY</a></li> <li><a href="options.html">OPTIONS</a></li> <li><a href="static_api.html">STATIC API</a></li> <li><a href="instance_api.html">INSTANCE API</a></li> <li><a href="events.html">EVENTS</a></li> <li><a href="thumbnails.html">THUMBNAILS</a></li> <li><a href="polyfills.html">IE11 POLYFILLS</a></li> </ul> <label class="menu-icon" for="menu-btn"><span></span></label> </div></aside> <div class="content-wrapper"> <div class="content"> <h2 id="Demo2" class="padding-top140">Autoplay Demo 2</h2> <div class="video-container"> <video></video> </div> <a class="link" href="./autoplay.html"> <div><div>Back to first example ?</div><div>Yep !</div></div> </a> <div class="padding-top20 text"> <p> All the setup is done through javascript.<br> This time, rather than giving the choice between several qualities, we are offering two languages&nbsp;: French and German, which is the default.<br> In the settings panel, we change the <em>qualityLabel</em> from <em>QUALITY</em> to <em>LANGUAGE</em> and set the <em>playbackRates</em> option as an empty array, so the user can't modify the playback speed.<br> As for the first example, we use the callback function to hide the controls when the player is ready and starts playing. </p> </div> <div class="code-show-hide"> <input type="checkbox" id="show-code01" class="show-code" autocomplete="off"> <pre>
+<h4>HTML</h4>
+<code class="html">
+
+&lt;div class=&quot;video-container&quot;&gt;
+	&lt;video&gt;&lt;!--Our video--&gt;&lt;/video&gt;
+&lt;/div&gt;
+
+</code>
+<h4>JAVASCRIPT</h4>
+<code class="javascript">
+
+new AmstramgramMediaPlayer(document.querySelector('video'),
+  {
+    autoplay: true,
+    src: [
+      {
+        src: 'assets/video/Castors-720p.mp4',
+        quality: 'Français'
+      },
+      {
+        src: 'assets/video/Castors-720p-de.mp4',
+        quality: 'Deutsch',
+        default: true,
+      }
+    ],
+    thumbnails: {
+      src: 'assets/video/Castors-thumbnails.jpg',
+      int: 2.12
+    },
+    settings: {
+      qualityLabel: 'LANGUAGE',
+      playbackRates: []
+    },
+    subtitles: {
+      sources: [
+        {
+          src: 'assets/video/Castors-fr.vtt',
+          label: 'Français',
+          srclang: 'fr',
+        },
+        {
+          src: 'assets/video/Castors-en.vtt',
+          label: 'English',
+          srclang: 'en',
+        },
+      ],
+      default: 'en'
+    },
+    volume: 0,
+    volumeGroup: 2,
+    volumeForced: true,
+  },
+  function () {
+    //this = our player
+    //Start listening to amst__play event
+    this.on('amst__play', function hideControlsWhenPlayBegin() {
+      //this = our player
+      //Stop listening
+      this.off('amst__play', hideControlsWhenPlayBegin)
+      //Hide the controls
+      this.hideControls()
+    })
+  }
+)
+
+</code></pre><label for="show-code01">Code</label> </div> <div class="end"></div> </div> </div> <div class="up"></div> <link rel="stylesheet" href="./css/amstramgramMediaPlayer.min.css"><script type="module">import AmstramgramMediaPlayer from"./js/esm/amstramgramMediaPlayer.min.js";window.AmstramgramMediaPlayer=AmstramgramMediaPlayer;</script><script nomodule src="./js/iife/amstramgramMediaPlayer.min.js"></script> <link rel="stylesheet" href="css/autoplay.css"> <script src="js/autoplay2.js"></script> </body></html>

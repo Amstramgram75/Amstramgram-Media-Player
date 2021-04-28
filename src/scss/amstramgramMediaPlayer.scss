@@ -1,0 +1,331 @@
+@use "amstramgramAudioPlayer"  as *;
+
+$VideoContainerBackground: #000;
+$VideoControlsHeight: 70px;
+$VideoControlsCompactHeight: 80px;
+$VideoControlsBackgroundColor: linear-gradient(rgba(50, 50, 50, 0.15), rgba(50, 50, 50, 0.55) 50%);
+$VideoControlsPadding: 0 10px;
+$VideoControlsCompactPadding: 10px 0 0 0;
+$VideoControlsBorder: none;
+$VideoControlsBorderRadius: 0;
+$VideoVolumeSliderVerticalBackgroundColor: rgba(50, 50, 50, 0.7);
+$SubtitlesFont: bold normal 24px Arial, "Helvetica Neue", Helvetica, sans-serif;
+$SubtitlesColor: #fff;
+$SubtitlesBackground: rgba(0, 0, 0, 0.15);
+
+.amst__video {
+	.amst__container {
+		background: $VideoContainerBackground;
+		position: relative;
+		transition: padding 0.4s;
+	}
+	.amst__controls {
+		align-items: center;
+		height: $VideoControlsHeight;
+		padding: $VideoControlsPadding;
+		background: $VideoControlsBackgroundColor;
+		border: $VideoControlsBorder;
+		border-radius: $VideoControlsBorderRadius;
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		transition: transform 0.15s ease-in;
+		transform-origin: bottom;
+		.amst__pip,
+		.amst__fullscreen {
+			.amst__svg-background {
+				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='112' height='28'%3E%3Cdefs%3E%3Crect id='A' x='5' y='5' width='18' height='18' rx='2' stroke-width='2' stroke='%23#{str-slice(#{$ControlsButtonColor},2)}' fill='transparent'/%3E%3Cpath id='B' d='M12 14h9v6h-9z'/%3E%3C/defs%3E%3Cg fill='%23#{str-slice(#{$ControlsButtonColor},2)}'%3E%3Cpath d='M4 4h9l-9 8zm11 0h9v8zM4 15v9h9zm20 0v9h-9zm8-4h7V4zm13-7v7h7zM32 17h7v7zm13 0h8l-8 7z'/%3E%3Cuse x='56' xlink:href='%23A'/%3E%3Cuse x='56' xlink:href='%23B'/%3E%3Cuse x='84' xlink:href='%23A'/%3E%3Cuse x='84' xlink:href='%23B' fill='%23#{str-slice(#{$ControlsButtonOnColor},2)}'/%3E%3C/g%3E%3C/svg%3E");
+			}
+		}
+		.amst__pip div {
+			background-position: -56px 0;
+		}
+		.amst__pip.amst__on div {
+			background-position: -84px 0;
+		}
+		.amst__fullscreen.amst__on div {
+			background-position: -28px 0;
+		}
+	}
+	&.amst__controls-hidden .amst__controls {
+		transform: scaleY(0);
+	}
+	video::-webkit-media-controls,
+	video::-webkit-media-controls-panel,
+	video::-webkit-media-controls-panel-container,
+	video::-webkit-media-controls-start-playback-button {
+		/* Hide iOS native controls */
+		-webkit-appearance: none;
+		display: none !important;
+	}
+	.amst__mediaelement {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		z-index: 0;
+	}
+	&.amst__isfullscreen {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		height: 100%;
+		background: #000;
+		&.amst__fake-fullscreen {
+			position: fixed;
+			top: 0;
+			left: 0;
+			z-index: 1111111111111;
+		}
+		.amst__container {
+			margin: auto;
+			transition: none;
+			.amst__pip {
+				display: none;
+			}
+		}
+	}
+	&.amst__isfullscreen .amst__mediaelement,
+	&.amst__isfullscreen video,
+	video {
+		height: 100% !important;
+		width: 100% !important;
+	}
+	&.amst__thumbnails {
+		.amst__seeking {
+			justify-content: flex-end;
+			align-items: flex-end;
+			padding: 0;
+			background-repeat: no-repeat;
+			border: 2px #fff solid;
+			span {
+				color: #fff;
+				padding: 4px;
+				box-sizing: content-box;
+				background: rgba(0, 0, 0, 0.2);
+				margin: 0;
+			}
+		}
+	}
+}
+.amst__compact .amst__controls {
+	height: $VideoControlsCompactHeight;
+	padding: $VideoControlsCompactPadding;
+}
+.amst__mouse.amst__isfullscreen:not(.amst__compact) .amst__controls div[role="button"].amst__tooltip {
+	&:before,
+	&:after {
+		top: -7px;
+		transform-origin: 0 100%;
+	}
+	&:after {
+		top: -30px;
+	}
+	&.amst__tooltip-left {
+		&:before,
+		&:after {
+			transform-origin: 100% 100%;
+		}
+	}
+}
+
+/* VOLUME */
+.amst__video .amst__volume {
+	&.amst__vertical {
+		.amst__volume-wrapper {
+			.amst__slider {
+				background-color: $VideoVolumeSliderVerticalBackgroundColor;
+				border: none;
+				.amst__slider-total {
+					width: 85%;
+				}
+			}
+		}
+	}
+}
+/* END VOLUME */
+
+/* LAYERS */
+.amst__layers {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+	> div {
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		height: 100%;
+		z-index: 1;
+		position: absolute;
+		top: 0;
+		left: 0;
+		.amst__svg {
+			margin: auto;
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='270' height='90'%3E%3Cg stroke='%23fff'%3E%3Ccircle cx='45' cy='45' r='37.5' opacity='.8' fill='none' stroke-width='5'/%3E%3Cpath d='M33 27V65L67 45z' fill='%23fff' stroke-width='4' stroke-linejoin='round'/%3E%3Ccircle cx='135' cy='45' r='37.5' fill='none' stroke-width='5'/%3E%3Cpath d='M123 27V65l34-20z' stroke-width='4' stroke-linejoin='round' fill='%23fff'/%3E%3C/g%3E%3Cg fill='%23fff'%3E%3Ccircle cx='225' cy='13' r='8'/%3E%3Ccircle cx='202.5' cy='22.5' r='7.5' opacity='.9'/%3E%3Ccircle cx='193' cy='45' r='7' opacity='.8'/%3E%3Ccircle cx='202.5' cy='67.5' r='6.5' opacity='.7'/%3E%3Ccircle cx='225' cy='77' r='6' opacity='.6'/%3E%3Ccircle cx='247.5' cy='67.5' r='5.5' opacity='.5'/%3E%3Ccircle cx='257' cy='45' r='5' opacity='.4'/%3E%3Ccircle cx='247.5' cy='22.5' r='4.5' opacity='.3'/%3E%3C/g%3E%3C/svg%3E");
+		}
+		.amst__show-error & {
+			filter: blur(5px);
+		}
+	}
+	/*Poster*/
+	.amst__layer-poster {
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		background-size: cover;
+		z-index: 1;
+		canvas {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	}
+	/*Loading*/
+	.amst__layer-loading {
+		display: none;
+		.amst__buffering & {
+			display: flex;
+		}
+		.amst__loading {
+			height: 90px;
+			width: 90px;
+			margin: auto;
+			.amst__svg {
+				animation: amst__loading-spinner 1s linear infinite;
+				background-position: -180px 0;
+				display: block;
+				height: 90px;
+				width: 90px;
+				z-index: 1;
+			}
+		}
+	}
+	.amst__layer-play {
+		.amst__svg {
+			background-position: -90px 0;
+			height: 90px;
+			width: 90px;
+			transition: transform 0.15s ease-in, opacity 0.15s ease-in;
+			.amst__mouse & {
+				background-position: 0 0;
+			}
+		}
+		.amst__buffering & .amst__svg {
+			opacity: 0.5;
+			transform: scale(0.5);
+		}
+	}
+	.amst__layer-subtitles {
+		justify-content: flex-end;
+		.amst__subtitles-wrapper {
+			background: $SubtitlesBackground;
+			display: flex;
+			flex-direction: column;
+			margin: 0 auto;
+			text-align: center;
+			transition: transform 0.15s;
+			transform: translateY(-$VideoControlsHeight);
+			&.amst__hide-subtitles, &.amst__subtitles-empty {
+				display: none;
+			}
+			.amst__compact & {
+				transform: translateY(-$VideoControlsCompactHeight);
+			}
+			.amst__controls-hidden & {
+				transform: translateY(-10px);
+			}
+			.amst__subtitles-container {
+				font: $SubtitlesFont;
+				font-weight: bold;
+				color: $SubtitlesColor;
+				text-shadow: 0.0625em 0.0625em #000;
+				white-space: pre;
+				text-align: center;
+				padding: 10px;
+				// &.amst__subtitles-empty {
+				// 	padding: 0;
+				// }
+			}
+		}
+	}
+	.amst__layer-overlay {
+		cursor: pointer;
+		position: relative;
+		.amst__seeking-touch-wrapper {
+			position: absolute;
+			left: 0;
+			top: 40px;
+		}
+		.amst__seeking-touch-info,
+		.amst__seeking-touch-cover,
+		.amst__seeking-touch-wrapper {
+			transform-origin: 0 0;
+		}
+		.amst__seeking-touch-cover,
+		.amst__seeking-touch-wrapper {
+			opacity: 0;
+			transition: opacity 0.15s ease-in;
+		}
+		.amst__seeking-touch-info,
+		.amst__seeking-touch-cover {
+			background: rgba(255, 255, 255, 0.5);
+		}
+		.amst__seeking-touch-info {
+			height: 40px;
+			display: flex;
+			opacity: 1;
+			transform: scaleY(0);
+			transition: transform 0.15s ease-in;
+			span {
+				font-family: "Helvetica", Arial, serif;
+				font-size: 16px;
+				font-weight: bold;
+				margin: auto;
+				color: #333333;
+			}
+		}
+		.amst__seeking-touch-cover {
+			flex-grow: 1;
+		}
+		.amst__seeking-time-display-wrapper {
+			height: 6px;
+			background-color: rgba(255, 255, 255, 0.5);
+			transition: transform 0.4s;
+			transform: scaleY(0);
+			.amst__seeking-time-display {
+				height: 6px;
+				background: $TimeSliderCurrentBackground;
+				transform-origin: 0 0;
+				transform: scaleX(0.5);
+			}
+		}
+		&.amst__show {
+			.amst__seeking-touch-cover,
+			.amst__seeking-touch-wrapper {
+				opacity: 1;
+			}
+			.amst__seeking-touch-info {
+				transform: scaleY(1);
+			}
+			.amst__seeking-time-display-wrapper {
+				transform: scaleY(1);
+			}
+		}
+	}
+	.amst__mouse &:hover .amst__layer-play .amst__svg {
+		background-position: -90px 0;
+	}
+}
+/* END LAYERS */
+
+@keyframes amst__loading-spinner {
+	100% {
+		-webkit-transform: rotate(360deg);
+		transform: rotate(360deg);
+	}
+}

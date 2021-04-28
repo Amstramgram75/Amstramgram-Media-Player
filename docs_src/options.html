@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en" class="loading">
+
+<head>
+	<title>Amstramgram Media Player - Documentation - Options</title>
+	<include src="head.html"></include>
+</head>
+<body>
+	<include src="header.html"></include>
+	<div class="content-wrapper options">
+		<div class="content">
+<!-- 
+	**** INTRODUCTION ****
+-->
+      <h2 id="intro" class="padding-top140">Introduction</h2>
+			<div class="text">
+				<p>
+					Some options can't be modified once the player instance has been initialized. They are marked with a <span class="inst-mark"></span>, like Instance...
+				</p>
+				<p>
+					However, most of them can be updated at the same time as the media source, through the <em>src</em> setter.<br>
+					In this case, the new source passed to the player is an object with a <em>src</em> property and some other properties we want to update like poster, duration or button's label. This options are marked with a <span class="src-mark"></span>, like Src...
+				</p>
+				<p>
+					The <span class="get-mark"></span> and <span class="set-mark"></span> marks indicate that the options have respectively a <em>getter</em> and a <em>setter</em>.
+				</p>
+				<p>
+					Finally, options that can be  directly set in the HTML code are marked with <span class="html-mark"></span>.<br>
+					Note that options passed through javascript to the player instance take precedence over those set in the HTML code. 
+				</p>
+				<p>
+					Some options only apply to the video player but I think you'll easily guess which ones.
+				</p>
+			</div>
+<!-- 
+	**** APPLABEL ****
+-->
+<h2 id="appLabel" class="padding-top140 inst">appLabel</h2>
+			<div class="text">
+				<pre class="default"><code class="javascript">/**
+ * @description : 	aria-label content of the player HTML wrapper.
+ *
+ * @type {string}
+ */
+
+ /*** Default for audio players ***/
+<b>appLabel</b> = 'Audio Player'
+
+ /*** Default for video players ***/
+<b>appLabel</b> = 'Video Player'
+
+</code></pre>
+			</div>
+<!-- 
+	**** ALWAYSSHOWHOURS ****
+-->
+			<h2 id="alwaysShowHours" class="padding-top140 inst">alwaysShowHours</h2>
+				<pre class="default" ><code class="javascript">/**
+ * @description : 	by default, the current time and duration indicators display timing informations
+ * 				as <em>00:00</em> when media duration is less than an hour and 
+ *				as <em>00:00:00</em> in the other cases.
+ *				If this options is set to true, they're always displayed as <em>00:00:00</em>
+ *
+ * @type {boolean}
+ */
+
+ /*** Default ***/
+<b>alwaysShowHours</b>: false
+
+</code></pre>
+<!-- 
+	**** AUTOPLAY ****
+-->
+			<h2 id="autoplay" class="padding-top140 html src">autoplay</h2>
+			<h3 class="padding-top20">HTML</h3>
+			<pre class="default" ><code class="html">
+&lt;video src=&quot;my_video.mp4&quot; autoplay muted&gt;
+		
+</code></pre>
+				<h3 class="padding-top20">Javascript</h3>
+				<pre class="default" ><code class="javascript">/**
+ * @description : 	try to automatically play the media
+ *
+ * @type {boolean}
+ */
+
+ /*** Default ***/
+<b>autoplay</b>: false
+
+</code></pre>
+			<h3 class="padding-top20">Important !</h3>
+			<div class="text">
+				<p>
+					Please be carefull !<br>
+					You should know that browers policy about this feature has varied over time and could change further.<br>
+					Most of the browsers won't autoplay a media unless it is muted.<br>
+					You may find more informations about the autoplay policy <a href="https://developer.mozilla.org/en-US/docs/Web/Media/Autoplay_guide" target="_blank">here</a> or <a href="https://developers.google.com/web/updates/2017/09/autoplay-policy-changes" target="_blank">here</a>
+				</p>
+				
+			</div>
+<!-- 
+	**** COMPACTMAXWIDTH ****
+-->
+      <h2 id="compactMaxWidth" class="padding-top140 inst">compactMaxWidth</h2>
+			<pre class="default" ><code class="javascript">/**
+ * @description : 	the UI arrangement changes according to the player width :
+ *				The default distributes all the controls on a single line;
+ *				The compact mode uses two lines : the second line is entirely used by the time rail;
+ *				The mini mode hides some of the buttons.
+ *
+ * @type {number} 	Player width in pixels below which compact mode is applied.
+ */
+
+/*** Default ***/
+<b>compactMaxWidth</b>: 600
+
+</code></pre>
+			<p class="text">
+				If you prefer this compact mode to the classic one, just set this option to a large value, <em>1000000</em> for example.
+			</p>
+<!-- 
+	**** CROSSORIGIN ****
+-->
+			<h2 id="crossOrigin" class="padding-top140 html src">crossOrigin</h2>
+			<h3>HTML</h3>
+			<pre class="default" ><code class="html">
+&lt;!-- without crossorigin --&gt;			
+&lt;video src=&quot;my_video.mp4&quot;&gt;
+
+&lt;!-- crossorigin set to anonymous --&gt;			
+&lt;video src=&quot;my_video.mp4&quot crossorigin=&quot;&quot;&gt;
+&lt;!-- OR --&gt;			
+&lt;video src=&quot;my_video.mp4&quot crossorigin=&quot;anonymous&quot;&gt;
+
+&lt;!-- crossorigin set to use-credentials --&gt;			
+&lt;video src=&quot;my_video.mp4&quot crossorigin=&quot;use-credentials&quot;&gt;
+
+						
+</code></pre>
+				<h3>Javascript</h3>
+				<pre class="default" ><code class="javascript">
+/**
+ * @description : 	set the media crossorigin attribute.
+ *				If <em>undefined</em> or <em>null</em>, no attribute is added.
+ *				Note that a empty string will be interpreted as <em>anonymous</em>.
+ *
+ * @type {undefined | string}
+ */
+
+/*** Default ***/
+<b>crossOrigin</b>: undefined
+
+</code></pre>
+<!-- 
+	**** DOWNLOAD ****
+-->
+			<h2 id="download" class="padding-top140 src set">download</h2>
+			<pre class="default" ><code class="javascript">
+/**
+ * @description : 	the download button properties.
+ *
+ * @type {object}
+ *
+ * @property {string} 		label		- The text displayed in the download button tooltip.
+ * @property {boolean} 		disabled 	- The download button availability.
+ * @property {boolean} 		hidden 	- The download button visibility.
+ * @property {object} 		tooltip 	- The download button tooltip properties.
+ * 	| @property {boolean} 	hidden 	- The tooltip visibility.
+ * 	| @property {boolean} 	left 		- The tooltip position.
+ */
+
+/*** Default ***/
+<b>download</b>: {
+	label: "Download",
+	disabled: false,
+	hidden: false, 
+	tooltip: {
+		hidden: false,
+		//If true, the tooltip is positioned to the left of the button;
+		//if false, it's positioned to the right.
+		left: true, 
+	},
+}
+
+</code></pre>
+<!-- 
+	**** DURATION ****
+-->
+			<h2 id="duration" class="padding-top140 src">duration</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	set the media duration in seconds.
+ *				This value is only used to display the media duration before the metadata are loaded.
+ *				It's updated by the value given by the metadata as soon as they load.
+ *
+ * @type {number}
+ */
+
+/*** Default ***/
+<b>duration</b>: 120
+	
+</code></pre>
+<!-- 
+	**** ERRORMESSAGE ****
+-->
+			<h2 id="errorMessage" class="padding-top140 inst">errorMessage</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	set the message displayed when the media can't be found.
+ *
+ * @type {string}
+ */
+
+/*** Default ***/
+<b>errorMessage</b>: "Oups ! Media can't be found !!!"
+	
+</code></pre>
+<!-- 
+	**** FORMAT ****
+-->
+			<h2 id="format" class="padding-top140 src">format</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	set the video format.
+ *				It could be a number or a ratio (eg <em>16 / 9</em> or <em>1.777777</em>).
+ *				The value is updated by the metadata as soon as they load.
+ *
+ * @type {number}
+ */
+
+/*** Default ***/
+<b>format</b>: 16 / 9
+	
+</code></pre>
+<!-- 
+	**** FULLSCREEN ****
+-->
+			<h2 id="fullscreen" class="padding-top140 src set">fullscreen</h2>
+			<pre class="default" ><code class="javascript">
+/**
+ * @description : 	the fullscreen button properties.
+ *
+ * @type {object}
+ *
+ * @property {object} 		label		- The label according to the button state
+ * 	| @property {string} 		on 		- The text displayed in the fullscreen button tooltip 
+ *									when button state is on.
+ * 	| @property {string} 		off 		- The text displayed in the fullscreen button tooltip 
+ *									when button state is off.
+ * @property {boolean} 		disabled 	- The fullscreen button availability.
+ * @property {boolean} 		hidden 	- The fullscreen button visibility.
+ * @property {object} 		tooltip 	- The fullscreen button tooltip properties.
+ * 	| @property {boolean} 	hidden 	- The tooltip visibility.
+ * 	| @property {boolean} 	left 		- The tooltip position.
+ */
+
+/*** Default ***/
+<b>fullscreen</b>: {
+	label: {
+		on: "Exit fullscreen",
+		off: "Fullscreen",
+	}
+	disabled: false,
+	hidden: false, 
+	tooltip: {
+		hidden: false,
+		//If true, the tooltip is positioned to the left of the button;
+		//if false, it's positioned to the right.
+		left: true, 
+	},
+}
+
+</code></pre>
+<!-- 
+	**** HIDECONTROLSDELAY ****
+-->
+			<h2 id="hideControlsDelay" class="padding-top140 inst">hideControlsDelay</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	set the delay in ms before video controls are hidden.
+ *				Also used in audio players for vertical volume slider 
+ *				on not mobile devices whose pointer is not mouse.
+ *
+ * @type {number}
+ */
+
+/*** Default ***/
+<b>hideControlsDelay</b>: 5000
+	
+</code></pre>
+<!-- 
+	**** LOOP ****
+-->
+			<h2 id="loop" class="padding-top140 html src">loop</h2>
+			<h3>HTML</h3>
+			<pre class="default" ><code class="html">
+&lt;video src=&quot;my_video.mp4&quot; loop&gt;
+						
+</code></pre>
+			<h3>Javascript</h3>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	if true, the media plays on repeat.
+ *
+ * @type {boolean}
+ */
+
+/*** Default ***/
+<b>loop</b>: false
+	
+</code></pre>
+<!-- 
+	**** MINIMAXWIDTH ****
+-->
+<h2 id="miniMaxWidth" class="padding-top140 inst">miniMaxWidth</h2>
+<pre class="default"><code class="javascript">
+/**
+ * @description : 	the UI arrangement changes according to the player width :
+ *				The default distributes all the controls on a single line;
+ *				The compact mode uses two lines : the second line is entirely used by the time rail;
+ *				The mini mode hides some of the buttons.
+ *
+ * @type {number} 	Player width in pixels below which mini mode is applied.
+ */
+
+/*** Default ***/
+<b>miniMaxWidth</b>: 500
+
+</code></pre>
+<p class="text">
+	If you prefer the minimal mode to the classic one, just set this option to a large value, <em>1000000</em> for example.<br>
+	If you really don't like it, set the option value to <em>0</em>.
+</p>
+<!-- 
+	**** MORE ****
+-->
+			<h2 id="more" class="padding-top140 src set">more</h2>
+			<pre class="default"><code class="javascript">
+/**
+ * @description : 	the more button properties.
+ *				The button is used in <a href="#miniMode">mini mode</a> to show/hide non-essential buttons.
+ *
+ * @type {object}
+ *
+ * @property {object} 		label		- The label according to the button state
+ * 	| @property {string} 		on 		- The text displayed in the more button tooltip 
+ *									when button state is on.
+ * 	| @property {string} 		off 		- The text displayed in the more button tooltip 
+ *									when button state is off.
+ * @property {object} 		tooltip 	- The more button tooltip properties.
+ * 	| @property {boolean} 	hidden 	- The tooltip visibility.
+ * 	| @property {boolean} 	left 		- The tooltip position.
+*/
+
+/*** Default ***/
+<b>more</b>: {
+	label: {
+		on: "Show less",
+		off: "Show more",
+	}
+	tooltip: {
+		hidden: false,
+		//If true, the tooltip is positioned to the left of the button;
+		//if false, it's positioned to the right.
+		left: true, 
+	},
+}
+
+</code></pre>
+<!-- 
+	**** MUTE ****
+-->
+			<h2 id="mute" class="padding-top140 src set">mute</h2>
+			<pre class="default"><code class="javascript">
+/**
+ * @description : 	the mute button properties.
+ *
+ * @type {object}
+ *
+ * @property {object} 		label		- The label according to the button state
+ * 	| @property {string} 		on 		- The text displayed in the mute button tooltip 
+ *									when button state is on.
+ * 	| @property {string} 		off 		- The text displayed in the mute button tooltip 
+ *									when button state is off.
+ * @property {boolean} 		disabled 	- The mute button availability.
+ * @property {boolean} 		hidden 	- The mute button visibility.
+ * @property {object} 		tooltip 	- The mute button tooltip properties.
+ * 	| @property {boolean} 	hidden 	- The tooltip visibility.
+ * 	| @property {boolean} 	left 		- The tooltip position.
+*/
+
+/*** Default ***/
+<b>mute</b>: { 
+	label: {
+		//When media is muted
+		on: "Unmute",
+		//When media is unmuted
+		off: "Mute",
+	}
+	disabled: false,
+	hidden: false,
+	tooltip: {
+		hidden: false,
+		//If true, the tooltip is positioned to the left of the button;
+		//if false, it's positioned to the right.
+		left: true, 
+	},
+}
+
+</code></pre>
+<!-- 
+	**** NEXT ****
+-->
+			<h2 id="next" class="padding-top140 src set">next</h2>
+			<pre class="default" ><code class="javascript">
+/**
+ * @description : 	the next button properties.
+ *
+ * @type {object}
+ *
+ * @property {string} 		label		- The text displayed in the next button tooltip.
+ * @property {boolean} 		disabled 	- The next button availability.
+ * @property {boolean} 		hidden 	- The next button visibility.
+ * @property {object} 		tooltip 	- The next button tooltip properties.
+ * 	| @property {boolean} 	hidden 	- The tooltip visibility.
+ * 	| @property {boolean} 	left 		- The tooltip position.
+*/
+
+/*** Default ***/
+<b>next</b>: {
+	label: "Next",
+	disabled: true,
+	hidden: true, 
+	tooltip: {
+		hidden: false,
+		//If true, the tooltip is positioned to the left of the button;
+		//if false, it's positioned to the right.
+		left: false, 
+	},
+}
+
+</code></pre>
+<!-- 
+	**** PIP ****
+-->
+			<h2 id="pip" class="padding-top140 src set">pip</h2>
+			<pre class="default" ><code class="javascript">
+/**
+ * @description : 	the PIP (<i>Picture In Picture</i>) button properties.
+ *
+ * @type {object}
+ *
+ * @property {string} 		label		- The label according to the PIP button state.
+ * 	| @property {string} 		on 		- The text displayed in the PIP button tooltip 
+ *									when button state is on.
+ * 	| @property {string} 		off 		- The text displayed in the PIP button tooltip 
+ *									when button state is off.
+ * @property {object} 		tooltip 	- The PIP button tooltip properties.
+ * 	| @property {boolean} 	hidden 	- The tooltip visibility.
+ * 	| @property {boolean} 	left 		- The tooltip position.
+*/
+
+/*** Default ***/
+<b>pip</b>: { 
+	label: {
+		on: "Disable PIP",
+		off: "PIP",
+	}
+	tooltip: {
+		hidden: false,
+		//If true, the tooltip is positioned to the left of the button;
+		//if false, it's positioned to the right.
+		left: true, 
+	},
+}
+
+</code></pre>
+<p class="text">
+	Note that the button won't be visible at all if the browser doesn't support the <a href="https://caniuse.com/?search=Picture%20In%20Picture" target="_blank">Picture In Picture API</a> feature.
+</p>
+<!-- 
+	**** PLAYBACKRATE ****
+-->
+<h2 id="playbackRate" class="padding-top140 src">playbackRate</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	set the playback rate. 
+ *
+ * @type {number}
+ */
+
+/*** Default ***/
+<b>playbackRate</b>: 1
+
+</code></pre>
+<!-- 
+	**** PLAYSINLINE ****
+-->
+			<h2 id="playsInline" class="padding-top140 html src">playsInline</h2>
+			<h3>HTML</h3>
+			<pre class="default" ><code class="html">
+&lt;video src=&quot;my_video.mp4&quot; playsinline&gt;
+						
+</code></pre>
+			<h3>Javascript</h3>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	set the video playsInline attribute.
+ *
+ * @type {boolean}
+ */
+
+/*** Default ***/
+<b>playsInline</b>: true
+	
+</code></pre>
+<!-- 
+	**** PLAYPAUSE ****
+-->
+			<h2 id="playPause" class="padding-top140 src set">playPause</h2>
+			<pre class="default" ><code class="javascript">
+/**
+ * @description : 	the playPause button properties.
+ *
+ * @type {object}
+ *
+ * @property {string} 		label		- The label according to the playPause button state.
+ * 	| @property {string} 		on 		- The text displayed in the playPause button tooltip 
+ *									when button state is on.
+ * 	| @property {string} 		off 		- The text displayed in the playPause button tooltip 
+ *									when button state is off.
+ * @property {object} 		tooltip 	- The playPause button tooltip properties.
+ * 	| @property {boolean} 	hidden 	- The tooltip visibility.
+ * 	| @property {boolean} 	left 		- The tooltip position.
+*/
+
+/*** Default ***/
+<b>playPause</b>: { 
+	label: {
+		//When media is playing
+		on: "Pause",
+		//When media is paused
+		off: "Play",
+	}
+	tooltip: {
+		hidden: false,
+		//If true, the tooltip is positioned to the left of the button;
+		//if false, it's positioned to the right.
+		left: false, 
+	},
+}
+
+</code></pre>
+<!-- 
+	**** POSTER ****
+-->
+			<h2 id="poster" class="padding-top140 html src">poster</h2>
+			<h3>HTML</h3>
+			<pre class="default" ><code class="html">
+&lt;video src=&quot;my_video.mp4&quot; poster="path_to_the_poster.jpg"&gt;
+						
+</code></pre>
+			<h3>Javascript</h3>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	defines the video poster path.
+ *
+ * @type {string}
+ */
+
+/*** Default ***/
+<b>poster</b>: ""
+	
+</code></pre>
+<!-- 
+	**** PRELOAD ****
+-->
+			<h2 id="preload" class="padding-top140 html src">preload</h2>
+			<h3>HTML</h3>
+			<pre class="default" ><code class="html">
+&lt;video src=&quot;my_video.mp4&quot; preload="none"&gt;
+						
+</code></pre>
+			<h3>Javascript</h3>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	set the value of the preload attribute.
+ *
+ * @type {'auto'|'metadata'|'none'}
+ */
+
+/*** Default ***/
+<b>preload</b>: 'none'
+	
+</code></pre>
+<p class="text">
+		Take care when you plan to use several players on the same page&nbsp;: some browsers (especialy mobile) refuse to preload more than a few medias.<br>
+		In the same way, if you provide multiple sources in HTML, you should set the HTML preload attribute to <em>"none"</em> so that the browser does not preload the first source.
+</p>
+<!-- 
+	**** PREVIOUS ****
+-->
+			<h2 id="previous" class="padding-top140 src set">previous</h2>
+			<pre class="default" ><code class="javascript">
+/**
+ * @description : 	the previous button properties.
+ *
+ * @type {object}
+ *
+ * @property {string} 		label		- The text displayed in the previous button tooltip.
+ * @property {boolean} 		disabled 	- The previous button availability.
+ * @property {boolean} 		hidden 	- The previous button visibility.
+ * @property {object} 		tooltip 	- The previous button tooltip properties.
+ * 	| @property {boolean} 	hidden 	- The tooltip visibility.
+ * 	| @property {boolean} 	left 		- The tooltip position.
+*/
+
+/*** Default ***/
+<b>previous</b>: {
+	label: "Previous",
+	disabled: true,
+	hidden: true, 
+	tooltip: {
+		hidden: false,
+		//If true, the tooltip is positioned to the left of the button;
+		//if false, it's positioned to the right.
+		left: false, 
+	},
+}
+
+</code></pre>
+<!-- 
+	**** SETTINGS ****
+-->
+			<h2 id="settings" class="padding-top140 src set">settings</h2>
+			<pre class="default" ><code class="javascript">
+/**
+ * @description : 	the settings button properties.
+ *
+ * @type {object}
+ *
+ * @property {boolean} 	hidden 			- The settings button visibility.
+ * @property {string} 	qualityLabel 		- The text of the quality selection header.
+ * @property {string} 	playbackRatesLabel 	- The text of the playback rates selection header.
+ * @property {array} 	playbackRates 		- Array of available playback rates.
+ * @property {string} 	subsLabel 			- The text of the subtitles selection header.
+*/
+
+/*** Default ***/
+<b>settings</b>: {
+	hidden: false, 
+	qualityLabel: "QUALITY",
+	playbackRatesLabel: "PLAYBACK SPEED",
+	playbackRates: [['0.25 x', 0.25], ['0.5 x', 0.5], ['0.75 x', 0.75], ['Normal', 1], ['1.5 x', 1.5], ['2 x', 2], ['4 x', 4]],
+	subsLabel: "SUBTITLES",
+}
+
+</code></pre>
+<p class="text">
+	<em>playbackRates</em> is either an array of numbers or an array of two elements arrays.
+</p>
+<p class="text">
+	In the first case, each number is an available playback speed and the settings panel simply lists them all.<br>
+	So, if you set&nbsp;:<br>
+	<em>playbackRates: [ 0.25, 0.5, 0.75, 1, 1.5, 2, 4 ]</em><br>
+	the panel settings panel will just display a vertical list of these numbers.<br>
+</p>
+<p class="text">
+	In the second case, the first element of each array is the string associated to the speed defined by the second element which is a number.
+</p>
+<!-- 
+	**** SUBTITLES ****
+-->
+			<h2 id="subtitles" class="padding-top140 html src">subtitles</h2>
+			<div class="text">
+			<h3 class="padding-top20">HTML</h3>
+				<pre class="default" ><code class="html">
+&lt;video src=&quot;my_video.mp4&quot;&gt;
+	&lt;!-- Two subtitles tracks - English is set as default language --&gt;
+	&lt;track label=&quot;English&quot; kind=&quot;subtitles&quot; srclang=&quot;en&quot; src=&quot;my_english_subtitles.vtt&quot; default&gt;
+	&lt;track label=&quot;Français&quot; kind=&quot;subtitles&quot; srclang=&quot;fr&quot; src=&quot;mes_sous-titres_francais.vtt&quot;&gt;
+&lt;/video&gt;
+			
+</code></pre>
+			<h3 class="padding-top20">Javascript</h3>
+				<pre class="default" ><code class="javascript">
+/**
+ * @description : the subtitles button properties
+ *
+ * @type {object}
+ *
+ * @property {object} 		label		- The text displayed in the tooltip according to the button state.
+ * 	| @property {string} 		on 		- The text displayed if the button is on.
+ * 	| @property {string} 		off 		- The text displayed if the button is off.
+ * @property {boolean} 		disabled 	- The subtitles button availability.
+ * @property {boolean} 		hidden 	- The subtitles button visibility.
+ * @property {object} 		tooltip 	- The subtitles button tooltip properties.
+ * 	| @property {boolean} 	hidden 	- The tooltip visibility.
+ * 	| @property {boolean} 	left 		- The tooltip position.
+ * @property {boolean} 		state 	- The default button state (if true, the button is on).
+ * @property {string} 		wrapper 	- A valid CSS selector referencing the HTML wrapper where to display the subtitles (see <a href="#subtitles-wrapper">below</a>).
+ * @property {string} 		container 	- A valid CSS selector referencing the HTML container where to display the subtitles (see <a href="#subtitles-wrapper">below</a>).
+ * @property {array} 		sources 	- An array of objects. Each object defines a subtitles source (see <a href="#subtitles-sources">below</a>).
+ * @property {string} 		default 	- The default language code (see <a href="#subtitles-default">below</a>).
+ */
+
+ /*** Default ***/
+ <b>subtitles</b>: {
+	label: {
+		on: 'Disable subtitles',
+		off: 'Enable subtitles',
+	},
+	disabled: false,
+	hidden: false, 
+	tooltip: {
+		hidden: false,
+		//If true, the tooltip is positioned to the left of the button;
+		//If false, it's positioned to the right.
+		left: true, 
+	},
+	state: false,
+	wrapper: '',
+	container: '',
+	sources: [],
+	default: 'en',
+}
+
+</code></pre>
+				<span id="subtitles-wrapper" class="anchor"></span>
+				<h3 class="padding-top20">wrapper & container</h3>
+				<p>
+					<em>wrapper</em> and <em>container</em> properties allow to specify where the subtitles are displayed.<br>
+					With some exceptions, they are not useful in the case of a video player since subtitles display is integrated to the UI.<br>
+					However, we need it if we want to display the lyrics of a song played throuh an audio player as this is the case <a href="./index.html#audio">here</a>.<br>
+					The HTML code should be of this form :
+				</p>
+				<pre class="padding-top20"><code class="html">
+&lt;block&gt;
+	&lt;inline-block id=&quot;my-subtitles-wrapper&quot;&gt;
+		&lt;inline id=&quot;my-subtitles-container&quot;&gt;
+			&lt;!-- HERE COME THE SUBTITLES --&gt;
+		&lt;/inline&gt;
+	&lt;/inline-block&gt;
+&lt;/block&gt;
+		
+</code></pre>
+				<p class="padding-top20">
+					And so we will set :
+				</p>
+				<pre class="default" ><code class="javascript">
+<b>subtitles</b>: {
+	wrapper: '#my-subtitles-wrapper',
+	container: '#my-subtitles-container'
+}
+	
+</code></pre>
+				<p class="padding-top20">
+					Note that the wrapper element automaticly gains the <em>amst__hide-subtitles</em> class when the subtitles button is off and the <em>amst__subtitles-empty</em> class each time there is no subtitle to display.
+				</p>
+				<span id="subtitles-sources" class="anchor"></span>
+				<h3 class="padding-top20">sources</h3>
+				<p>
+					<em>sources</em> property must be an array of objects, each object referencing a subtitles track.
+				</p>
+				<pre class="default" ><code class="javascript">
+/**
+* @description : The subtitles sources
+*
+* @type {array}
+*
+* @property {string} 	src		- The path to the subtitles file.
+* @property {string} 	srclang 	- The language code ('en-US', 'fr-FR', 'en', 'fr').
+* @property {string} 	label 	- The language label displayed in the settings panel.
+*/
+				 
+<b>sources</b>: [
+	{
+		src: 'path_to_the_english_subtitles_file.vtt',
+		srclang: 'en',
+		label: 'English',
+	},
+	{
+		src: 'path_to_the_french_subtitles_file.vtt',
+		srclang: 'fr',
+		label: 'Français',
+	},
+]
+
+</code></pre>
+				<span id="subtitles-default" class="anchor"></span>
+				<h3 class="padding-top20">default</h3>
+				<p>
+					The browser language property take precedence over the default language.<br>
+					So, if you provide english and french subtitles with english set as default and if the user has a french browser, default language will be french.
+				</p>
+			</div>
+<!-- 
+	**** SKIPTIME ****
+-->
+<h2 id="skipTime" class="padding-top140 src">skipTime</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	defines the value of the time skip applied to the playback 
+ *				when left or right keyboard arrows are pressed.
+ *				If it's a number, it simply defines this value in seconds.
+ *				If it's a string on the form "5%", 
+ *				the value is equal to the given percent of the total duration.
+ *
+ * @type {number|string}
+ */
+
+/*** Default ***/
+<b>skipTime</b>: "1%"
+
+</code></pre>
+<!-- 
+	**** SRC ****
+-->
+<h2 id="src" class="padding-top140 html src set get">src</h2>
+<h3>HTML</h3>
+<pre class="default" ><code class="html">
+&lt;video src=&quot;my_video.mp4&quot;&gt;
+
+&lt;!-- OR --&gt;	
+
+&lt;video&gt;
+	&lt;source&gt;src=&quot;my_video480.mp4&quot; data-quality=&quot;480P&quot;&lt;/source&gt;
+	&lt;!-- This will be the default source --&gt;	
+	&lt;source&gt;src=&quot;my_video720.mp4&quot; data-quality=&quot;720P&quot; data-default="true"&lt;/source&gt;
+	&lt;source&gt;src=&quot;my_video1080.mp4&quot; data-quality=&quot;1080P&quot;&lt;/source&gt;
+&lt;/video&gt;
+
+</code></pre>
+<p class="text"><a href="./demo.html#video">Demo here</a></p>
+<h3>Javascript</h3>
+<pre class="default" ><code class="javascript">
+
+/**
+ * @description : 	defines the media source.
+ *				A simple string defines a single source.
+ *				An array of several object defines multiple sources.
+ *				Each object must have a src key pointing to a media file
+ *				and a quality key whose content is displayed in the settings panel.
+ *
+ * @type {array|string}
+ * 
+ * @example :
+ *  src : "path_audio.mp3"
+ *
+ *  OR
+ *
+ *  src : [
+ *      {
+ *          src: "path_audio_1.mp3",
+ *          quality: "128 MP3",
+ *          type: "audio/mpeg",
+ *      },
+ *      {
+ *          src: "path_audio_2.mp3",
+ *          quality: "256 MP3"
+ *          type: "audio/mpeg",
+ *      },
+ *      {
+ *          src: "path_audio_3.wav",
+ *          quality: "WAV"
+ *          type: "audio/wav",
+ *      },
+ *  ]
+ */
+
+/*** Default ***/
+<b>src</b>: []
+
+</code></pre>
+<p class="test padding-top20">
+	Note that if you provide a type for each source, the player will only retain those which the browser can play.<br>
+	In the audio example above, the third source with <em>audio/wav</em> type won't be available in Internet Explorer. 
+</p>
+<!-- 
+	**** THUMBNAILS ****
+-->
+<h2 id="thumbnails" class="padding-top140 src set">thumbnails</h2>
+<pre class="default" ><code class="javascript">
+/**
+* @description : 	defines the thumbnails image properties.
+*
+* @type {object}
+*
+* @property {string} 	src 		- The image source.
+* @property {integer} 	width 	- The width of one thumbnail in pixels.
+* @property {number} 	int 		- The time interval between two thumbnails.
+*/
+
+/*** Default ***/
+<b>thumbnails</b>: {
+	src: undefined, 
+	width: 120,
+	int: 0,
+}
+
+</code></pre>
+<p class=text>
+	See all the details <a href="./thumbnails.html">here</a>.
+</p>
+<!-- 
+	**** TIMESLIDERHELPTEXT ****
+-->
+<h2 id="timeSliderHelpText" class="padding-top140 inst">timeSliderHelpText</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	helper text for the time slider keyboard shortcuts.
+ *
+ * @type {string}
+ */
+
+/*** Default ***/
+<b>timeSliderHelpText</b>: "Use Left/Right arrow keys to go backward/forward"
+
+</code></pre>
+<!-- 
+	**** VOLUMESLIDERLABEL ****
+-->
+<h2 id="timeSliderLabel" class="padding-top140 inst">timeSliderLabel</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	title for time slider for WARIA purposes.
+ *
+ * @type {string}
+ */
+
+/*** Default ***/
+<b>timeSliderLabel</b>: "Time slider"
+
+</code></pre>
+<!-- 
+	**** TOUCHSEEKINGINFOTEXT ****
+-->
+<h2 id="touchSeekingInfoText" class="padding-top140 inst">touchSeekingInfoText</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	defines the information text displayed 
+ * 				when the user horizontally swipes on video on a touch device.
+ *
+ * @type {string}
+ */
+
+/*** Default ***/
+<b>touchSeekingInfoText</b>: "Tap & go !"
+
+</code></pre>
+<!-- 
+	**** VOLUME ****
+-->
+<h2 id="volume" class="padding-top140 src get set">volume</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	set the initial media volume.
+ * 				Note that if a volume is already stored in the session storage 
+ *				for the player's volumeGroup, it will override this parameter 
+ * 				unless the volumeForced option is set to true.
+ *
+ * @type {number between 0 and 1}
+ */
+
+/*** Default ***/
+<b>volume</b>: 0.8
+
+</code></pre>
+<!-- 
+	**** VOLUMEBEFOREMUTE ****
+-->
+<h2 id="volumeBeforeMute" class="padding-top140 inst">volumeBeforeMute</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	defines the media volume when a click occurs 
+ * 				on the unmute button if the media was muted
+ * 				on initialization.
+ * 				Note that if a volume is already stored in the session storage 
+ *				for the player's volumeGroup, it will override this parameter .
+ *
+ * @type {number between 0 and 1}
+ */
+
+/*** Default ***/
+<b>volumeBeforeMute</b>: 0.8
+
+</code></pre>
+<!-- 
+	**** VOLUMEFORCED ****
+-->
+<h2 id="volumeForced" class="padding-top140 src">volumeForced</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	if set to <em>true</em>, the volume passed as option
+ * 				will be applied to all the players of the same <em>volumeGroup</em>
+ *				and override the volume eventually stored in the Session Storage. 
+ *
+ * @type {boolean}
+ */
+
+/*** Default ***/
+<b>volumeForced</b>: false
+
+</code></pre>
+<!-- 
+	**** VOLUMEGROUP ****
+-->
+<h2 id="volumeGroup" class="padding-top140 inst">volumeGroup</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	defines the <em>volumeGroup</em> to which the player belongs.
+ * 				When the volume of a player changes, 
+ * 				all the volume of the same players group
+ *				change accordingly. 
+ *
+ * @type {integer}
+ */
+
+/*** Default ***/
+<b>volumeGroup</b>: 0
+
+</code></pre>
+<!-- 
+	**** VOLUMEHORIZONTAL ****
+-->
+<h2 id="volumeHorizontal" class="padding-top140 inst">volumeHorizontal</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	ff false, the volume slider is displayed vertically.
+ *
+ * @type {boolean}
+ */
+
+/*** Default ***/
+<b>volumeHorizontal</b>: true
+
+</code></pre>
+<!-- 
+	**** VOLUMESLIDERHELPTEXT ****
+-->
+<h2 id="volumeSliderHelpText" class="padding-top140 inst">volumeSliderHelpText</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	helper text for the volume slider keyboard shortcuts.
+ *
+ * @type {string}
+ */
+
+/*** Default ***/
+<b>volumeSliderHelpText</b>: "Use Up/Down arrow keys to increase/decrease the volume"
+
+</code></pre>
+<!-- 
+	**** VOLUMESLIDERLABEL ****
+-->
+<h2 id="volumeSliderLabel" class="padding-top140 inst">volumeSliderLabel</h2>
+<pre class="default" ><code class="javascript">
+/**
+ * @description : 	title for volume slider for WARIA purposes.
+ *
+ * @type {string}
+ */
+
+/*** Default ***/
+<b>volumeSliderLabel</b>: "Volume slider"
+
+</code></pre>
+
+			<div class="end"></div>
+		</div>
+	</div>
+	<div class="up"></div>
+	<link rel="stylesheet" href="css/options.css">
+	<script src="js/options.js"></script>
+</body>
+</html>

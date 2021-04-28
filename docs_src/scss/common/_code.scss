@@ -1,0 +1,165 @@
+@import "_hljs";
+
+.code-show-hide {
+  position: relative;
+  margin-top: 3em;
+}
+.code-show-hide input {
+  display: none;
+}
+.code-show-hide label{
+  position: absolute;
+  top: -1em;
+  left: 0;
+  padding: 5px;
+  color: $orange;
+  background:$red;
+  font-weight: bold;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.show-code:checked + pre:not(.visible) {
+  transition: all 0.3s ease-out;
+}
+.code-show-hide label:hover {
+  color: #fff;
+}
+.code-show-hide pre{
+  overflow: auto;
+  scrollbar-color: $red $orange;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $orange;
+  }
+  &::-webkit-scrollbar-track {
+    margin: 10px;
+    background: $red;
+  }
+  &:not(.visible) {
+    max-height: 0;
+    transition: all 0.3s ease-out;
+  }
+  // h4 {
+  //   text-align: left;
+  //   font-weight: bold;
+  //   font-size: 0.9em;
+  //   color: $orange;
+  //   text-decoration: underline;
+  //   margin: 1.5em 0 -3em 0.5em;
+  //   position: relative;
+  //   &:after {
+  //     content: " :";
+  //   }
+  //   div.copy-code{
+  //     position: absolute;
+  //     top: 0;
+  //     right: 0;
+  //     color: $orange;
+  //     background: #1e1e1e;
+  //     border: 1px solid $red;
+  //     border-radius: 5px;
+  //     padding: 5px 10px;
+  //     cursor: pointer;
+  //     margin-right: 5px;
+  //     font-weight: bold;
+  //     transition: transform 0.2s, color 0.2s;
+  //     will-change: transform;
+  //     &:hover{
+  //       color: $red;
+  //       transform: scale(1.1);
+  //       outline: none;
+  //     }
+  //     &.copy-succeed:after{
+  //       content: 'Code copied in clipboard !';
+  //       position: absolute;
+  //       padding: 5px 10px;
+  //       top: 120%;
+  //       right: 0;
+  //       color: $orange;
+  //       background: #1e1e1e;
+  //       border: 1px solid $bodycolor;
+  //       border-radius: 5px;
+  //     }
+  //   }
+  // }
+}
+
+pre h4{
+  text-align: left;
+  font-weight: bold;
+  font-size: 0.9em;
+  color: $orange;
+  text-decoration: underline;
+  margin: 1.5em 0 -3em 0.5em;
+  position: relative;
+  &:after {
+    content: " :";
+  }
+  div.copy-code{
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: $orange;
+    background: #1e1e1e;
+    border: 1px solid $red;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-right: 5px;
+    font-weight: bold;
+    transition: transform 0.2s, color 0.2s;
+    will-change: transform;
+    &:hover{
+      color: $red;
+      transform: scale(1.1);
+      outline: none;
+    }
+    &.copy-succeed:after{
+      content: 'Code copied in clipboard !';
+      position: absolute;
+      padding: 5px 10px;
+      top: 120%;
+      right: 0;
+      color: $orange;
+      background: #1e1e1e;
+      border: 1px solid $bodycolor;
+      border-radius: 5px;
+    }
+  }
+}
+
+code {
+  font-size: 0.75em;
+  scrollbar-color: $red $orange;
+  scrollbar-width: thin;
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: $orange;
+  }
+  &::-webkit-scrollbar-track {
+    margin: 10px;
+    background: $red;
+  }
+  p {
+    color: $orange;
+    text-align: left;
+    em{
+      color: $red;
+    }
+  }
+}
+pre.default{
+  margin-top: 1em;
+  code b{
+    color: $orange;
+  }
+}
+

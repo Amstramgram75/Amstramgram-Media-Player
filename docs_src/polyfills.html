@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" class="loading">
+
+<head>
+	<title>Amstramgram Media Player - Documentation - IE11 Polyfills</title>
+	<include src="head.html"></include>
+</head>
+<body>
+	<include src="header.html"></include>
+	<div class="content-wrapper polyfill">
+		<div class="content">
+<!-- 
+	**** INTRODUCTION ****
+-->
+      <h2 id="intro" class="padding-top140">Introduction</h2>
+			<div class="text">
+				<p>
+					This is not a big surprise : <em>Internet Explorer 11</em> needs a little help to fully understand what we ask him for here...<br>
+					To avoid that he does not feel uncomfortable when he meets our class, we have to explain the folowing concepts to him&nbsp;:<br>
+					<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign" target="_blank">Object.assign()</a>,<br>
+					<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find" target="_blank">Array.find()</a>,<br>
+					<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from" target="_blank">Array.from()</a>,<br>
+					<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/includes" target="_blank">Array.includes()</a>,<br>
+					<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet" target="_blank">Weakset</a>,<br>
+					<a href="https://developer.mozilla.org/en-US/docs/Web/API/ChildNode/remove" target="_blank">ChildNode.remove()</a><br>
+					and <a href="https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent" target="_blank">CustomEvent()</a>.
+				</p>
+				<p>
+					To carry out this arduous task, several solutions are available to you&nbsp;:<br>
+					- Use the dedicaced <em>amstramgramMediaPlayerPolyfill.js</em> file located in the <em>dist</em> folder.<br>
+					- Work with <a href="https://polyfill.io/v3/" target="_blank">polyfill.io</a><br>
+					- Build your own cocktail...
+				</p>
+			</div>
+<!-- 
+	**** AMSTRAMGRAM POLYFILLS ****
+-->
+      <h2 id="amstramgramMediaPlayerPolyfill" class="padding-top140">Amstramgram polyfills</h2>
+			<p class="text">
+				It is a somewhat brutal method but nevertheless effective&nbsp;: just insert in your HTML head tag the folowing lines.
+			</p>
+			<pre>
+<h4>HTML</h4>
+<code class="html">
+
+&lt;script&gt;
+	if (typeof Object.assign !== 'function' || 
+			!Array.from || 
+			!Array.prototype.includes || 
+			!Array.prototype.find || 
+			!('remove' in Element.prototype) || 
+			typeof window.CustomEvent !== "function" || 
+			typeof window.WeakSet !== "function"
+		){
+		var d = document,
+				s = d.createElement('script');
+		s.async = "false";
+		s.src = "js/amstramgramMediaPlayerPolyfill.min.js";
+		d.head.appendChild(s);
+	}
+&lt;/script&gt;
+
+</code></pre>
+			<p class="text">
+				If the browser doesn't implement some of the necessary methods listed above, it will load the polyfill script.<br>
+				The downside is that, if you're using other libraries that already polyfill some of the needed methods, it will duplicate work.<br>
+				But, if you are not sure, this is the method you should choose.
+			</p>
+<!-- 
+	**** POLYFILL-IO ****
+-->
+			<h2 id="polyfill-io" class="padding-top140">polyfill.io</h2>
+			<div class="text">
+				<p>
+					As you can read on its <a href="https://github.com/financial-times/polyfill-service" target="_blank">Github Repo</a>, <i>Polyfill.io is a service which makes web development less frustrating by selectively polyfilling just what the browser needs. Polyfill.io reads the User-Agent header of each request and returns polyfills that are suitable for the requesting browser.</i><br>
+				</p>
+				<p>
+					Unlike the previous method, the downside is that the browser makes a request whether or not it needs some polyfills.<br>
+					Furtherwise, the script bundled this way weights 8.62 Ko against 2.87 Ko for our amstramgramMediaPlayerPolyfill.
+				</p>
+				<p>
+					Anyway, If you opt for this solution, you just have to insert the folowing line in your HTML head tag&nbsp;:
+				</p>
+			</div>
+			<pre>
+<h4>HTML</h4>
+<code class="html">
+
+
+&lt;script src="https://polyfill.io/v3/polyfill.min.js?features=Object.assign%2CArray.prototype.find%2CArray.from%2CArray.prototype.includes%2CWeakSet%2CElement.prototype.remove%2CCustomEvent"&gt;&lt;/script&gt;
+
+
+</code></pre>
+			<p class="text">
+				You can see <a href="./polyfillIODemo.html">here</a> a copy of the Home page using the polyfill.io script.
+			</p>
+			<div class="end">
+			</div>
+		</div>
+	</div>
+	<div class="up"></div>
+	<link rel="stylesheet" href="css/polyfills.css">
+	<script src="js/polyfills.js"></script>
+</body>
+</html>

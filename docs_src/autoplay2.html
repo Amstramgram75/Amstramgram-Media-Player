@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" class="loading">
+
+<head>
+	<title>Amstramgram Media Player - Documentation - Autoplay - Example 2</title>
+	<include src="head.html"></include>
+	<include src="headAmpPolyfill.html"></include>
+</head>
+<body>
+	<include src="header.html"></include>
+	<div class="content-wrapper">
+		<div class="content">
+      <h2 id="Demo2" class="padding-top140">Autoplay Demo 2</h2>
+			<div class="video-container">
+				<video><!--Our video--></video>
+			</div>
+			<a class="link" href="./autoplay.html">
+				<div><div>Back to first example ?</div><div>Yep !</div></div>
+      </a>
+			<div class="padding-top20 text">
+				<p>
+          All the setup is done through javascript.<br>
+          This time, rather than giving the choice between several qualities, we are offering two languages&nbsp;: French and German, which is the default.<br>
+          In the settings panel, we change the <em>qualityLabel</em> from <em>QUALITY</em> to <em>LANGUAGE</em> and set the <em>playbackRates</em> option as an empty array, so the user can't modify the playback speed.<br>
+					As for the first example, we use the callback function to hide the controls when the player is ready and starts playing.
+				</p>
+			</div>
+			<div class="code-show-hide">
+				<input type="checkbox" id="show-code01" class="show-code" autocomplete="off" />
+				<pre>
+<h4>HTML</h4>
+<code class="html">
+
+&lt;div class=&quot;video-container&quot;&gt;
+	&lt;video&gt;&lt;!--Our video--&gt;&lt;/video&gt;
+&lt;/div&gt;
+
+</code>
+<h4>JAVASCRIPT</h4>
+<code class="javascript">
+
+new AmstramgramMediaPlayer(document.querySelector('video'),
+  {
+    autoplay: true,
+    src: [
+      {
+        src: 'assets/video/Castors-720p.mp4',
+        quality: 'Français'
+      },
+      {
+        src: 'assets/video/Castors-720p-de.mp4',
+        quality: 'Deutsch',
+        default: true,
+      }
+    ],
+    thumbnails: {
+      src: 'assets/video/Castors-thumbnails.jpg',
+      int: 2.12
+    },
+    settings: {
+      qualityLabel: 'LANGUAGE',
+      playbackRates: []
+    },
+    subtitles: {
+      sources: [
+        {
+          src: 'assets/video/Castors-fr.vtt',
+          label: 'Français',
+          srclang: 'fr',
+        },
+        {
+          src: 'assets/video/Castors-en.vtt',
+          label: 'English',
+          srclang: 'en',
+        },
+      ],
+      default: 'en'
+    },
+    volume: 0,
+    volumeGroup: 2,
+    volumeForced: true,
+  },
+  function () {
+    //this = our player
+    //Start listening to amst__play event
+    this.on('amst__play', function hideControlsWhenPlayBegin() {
+      //this = our player
+      //Stop listening
+      this.off('amst__play', hideControlsWhenPlayBegin)
+      //Hide the controls
+      this.hideControls()
+    })
+  }
+)
+
+</code></pre><label for="show-code01">Code</label>
+			</div>
+			<div class="end"></div>
+		</div>
+	</div>
+	<div class="up"></div>
+	<include src="footerAmp.html"></include>
+	<link rel="stylesheet" href="css/autoplay.css">
+	<script src="js/autoplay2.js"></script>
+</body>
+</html>

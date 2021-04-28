@@ -1,0 +1,33 @@
+@import "./common/_main";
+@import "./common/_code";
+
+.audio-container, .video-container {
+  margin-top: 1em;
+}
+.audio-container .amst__wrapper {
+  border: 1px solid rgba(161, 3, 4, 0.5);
+  border-radius: 5px;
+}
+.audio-container.highligth .amst__wrapper {
+  border: 1px solid #383838;
+  border-radius: 5px;
+  box-shadow: 2px 2px 3px #383838;
+}
+.audio-subtitles-display {
+  text-align: center;
+  margin-top: 15px;
+  height: 100px;
+  .audio-subtitles-wrapper {
+    display: inline-block;
+    padding: 15px;
+    background: #333;
+    border-radius: 5px;
+    .audio-subtitles-container {
+      white-space: break-spaces;
+    }
+    &.amst__hide-subtitles,
+    &.amst__subtitles-empty {
+      display: none;
+    }
+  }
+}

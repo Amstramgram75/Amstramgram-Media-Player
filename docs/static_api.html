@@ -1,0 +1,83 @@
+<!DOCTYPE html><html lang="en" class="loading"><head><title>Amstramgram Media Player - Documentation - Static API</title><meta http-equiv="content-type" content="text/html; charset=UTF-8"><meta name="description" content="AmstramgramMediaPlayer is a open-source, simple, smart, responsive, lightweight although powerful HTML5 Audio and Video Player"><meta name="author" content="onfaitdessites.fr"><link rel="icon shortcut" href="#"><meta name="viewport" id="viewport" content="width=device-width, initial-scale=1.0"><style>body,html{height:100%;background:#121212}.loading body{opacity:0;overflow-y:scroll}.loading:after,.loading:before{content:"";display:block;position:fixed;top:50%;left:50%;width:100px;height:100px;border-radius:50%}.loading:before{transform:translate(-50%,-50%);border:10px solid red;box-sizing:border-box}.loading:after{background:linear-gradient(90deg,#000,rgba(0,0,0,.9) 30%,rgba(0,0,0,.7) 70%,transparent);animation:r 1.5s linear infinite}@keyframes r{0%{transform:translate(-50%,-50%) rotate(0)}to{transform:translate(-50%,-50%) rotate(1turn)}}</style><script>!function(e){if(!e.currentScript){var l=e.createElement("script"),i=e.createElement("script");l.async=i.async="false",l.src="js/polyfill/highlight9.18.5.min.js",i.src="js/polyfill/symbol-es6-polyfill.min.js",e.head.appendChild(l),e.head.appendChild(i)}}(document);</script></head><body> <input class="menu-btn" type="checkbox" id="menu-btn" autocomplete="off"><header class="header"> <a href="https://github.com/Amstramgram75/Amstramgram-Media-Player" class="logo">mstramgram<div> <div class="github"></div> <div> <div class="media">edia</div><div class="player">layer</div> </div> </div></a> </header><aside> <div class="aside"> <ul class="menu"> <li><a href="index.html">HOME</a></li> <li><a href="demo.html">DEMO</a></li> <li><a href="playlists.html">PLAYLISTS</a></li> <li><a href="autoplay.html">AUTOPLAY</a></li> <li><a href="audio.html">AUDIO ONLY</a></li> <li><a href="options.html">OPTIONS</a></li> <li><a href="static_api.html">STATIC API</a></li> <li><a href="instance_api.html">INSTANCE API</a></li> <li><a href="events.html">EVENTS</a></li> <li><a href="thumbnails.html">THUMBNAILS</a></li> <li><a href="polyfills.html">IE11 POLYFILLS</a></li> </ul> <label class="menu-icon" for="menu-btn"><span></span></label> </div></aside> <div class="api content-wrapper"> <div class="content"> <h2 id="intro" class="padding-top140">Introduction</h2> <div class="text"> <p> Some of the static methods listed here DO NOT APPLY to the <em class="orange">AmstramgramAudioPlayer</em> class.<br> They are marked with a <span class="not-audio-mark"></span>. </p> <p> The <span class="get-mark"></span> and <span class="set-mark"></span> marks indicate that the properties have respectively a <em>getter</em> and a <em>setter</em>. </p> </div> <h2 id="audioOptions" class="get not-audio padding-top140 set">audioOptions</h2> <pre class="default"><code class="javascript">/**
+ * @set audioOptions
+ * @params {object}
+ * @description : set the audio players default options .
+ */
+
+//Set the default aria-label content for audio players HTML wrappers.
+AmstramgramMediaPlayer.audioOptions = {appLabel: 'Lecteur Audio'}
+
+/**
+ * @get audioOptions
+ * @returns {object}
+ * @description : get the audio players default options .
+ */
+
+console.log(AmstramgramMediaPlayer.audioOptions.appLabel)
+//Should output : Lecteur Audio
+
+</code></pre> <h2 id="currentPlayer" class="get padding-top140">currentPlayer</h2> <pre class="default"><code class="javascript">/**
+ * @get currentPlayer
+ * @returns {AmstramgramAudioPlayer | AmstramgramVideoPlayer | undefined}
+ * @description : Returns the current player or undefined if there is none.
+ */
+
+//Pauses the current player if it's playing
+if (AmstramgramMediaPlayer.currentPlayer && !AmstramgramMediaPlayer.currentPlayer.paused) {
+	AmstramgramMediaPlayer.currentPlayer.pause()
+}
+
+//Same thing if you use AmstramgramAudioPlayer class
+if (AmstramgramAudioPlayer.currentPlayer && !AmstramgramAudioPlayer.currentPlayer.paused) {
+	AmstramgramAudioPlayer.currentPlayer.pause()
+}
+
+</code></pre> <h2 id="options" class="get padding-top140 set">options</h2> <pre class="default"><code class="javascript">/**
+ * @set options
+ * @params {object}
+ * @description : set the players default options .
+ */
+
+//Set the default aria-label content for all players HTML wrappers.
+AmstramgramMediaPlayer.options = {appLabel: 'Multimedia Player'}
+
+//Or if you're using the AmstramgramAudioPlayer class :
+AmstramgramAudioPlayer.options = {appLabel: 'My beautiful Audio Player'}
+
+/**
+ * @get options
+ * @returns {object}
+ * @description : get the players default options .
+ */
+
+console.log(AmstramgramMediaPlayer.options.appLabel)
+//Should output : Multimedia Player
+
+</code></pre> <h2 id="players" class="get padding-top140">players</h2> <pre class="default"><code class="javascript">/**
+ * @get players
+ * @returns {array}
+ * @description : returns an array of all instantiated players.
+ */
+
+//Hides the download button of all players.
+AmstramgramMediaPlayer.players.forEach( player => player.download = {hidden: true} )
+
+</code></pre> <h2 id="videoOptions" class="get not-audio padding-top140 set">videoOptions</h2> <pre class="default"><code class="javascript">/**
+ * @set videoOptions
+ * @params {object}
+ * @description : set the video players default options .
+ */
+
+ //Set the default aria-label content for video players HTML wrappers.
+ AmstramgramMediaPlayer.videoOptions = {appLabel: 'Lecteur Vidéo'}
+
+/**
+ * @get videoOptions
+ * @returns {object}
+ * @description : returns the video players default options .
+ */
+
+console.log(AmstramgramMediaPlayer.videoOptions.appLabel)
+//Should output : Lecteur Vidéo
+
+</code></pre> <div class="end"></div> </div> </div> <div class="up"></div> <link rel="stylesheet" href="css/static_api.css"> <script src="js/static_api.js"></script> </body></html>

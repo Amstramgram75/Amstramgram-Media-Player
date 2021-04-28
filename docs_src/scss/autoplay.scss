@@ -1,0 +1,44 @@
+@import "./common/_main";
+@import "./common/_code";
+
+.video-container {
+  margin-top: 1em;
+}
+
+.content a.link{
+  box-sizing: border-box;
+  padding: 20px 0;
+  overflow: hidden;
+  display: flex;
+  >div{
+    height: 40px;
+    overflow: hidden;
+    margin: auto;
+    cursor: pointer;
+    background: $bodybackground;
+    color: $bodybackground;
+    color: $red;
+    font-weight: bold;
+    border: 3px solid $orange;
+    border-radius: 8px;
+    transition: transform 0.4s;
+    div{
+      padding: 10px;
+      height: 40px;
+      box-sizing: border-box;
+      width: 100%;
+      text-align: center;
+    }
+    div:first-of-type {
+      will-change: margin;
+      margin-top: 0;
+      transition: margin 0.4s;
+    }
+    &:hover div:first-of-type {
+      margin-top: -40px;
+    }
+    &.clicked{
+      transform: translateX(50vw);
+    }
+  }
+}

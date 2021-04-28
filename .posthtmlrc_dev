@@ -1,0 +1,13 @@
+{
+  "root": "docs_src",
+  "input": "*.html",
+  "output": "docs_dev",
+  "options": {
+    "sync": true
+  },
+  "plugins": {
+    "posthtml-include": {
+      "root": 'docs_src/htmlPartials/'
+    }
+  }
+}

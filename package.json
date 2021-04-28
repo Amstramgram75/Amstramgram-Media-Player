@@ -1,0 +1,74 @@
+{
+  "name": "amstramgrammediaplayer",
+  "version": "1.0.0",
+  "description": "Simple, smart, responsive, lightweight although powerfull HTML5 Audio and Video Player",
+  "author": {
+    "name": "Amstramgram",
+    "email": "contact@onfaitdessites.fr",
+    "url": "https://amp.onfaitdessites.fr/"
+  },
+  "keywords": [
+    "audio",
+    "video",
+    "media",
+    "player",
+    "light",
+    "responsive"
+  ],
+  "homepage": "https://amp.onfaitdessites.fr/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Amstramgram75/Amstramgram-Media-Player"
+  },
+  "bugs": {
+    "url": "https://github.com/Amstramgram75/Amstramgram-Media-Player/issues"
+  },
+  "license": "MIT",
+  "main": "cjs/amstramgramMediaPlayer.js",
+  "module": "esm/amstramgramMediaPlayer.js",
+  "exports": {
+    ".":{
+      "require": "./cjs/amstramgramMediaPlayer.js",
+      "import": "./esm/amstramgramMediaPlayer.js"
+    },
+    "./AmstramgramAudioPlayer":{
+      "require": "./cjs/amstramgramAudioPlayer.js",
+      "import": "./esm/amstramgramAudioPlayer.js"
+    },
+    "./AmstramgramMediaPlayer_src": {
+      "import": "./src/js/amstramgramMediaPlayer.js"
+    }
+  },
+  "style": "css/amstramgramMediaPlayer.min.css",
+  "files": [
+    "css",
+    "cjs",
+    "esm",
+    "iife",
+    "src"
+  ],
+  "scripts": {
+    "dev": "node dev.js",
+    "build": "rollup -c rollup.build.js"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.15",
+    "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/preset-env": "^7.13.15",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-commonjs": "^18.0.0",
+    "@rollup/plugin-node-resolve": "^11.2.1",
+    "edit-json-file": "^1.6.0",
+    "fs-extra": "^9.1.0",
+    "highlight.js": "^10.7.2",
+    "htmlnano": "^0.2.9",
+    "onchange": "^7.1.0",
+    "posthtml-cli": "^0.9.1",
+    "posthtml-include": "^1.7.0",
+    "prepend-file": "^2.0.0",
+    "replace-in-file": "^6.2.0",
+    "rollup": "^2.45.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "sass": "^1.32.8"
+  }
+}
